@@ -76,7 +76,14 @@
   /photos/landmarks/fifth-avenue.jpg
   /photos/landmarks/harlem.jpg
   /photos/landmarks/staten-island-ferry.jpg
+  /photos/culture/met-museum.jpg
+  /photos/culture/moma.jpg
+  /photos/culture/lincoln-center.jpg
+  /photos/culture/schomburg-center.jpg
+  /photos/culture/apollo-theater.jpg
+  /photos/culture/africa-center.jpg
   /photos/dj-ej.jpg
+  /photos/mc-matilda-banga.jpg
 
   Until a matching file is added, an elegant gold-and-green monogram
   placeholder displays instead — nothing breaks, nothing needs to be
@@ -221,6 +228,21 @@
   .portrait-ph .initials{font-family:var(--serif); color:var(--gold-soft); font-size:1.9rem; font-weight:700;}
   .portrait-ph .ph-star{color:var(--gold); font-size:.9rem; margin-top:2px;}
 
+  /* ---------- Rectangular portrait variant (e.g. First Lady) ---------- */
+  .portrait-rect{
+    width:100%; max-width:210px; margin:0 auto; border-radius:10px; padding:5px;
+    background:var(--green); position:relative;
+  }
+  .portrait-rect .ring2-rect{border-radius:7px; padding:4px; background:var(--gold);}
+  .portrait-rect .inner-rect{
+    border-radius:5px; overflow:hidden; position:relative; background:var(--ivory-dim);
+    aspect-ratio:3/4;
+  }
+  .portrait-rect img{width:100%; height:100%; object-fit:cover; object-position:top center; position:absolute; inset:0;}
+  .portrait-rect .portrait-ph{border-radius:5px;}
+  #flAchievementsPhotoBtn.portrait-btn{display:block;}
+  #flAchievementsPhotoBtn.portrait-btn::after{border-radius:10px; content:"View Achievements";}
+
   /* ---------- Welcome ---------- */
   .welcome{background:#fff;}
   .welcome-grid{display:grid; grid-template-columns:280px 1fr; gap:60px; align-items:center;}
@@ -344,7 +366,6 @@
     opacity:0; transition:opacity .2s ease;
   }
   .portrait-btn:hover::after, .portrait-btn:focus-visible::after{opacity:1;}
-  #flAchievementsPhotoBtn::after{content:"View Achievements";}
 
   /* ---------- Modal role / actions ---------- */
   .modal-role{font-size:.85rem; color:var(--green); font-weight:700; margin-bottom:14px;}
@@ -520,10 +541,38 @@
   .lm-modal-body p{color:#4b4b46; font-size:.96rem;}
 
   .why-ny{padding-top:56px; margin-top:56px; border-top:1px solid rgba(255,255,255,.12);}
-  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:26px;}
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:26px;}
   .why-item{text-align:center;}
   .why-item .num{font-family:var(--serif); font-size:1.6rem; color:var(--gold); margin-bottom:8px;}
   .why-item p{font-size:.86rem; color:rgba(255,255,255,.68);}
+  .why-icon{width:34px; height:34px; margin:0 auto 12px;}
+  .why-icon svg{width:100%; height:100%;}
+  .why-badge{
+    display:inline-block; margin-top:10px; padding:3px 11px; border:1px solid rgba(201,162,39,.5); border-radius:20px;
+    font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-soft); font-weight:700;
+  }
+  .why-link{
+    display:block; width:100%; background:none; border:none; cursor:pointer; padding:16px 10px; border-radius:8px;
+    transition:background .2s ease;
+  }
+  .why-link:hover, .why-link:focus-visible{background:rgba(255,255,255,.05);}
+  .why-link .why-sub{display:block; margin-top:8px; font-size:.72rem; color:rgba(255,255,255,.4);}
+  .why-link .why-sub svg{width:11px; height:11px; vertical-align:-1px; margin-right:3px;}
+
+  .culture-panel{
+    grid-column:1/-1; max-height:0; overflow:hidden; transition:max-height .4s ease;
+  }
+  .culture-panel.open{max-height:900px;}
+  .culture-panel-inner{padding-top:28px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .culture-card{
+    background:rgba(255,255,255,.04); border:1px solid rgba(201,162,39,.22); border-radius:8px; padding:20px 18px;
+    text-align:left; cursor:pointer; color:#fff; font-family:var(--sans); transition:background .2s ease, transform .2s ease;
+  }
+  .culture-card:hover{background:rgba(255,255,255,.08); transform:translateY(-2px);}
+  .culture-card h5{font-family:var(--serif); font-size:1rem; color:#fff; margin-bottom:6px;}
+  .culture-card span{font-size:.76rem; color:rgba(255,255,255,.55);}
+  @media(max-width:900px){ .culture-panel-inner{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:520px){ .culture-panel-inner{grid-template-columns:1fr;} }
 
   /* ---------- Gallery ---------- */
   .gallery{background:var(--ivory-dim);}
@@ -684,16 +733,18 @@
 <!-- ============ WELCOME ============ -->
 <section class="welcome pad" id="welcome">
   <div class="wrap welcome-grid reveal">
-    <div class="portrait">
-      <div class="ring2"><div class="inner">
-        <img src="photos/chairman-welcome.jpg" alt="Chairman Jabati Wai" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="portrait-ph" style="display:none;"><div class="initials">JW</div><div class="ph-star">✦</div></div>
-      </div></div>
-    </div>
+    <button type="button" class="portrait-btn" id="chairmanProfileBtn" data-photo="photos/chairman-welcome.jpg" data-name="Chairman Jabati Wai" data-role="Chairman, SLPP North America New York Chapter" data-bio="Chairman Jabati Wai is the elected Chairman of the SLPP North America New York Chapter, leading with a commitment to unity, discipline, and the organizational strength of the Sierra Leone People's Party in the diaspora. Guided by service, accountability, and respect for the Party's Constitution, he has championed greater member participation, strengthened ties with sister chapters across North America, and promoted constructive engagement with the National Party. He is widely respected for an inclusive leadership style and a gift for bringing people together in pursuit of common goals. Professionally, Chairman Wai is a Program Director specializing in program development and client services, currently managing operations at CAMBA, one of New York City's major human services organizations. His earlier roles include Services for the UnderServed, Personal Involvement Center, Inc., and Forum for Youth Initiative, with expertise in navigating regulatory landscapes, implementing person-centered treatment plans, and enhancing community support initiatives. He holds a Master of Social Work with a focus on Substance Abuse and Addiction Counseling from Long Island University, and a Bachelor's degree in Political Science from Fourah Bay College, University of Sierra Leone — a career of empowering individuals and strengthening communities that reflects the same servant leadership he brings to the Chapter.">      <div class="portrait">
+        <div class="ring2"><div class="inner">
+          <img src="photos/chairman-welcome.jpg" alt="Chairman Jabati Wai" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="portrait-ph" style="display:none;"><div class="initials">JW</div><div class="ph-star">✦</div></div>
+        </div></div>
+      </div>
+    </button>
     <div>
       <div class="eyebrow">A Welcome From The Chairman</div>
       <blockquote>"Welcome to the official website of the SLPP North America New York Chapter Executive Inauguration. As we celebrate the inauguration of our newly elected Executive Council, we invite members of the Sierra Leone People's Party, the Sierra Leonean community, friends of Sierra Leone, and distinguished guests from around the world to join us in New York for three unforgettable days of fellowship, celebration, and service."</blockquote>
       <p class="signoff">Chairman Jabati Wai<span>SLPP North America — New York Chapter</span></p>
+      <button type="button" class="btn btn-gold" id="chairmanProfileLinkBtn" style="margin-top:22px; color:var(--navy);">Read Chairman's Profile →</button>
     </div>
   </div>
 </section>
@@ -709,7 +760,7 @@
       <div class="guest-card">
         <div class="guest-role">Keynote Speaker</div>
         <button type="button" class="portrait-btn" id="flAchievementsPhotoBtn" data-photo="photos/keynote-dr-fatima-maada-bio.jpg" data-name="Her Excellency Dr. Fatima Maada Bio">
-          <div class="portrait"><div class="ring2"><div class="inner">
+          <div class="portrait-rect"><div class="ring2-rect"><div class="inner-rect">
             <img src="photos/keynote-dr-fatima-maada-bio.jpg" alt="Her Excellency Dr. Fatima Maada Bio" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="portrait-ph" style="display:none;"><div class="initials">FB</div><div class="ph-star">✦</div></div>
           </div></div></div>
@@ -732,11 +783,15 @@
       </div>
       <div class="guest-card">
         <div class="guest-role">Master of Ceremony</div>
-        <div class="portrait"><div class="ring2"><div class="inner">
-          <div class="portrait-ph" style="display:flex;"><div class="initials">?</div><div class="ph-star">✦</div></div>
-        </div></div></div>
-        <h3>To Be Announced</h3>
-        <span class="tbd-badge">Coming Soon</span>
+        <button type="button" class="portrait-btn" data-photo="photos/mc-matilda-banga.jpg" data-name="Rev. Dr. Matilda Banga" data-role="Master of Ceremony" data-bio="Rev. Dr. Matilda Banga built her career at the intersection of faith, journalism, and public service. Raised in Sierra Leone's Kono District, she trained at the Omega Institute and Seminary, the Haggai Institute, and the Thompson School of Journalism, later earning a master's in Broadcast Journalism and a doctorate in Christian Education and Leadership from Southern Wesleyan University. During Sierra Leone's civil war, she broadcast for Radio Democracy 98.1 FM under the on-air name 'Sia Domingo,' reporting through one of the country's hardest periods. She went on to serve as Civil Society Coordinator for the Campaign for Good Governance, Secretary-General of the National Organization for Women, and Personal Assistant to President Ahmad Tejan Kabbah before continuing her studies in the United States. Today she leads GAP Ministries International as Founder and General Overseer, serves as President of the Diaspora International Platform, and is CEO of This Time Africa Media. She is also the author of 'The Battle for the Goal Post' and 'So You Think You Can Pray?'">
+          <div class="portrait"><div class="ring2"><div class="inner">
+            <img src="photos/mc-matilda-banga.jpg" alt="Rev. Dr. Matilda Banga" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="portrait-ph" style="display:none;"><div class="initials">MB</div><div class="ph-star">✦</div></div>
+          </div></div></div>
+        </button>
+        <h3>Rev. Dr. Matilda Banga</h3>
+        <div class="sub">Master of Ceremony</div>
+        <p class="bio">Tap the photo for biography.</p>
       </div>
       <div class="guest-card">
         <div class="guest-role">DJ</div>
@@ -766,7 +821,7 @@
 
     <div class="council-grid reveal">
       <div class="exec-card">
-        <button type="button" class="portrait-btn" data-photo="photos/chairman-jabati-wai.jpg" data-name="Jabati Wai" data-role="Chairman" data-bio="Biography to be published.">
+        <button type="button" class="portrait-btn" data-photo="photos/chairman-jabati-wai.jpg" data-name="Jabati Wai" data-role="Chairman" data-bio="Chairman Jabati Wai leads the SLPP North America New York Chapter, elected to head its executive and a familiar presence at sister-chapter events across the region. Professionally, he is a Program Director specializing in program development and client services, currently managing operations at CAMBA, with earlier roles at Services for the UnderServed, Personal Involvement Center, Inc., and Forum for Youth Initiative. He holds a Master of Social Work focused on Substance Abuse and Addiction Counseling from Long Island University and a B.A. in Political Science from Fourah Bay College, University of Sierra Leone. As Chairman, he has driven the push toward the September 2026 Executive Inauguration — appointing the planning committee, leading fundraising, and inviting dignitaries including First Lady Dr. Fatima Maada Bio. He's known within SLPP North America for methodical planning, strong inter-chapter relationships, and a focus on raising New York's profile as a host of major diaspora events.">
           <div class="portrait"><div class="ring2"><div class="inner">
             <img src="photos/chairman-jabati-wai.jpg" alt="Chairman Jabati Wai" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="portrait-ph" style="display:none;"><div class="initials">JW</div><div class="ph-star">✦</div></div>
@@ -783,7 +838,7 @@
       </div>
 
       <div class="exec-card">
-        <button type="button" class="portrait-btn" data-photo="photos/sg-fomba-kassoh.jpg" data-name="Fomba Kassoh" data-role="Secretary General" data-bio="Biography to be published.">
+        <button type="button" class="portrait-btn" data-photo="photos/sg-fomba-kassoh.jpg" data-name="Fomba Kassoh" data-role="Secretary General" data-bio="Fomba Kassoh is a data scientist, adjunct lecturer in Artificial Intelligence and Business Analytics, policy researcher, and political strategist serving as Secretary General of the SLPP North America New York Chapter. His writing on Sierra Leone's politics and development includes 'The Incumbency Trap,' a global warning to the SLPP ahead of 2028 drawn from ruling-party defeats across four continents; 'Win the Village, Win the Republic,' a grassroots infrastructure compact arguing the next election will be decided by culverts, classrooms, and Keke riders rather than mega-projects; 'The Unwritten Doctrine' and 'Reading the Race,' frameworks for SLPP electoral strategy; a study of the knowing-doing gap among Sierra Leone's most credentialed leaders; a strategic intelligence brief on the APC; and a data-driven analysis of the country's maternal mortality trajectory toward the 2030 Sustainable Development Goal. He is known for translating complex datasets into accessible charts and strategic frameworks for decision-makers, organizers, and the wider public. Beyond research and politics, he is an oil palm farmer in Kambia and a philanthropist in education who has helped build two primary schools in Sierra Leone and mobilized communities and the diaspora to fund teacher stipends — work that keeps his writing grounded in the villages it is written for.">
           <div class="portrait"><div class="ring2"><div class="inner">
             <img src="photos/sg-fomba-kassoh.jpg" alt="Fomba Kassoh" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="portrait-ph" style="display:none;"><div class="initials">FK</div><div class="ph-star">✦</div></div>
@@ -1296,10 +1351,72 @@
         <h2>The World Comes Here</h2>
       </div>
       <div class="why-grid">
-        <div class="why-item"><div class="num">✦</div><p>Home to the United Nations Headquarters</p></div>
-        <div class="why-item"><div class="num">✦</div><p>Home to the Permanent Mission of Sierra Leone to the United Nations</p></div>
-        <div class="why-item"><div class="num">✦</div><p>The financial capital of the world</p></div>
-        <div class="why-item"><div class="num">✦</div><p>One of the world's greatest cultural destinations</p></div>
+        <div class="why-item">
+          <button type="button" class="why-link why-reveal" data-name="United Nations Headquarters" data-desc="The seat of the United Nations since 1952, where all 193 member states convene each September for the General Assembly. Sierra Leone has been a member since 1961, and delegations from around the world pass through its halls year-round." data-address="405 East 42nd Street, New York, NY 10017" data-subway="Grand Central–42 St (4, 5, 6, 7, S), then about a 10-minute walk east.">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M6.2 6.2c3.8 2.8 7.8 2.8 11.6 0M6.2 17.8c3.8-2.8 7.8-2.8 11.6 0"/></svg></div>
+            <p>Home to the United Nations Headquarters</p>
+            <span class="why-sub">Grand Central–42 St (4,5,6,7,S) · Tap for details</span>
+          </button>
+        </div>
+        <div class="why-item">
+          <button type="button" class="why-link why-reveal" data-name="Permanent Mission of Sierra Leone to the UN" data-desc="The diplomatic office representing Sierra Leone at the United Nations, led by the country's Ambassador and Permanent Representative. It's where Sierra Leone's voice is heard on the world stage, a short walk from UN Headquarters." data-address="228 East 45th Street, New York, NY 10017" data-subway="Grand Central–42 St (4, 5, 6, 7, S), then about an 8-minute walk northeast.">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><path d="M6 3v18"/><path d="M6 4h13l-3 4 3 4H6"/></svg></div>
+            <p>Home to the Permanent Mission of Sierra Leone to the United Nations</p>
+            <span class="why-sub">Grand Central–42 St (4,5,6,7,S) · Tap for details</span>
+          </button>
+        </div>
+        <div class="why-item">
+          <button type="button" class="why-link why-reveal" data-name="Wall Street &amp; the Financial District" data-desc="Wall Street and the New York Stock Exchange anchor the world's largest financial center, where global markets open every trading day. A short walk through the Financial District passes more than three centuries of American commerce." data-address="11 Wall Street, New York, NY 10005" data-subway="Wall St (4, 5) or Broad St (J, Z), both a block away.">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+            <p>The financial capital of the world</p>
+            <span class="why-sub">Wall St (4,5) or Broad St (J,Z) · Tap for details</span>
+          </button>
+        </div>
+        <div class="why-item">
+          <button type="button" class="why-link why-reveal" data-name="A Sierra Leonean Home Away From Home" data-desc="New York City is home to one of the largest Sierra Leonean communities in the United States, with families, churches, mosques, and associations rooted across the Bronx, Staten Island, and beyond — a diaspora deep enough that the chapter's guests will find familiar faces at every turn.">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.2 20c.3-2 1.7-3.5 3.4-4"/></svg></div>
+            <p>One of the largest Sierra Leonean communities in the U.S.</p>
+            <span class="why-sub">Tap for details</span>
+          </button>
+        </div>
+        <div class="why-item">
+          <button type="button" class="why-link why-reveal" data-name="A Hub for West African Diaspora Life" data-desc="Beyond Sierra Leoneans, New York's Bronx and Harlem neighborhoods host some of the largest West African immigrant communities in the country — Liberian, Ghanaian, Nigerian, Senegalese, and Guinean businesses, churches, and mosques side by side, giving the chapter's inauguration a wider diaspora family to draw on.">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+            <p>A hub for West African diaspora life</p>
+            <span class="why-sub">Tap for details</span>
+          </button>
+        </div>
+        <div class="why-item">
+          <button type="button" class="why-link" id="cultureToggleBtn" aria-expanded="false" aria-controls="culturePanel">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.6"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-.5-.2-1-.4-1.4-.2-.5-.4-.9-.4-1.4 0-.9.7-1.4 1.6-1.4H17a3 3 0 0 0 3-3c0-5-3.6-9-8-9z"/><circle cx="7.7" cy="10.8" r=".9"/><circle cx="11.5" cy="7.8" r=".9"/><circle cx="15.3" cy="10.3" r=".9"/></svg></div>
+            <p>One of the world's greatest cultural destinations</p>
+            <span class="why-badge">6 Highlights</span>
+            <span class="why-sub" id="cultureToggleLabel">Tap to see highlights ▾</span>
+          </button>
+        </div>
+
+        <div class="culture-panel" id="culturePanel">
+          <div class="culture-panel-inner">
+            <button type="button" class="culture-card" data-photo="photos/culture/met-museum.jpg" data-name="The Metropolitan Museum of Art" data-desc="One of the world's largest and most encyclopedic art museums, spanning 5,000 years of art and culture from every corner of the globe." data-address="1000 Fifth Avenue, New York, NY 10028" data-subway="86 St (4, 5, 6), a short walk from the Museum Mile entrance.">
+              <h5>The Metropolitan Museum of Art</h5><span>Museum Mile · Fifth Avenue</span>
+            </button>
+            <button type="button" class="culture-card" data-photo="photos/culture/moma.jpg" data-name="Museum of Modern Art (MoMA)" data-desc="Home to modern and contemporary masterpieces, from Van Gogh's 'The Starry Night' to Warhol — a cornerstone of Midtown's cultural life." data-address="11 West 53rd Street, New York, NY 10019" data-subway="5 Av/53 St (E, M) or 47-50 Sts–Rockefeller Ctr (B, D, F, M).">
+              <h5>MoMA</h5><span>Midtown Manhattan</span>
+            </button>
+            <button type="button" class="culture-card" data-photo="photos/culture/lincoln-center.jpg" data-name="Lincoln Center for the Performing Arts" data-desc="A campus of world-class opera, ballet, and orchestral halls, including the Metropolitan Opera, New York City Ballet, and the New York Philharmonic." data-address="10 Lincoln Center Plaza, New York, NY 10023" data-subway="66 St–Lincoln Center (1), right at the plaza.">
+              <h5>Lincoln Center</h5><span>Performing Arts · Upper West Side</span>
+            </button>
+            <button type="button" class="culture-card" data-photo="photos/culture/schomburg-center.jpg" data-name="Schomburg Center for Research in Black Culture" data-desc="A world-renowned research library and cultural institution in Harlem dedicated to preserving Black and African diaspora history — a natural stop for Sierra Leonean guests tracing the diaspora's story." data-address="515 Malcolm X Boulevard, New York, NY 10037" data-subway="135 St (2, 3), right at the corner.">
+              <h5>Schomburg Center</h5><span>Black &amp; Diaspora History · Harlem</span>
+            </button>
+            <button type="button" class="culture-card" data-photo="photos/culture/apollo-theater.jpg" data-name="The Apollo Theater" data-desc="The legendary Harlem stage that launched Ella Fitzgerald, James Brown, and generations of Black musical talent — still hosting Amateur Night today." data-address="253 West 125th Street, New York, NY 10027" data-subway="125 St (2, 3) or 125 St (A, B, C, D).">
+              <h5>The Apollo Theater</h5><span>Historic Harlem Stage</span>
+            </button>
+            <button type="button" class="culture-card" data-photo="photos/culture/africa-center.jpg" data-name="The Africa Center" data-desc="A museum and cultural hub on Museum Mile dedicated to African art, ideas, and the diaspora — a fitting stop for Sierra Leonean and diaspora guests." data-address="1280 Fifth Avenue, New York, NY 10029" data-subway="110 St (2, 3) or 110 St (6).">
+              <h5>The Africa Center</h5><span>African Art &amp; Diaspora · Museum Mile</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1570,9 +1687,14 @@
   const lmClose = document.getElementById('lmModalClose');
 
   function openModal({photo, name, role, desc, eyebrow, address, subway}){
-    lmImg.style.display = '';
-    lmPh.style.display = 'none';
-    lmImg.src = photo || '';
+    if(photo){
+      lmImg.style.display = '';
+      lmPh.style.display = 'none';
+      lmImg.src = photo;
+    } else {
+      lmImg.style.display = 'none';
+      lmPh.style.display = 'flex';
+    }
     lmImg.alt = name || '';
     lmEyebrow.textContent = eyebrow || '';
     lmTitle.textContent = name || '';
@@ -1605,6 +1727,40 @@
     setTimeout(() => lmOverlay.classList.remove('open'), 250);
   }
 
+  // Why New York — UN HQ, Permanent Mission, Financial District reveal
+  document.querySelectorAll('.why-reveal').forEach(btn => {
+    btn.addEventListener('click', () => openModal({
+      photo: null,
+      name: btn.getAttribute('data-name'),
+      desc: btn.getAttribute('data-desc'),
+      eyebrow: 'Why New York',
+      address: btn.getAttribute('data-address'),
+      subway: btn.getAttribute('data-subway')
+    }));
+  });
+
+  // Cultural destinations reveal panel
+  const cultureToggleBtn = document.getElementById('cultureToggleBtn');
+  const cultureToggleLabel = document.getElementById('cultureToggleLabel');
+  const culturePanel = document.getElementById('culturePanel');
+  if (cultureToggleBtn) {
+    cultureToggleBtn.addEventListener('click', () => {
+      const isOpen = culturePanel.classList.toggle('open');
+      cultureToggleLabel.textContent = isOpen ? 'Hide highlights ▴' : 'Tap to see highlights ▾';
+      cultureToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('.culture-card').forEach(card => {
+    card.addEventListener('click', () => openModal({
+      photo: card.getAttribute('data-photo'),
+      name: card.getAttribute('data-name'),
+      desc: card.getAttribute('data-desc'),
+      eyebrow: 'Cultural Destination',
+      address: card.getAttribute('data-address'),
+      subway: card.getAttribute('data-subway')
+    }));
+  });
+
   // Landmarks
   document.querySelectorAll('.lm-card').forEach(card => {
     card.addEventListener('click', () => openModal({
@@ -1618,7 +1774,7 @@
   });
 
   // Executive / guest bios
-  document.querySelectorAll('.portrait-btn:not(#flAchievementsPhotoBtn)').forEach(btn => {
+  document.querySelectorAll('.portrait-btn:not(#flAchievementsPhotoBtn):not(#chairmanProfileBtn)').forEach(btn => {
     btn.addEventListener('click', () => openModal({
       photo: btn.getAttribute('data-photo'),
       name: btn.getAttribute('data-name'),
@@ -1638,6 +1794,21 @@
       eyebrow: 'Biography'
     }));
   });
+
+  // "Read Chairman's Profile" button and welcome photo — same profile content
+  const chairmanProfileLinkBtn = document.getElementById('chairmanProfileLinkBtn');
+  const chairmanProfileBtn = document.getElementById('chairmanProfileBtn');
+  function openChairmanProfile(){
+    openModal({
+      photo: chairmanProfileBtn.getAttribute('data-photo'),
+      name: chairmanProfileBtn.getAttribute('data-name'),
+      role: chairmanProfileBtn.getAttribute('data-role'),
+      desc: chairmanProfileBtn.getAttribute('data-bio'),
+      eyebrow: "Chairman's Profile"
+    });
+  }
+  if (chairmanProfileLinkBtn) chairmanProfileLinkBtn.addEventListener('click', openChairmanProfile);
+  if (chairmanProfileBtn) chairmanProfileBtn.addEventListener('click', openChairmanProfile);
 
   // Boat ride promo
   const boatCard = document.getElementById('boatCard');
