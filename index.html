@@ -296,6 +296,10 @@
   .venues{background:var(--ivory-dim);}
   .venue-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:0; border:2px solid var(--gold); border-radius:8px; overflow:hidden; box-shadow:0 14px 34px rgba(11,31,58,.1); margin-bottom:34px; background:#fff;}
   .venue-grid iframe{width:100%; height:100%; min-height:320px; border:0;}
+  .venue-media-stack{display:flex; flex-direction:column; min-width:0; background:#fff;}
+  .venue-media-stack iframe{height:320px; min-height:320px;}
+  .venue-yacht-photo{background:#eef3f5; border-top:2px solid var(--gold); overflow:hidden;}
+  .venue-yacht-photo img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;}
   .venue-map-wrap{position:relative; width:100%; min-height:320px; background:var(--ivory-dim);}
   .venue-map-iframe{position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;}
   .venue-map-overlay{position:absolute; inset:0; display:block; z-index:2;}
@@ -1173,16 +1177,14 @@
 <div class="day-head"><span class="day">Saturday — Daytime</span><span class="date">September 5, 2026</span></div>
 <div class="event-rows">
 <div class="event-row"><div class="ev-title">The Situation Room</div><div class="ev-time">All day</div><div class="ev-note">Food and drinks flowing all day — an informal, come-as-you-are lunch for guests in town early.</div></div>
-</div>
-<div class="boat-card">
-<div class="boat-photo">
-<img alt="Avalon Yacht, SLPP NY Boat Ride" src="images/avalon-yacht.png"/>
-</div>
-<div class="boat-info">
-<div class="eyebrow" style="color:var(--green);">Presented by the SLPP NY Young Generation Council</div>
-<h3>Sail Into the Weekend: The SLPP NY Boat Ride</h3>
-<p>Avalon · New York Harbor · 12:00 PM – 4:00 PM, Saturday, September 5</p>
-<span class="boat-fee">Fee: $70 per person</span>
+<div class="event-row">
+<div class="ev-title">SLPP NY Boat Ride — Avalon</div>
+<div class="ev-time">12:00 PM – 4:00 PM · $70 per person</div>
+<div class="ev-note">Presented by the SLPP NY Young Generation Council. Enjoy an afternoon cruise on New York Harbor aboard the Avalon.
+<br/><a class="map-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=2430+FDR+Drive+Service+Road+East%2C+New+York%2C+NY+10010" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+2430 FDR Drive Service Road East, New York, NY 10010
+</a></div>
 </div>
 </div>
 </div>
@@ -1276,7 +1278,12 @@
 </div>
 </div>
 <div class="venue-grid reveal" style="margin-bottom:0;">
+<div class="venue-media-stack">
 <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=2430+FDR+Drive+Service+Road+East,New+York,NY+10010&amp;output=embed"></iframe>
+<div class="venue-yacht-photo">
+<img alt="Avalon yacht for the SLPP New York Boat Ride" src="images/avalon-yacht.png"/>
+</div>
+</div>
 <div class="venue-detail">
 <span class="venue-tag">Boat Ride Departure</span>
 <h3>Avalon</h3>
