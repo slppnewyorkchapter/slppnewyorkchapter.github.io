@@ -340,7 +340,7 @@
 
   /* ---------- Hotels ---------- */
   .hotels{background:#fff;}
-  .hotel-grid{display:grid; grid-template-columns:1fr 1fr; gap:30px;}
+  .hotel-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px;}
   .hotel-card{border:1px solid var(--line); border-radius:10px; overflow:hidden; display:flex; flex-direction:column;}
   .hotel-card.primary{border:2px solid var(--gold);}
   .hotel-top{padding:28px 30px 20px; background:var(--ivory-dim);}
@@ -362,6 +362,26 @@
   .hotel-notes li{padding:3px 0;}
   .hotel-notes li::before{content:"— "; color:var(--gold);}
   .hotel-contact{margin-top:16px; font-size:.86rem; color:var(--green); font-weight:700;}
+
+  .hotel-hero{width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--green-deep);}
+  .hotel-hero img{width:100%; height:100%; object-fit:cover; display:block;}
+  .hotel-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .hotel-detail-btn{border:0; cursor:pointer; background:var(--green); color:#fff; padding:12px 18px; border-radius:5px; font-weight:800; letter-spacing:.02em;}
+  .hotel-book-link{display:inline-flex; align-items:center; justify-content:center; background:var(--gold); color:var(--navy); padding:12px 18px; border-radius:5px; font-weight:800; text-decoration:none;}
+  .hotel-detail-btn:hover,.hotel-book-link:hover{filter:brightness(.95); transform:translateY(-1px);}
+  .hotel-overlay{position:fixed; inset:0; z-index:2600; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(3,18,27,.88); opacity:0; transition:opacity .25s ease;}
+  .hotel-overlay.open{display:flex}.hotel-overlay.show{opacity:1}
+  .hotel-modal{width:min(940px,96vw); max-height:92vh; overflow:auto; background:#fff; border-radius:12px; box-shadow:0 30px 90px rgba(0,0,0,.45); transform:translateY(14px) scale(.985); transition:transform .25s ease;}
+  .hotel-overlay.show .hotel-modal{transform:translateY(0) scale(1)}
+  .hotel-modal-head{position:relative; padding:26px 30px 20px; background:linear-gradient(135deg,var(--green-deep),var(--navy)); color:#fff;}
+  .hotel-modal-head h3{color:#fff; margin:4px 56px 4px 0; font-size:1.55rem}.hotel-modal-head p{color:rgba(255,255,255,.8); margin:0}
+  .hotel-modal-close{position:absolute; top:16px; right:16px; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.35); color:#fff; background:rgba(0,0,0,.22); font-size:1.2rem; cursor:pointer;}
+  .hotel-gallery{display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px; padding:8px; background:#0d2d25;}
+  .hotel-gallery figure{margin:0; min-height:160px; overflow:hidden; position:relative; background:#0b221c}.hotel-gallery figure:first-child{min-height:330px; grid-row:span 2}.hotel-gallery img{width:100%; height:100%; object-fit:cover; display:block}.hotel-gallery figcaption{position:absolute; left:10px; bottom:9px; background:rgba(0,0,0,.66); color:#fff; padding:5px 9px; border-radius:4px; font-size:.75rem;}
+  .hotel-modal-content{padding:26px 30px 32px}.hotel-modal-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px}.hotel-info-box{border:1px solid var(--line); border-radius:8px; padding:18px; background:var(--ivory-dim)}.hotel-info-box h4{margin:0 0 10px; color:var(--navy)}.hotel-info-box ul{margin:0; padding-left:18px}.hotel-info-box li{margin:7px 0}.hotel-price-callout{display:flex; justify-content:space-between; gap:18px; align-items:center; padding:18px 20px; margin-bottom:20px; border-radius:8px; background:var(--navy); color:#fff}.hotel-price-callout strong{font-family:var(--serif); font-size:2rem; color:var(--gold)}.hotel-price-callout span{font-size:.9rem; color:rgba(255,255,255,.8)}.hotel-modal-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}.hotel-modal-actions a{flex:1; min-width:210px; text-align:center;}
+  @media(max-width:1050px){.hotel-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:700px){.hotel-grid{grid-template-columns:1fr}.hotel-gallery{grid-template-columns:1fr 1fr}.hotel-gallery figure:first-child{grid-column:1/-1; grid-row:auto; min-height:230px}.hotel-modal-grid{grid-template-columns:1fr}.hotel-modal-content{padding:22px 18px 26px}.hotel-modal-head{padding:22px 18px 18px}.hotel-price-callout{align-items:flex-start; flex-direction:column; gap:4px}}
+
 
   /* ---------- Map links ---------- */
   .map-link{
@@ -934,7 +954,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Doris Allie" data-photo="images/doris-allie.jpg" data-role="Women's Leader" type="button">
+<button class="portrait-btn" data-bio="Doris Allie serves as Women’s Leader of the SLPP North America New York Chapter, providing leadership, encouragement, and a strong voice for women throughout the Chapter. In this role, she works to increase women’s participation in party activities, strengthen unity, support member welfare, and promote initiatives that empower women and families. She is committed to mobilizing women, supporting Chapter programs, and advancing the values of service, inclusion, and community engagement within the SLPP family." data-name="Doris Allie" data-photo="images/doris-allie.jpg" data-role="Women's Leader" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Doris Allie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/doris-allie.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">DA</div><div class="ph-star">✦</div></div>
@@ -966,7 +986,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Julia Hawa Conteh" data-photo="images/julia-hawa-conteh.jpg" data-role="Elders Council" type="button">
+<button class="portrait-btn" data-bio="Julia Hawa Conteh serves on the Elders Council of the SLPP North America New York Chapter, offering experience, guidance, and institutional wisdom to the Chapter’s leadership and membership. As an elder, she supports unity, respectful dialogue, conflict resolution, and the preservation of the Party’s values and traditions. Her role helps strengthen continuity between generations while encouraging discipline, service, and cooperation across the Chapter." data-name="Julia Hawa Conteh" data-photo="images/julia-hawa-conteh.jpg" data-role="Elders Council" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Julia Hawa Conteh" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/julia-hawa-conteh.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">JC</div><div class="ph-star">✦</div></div>
@@ -982,7 +1002,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Steven Kebbie" data-photo="images/steven-kebbie.jpg" data-role="Electoral Commissioner" type="button">
+<button class="portrait-btn" data-bio="Steven Kebbie serves as Electoral Commissioner of the SLPP North America New York Chapter, with responsibility for supporting credible, orderly, and transparent internal electoral processes. He helps coordinate election procedures, promotes adherence to Chapter rules, and works to ensure that members can participate fairly and confidently. His service reflects a commitment to accountability, impartiality, democratic practice, and the institutional strength of the Chapter." data-name="Steven Kebbie" data-photo="images/steven-kebbie.jpg" data-role="Electoral Commissioner" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Steven Kebbie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/steven-kebbie.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">SK</div><div class="ph-star">✦</div></div>
@@ -998,7 +1018,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Mohamed Sanoh" data-photo="images/mohamed-sanoh.jpg" data-role="Treasurer" type="button">
+<button class="portrait-btn" data-bio="Mohamed Sanoh serves as Treasurer of the SLPP North America New York Chapter, overseeing the careful management, recording, and safeguarding of Chapter funds. He supports budgeting, financial reporting, fundraising accountability, and the responsible use of resources for programs and activities. Through diligence and transparency, he helps strengthen the Chapter’s financial stability and supports its long-term organizational goals." data-name="Mohamed Sanoh" data-photo="images/mohamed-sanoh.jpg" data-role="Treasurer" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Mohamed Sanoh" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/mohamed-sanoh.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">MS</div><div class="ph-star">✦</div></div>
@@ -1014,7 +1034,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Tommy Lewis" data-photo="images/financial-sec-tommy-lewis.jpg" data-role="Financial Secretary" type="button">
+<button class="portrait-btn" data-bio="Tommy Lewis serves as Financial Secretary of the SLPP North America New York Chapter, helping maintain accurate financial records and supporting the collection, documentation, and reporting of dues, donations, and other income. He works closely with the Treasurer and executive leadership to promote transparency, accountability, and sound financial administration. His role is essential to ensuring that the Chapter’s financial activities are properly organized and documented." data-name="Tommy Lewis" data-photo="images/financial-sec-tommy-lewis.jpg" data-role="Financial Secretary" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Tommy Lewis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/financial-sec-tommy-lewis.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">TL</div><div class="ph-star">✦</div></div>
@@ -1030,7 +1050,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Hassan Kamara" data-photo="images/hassan-kamara.jpg" data-role="Public Relations Officer" type="button">
+<button class="portrait-btn" data-bio="Hassan Kamara serves as Public Relations Officer of the SLPP North America New York Chapter, helping communicate the Chapter’s message, activities, and achievements to members, partner organizations, and the wider community. He supports public announcements, event promotion, media engagement, and the Chapter’s digital presence. Through clear and responsible communication, he works to strengthen the Chapter’s public image, keep members informed, and promote unity around its programs and objectives." data-name="Hassan Kamara" data-photo="images/hassan-kamara.jpg" data-role="Public Relations Officer" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Hassan Kamara" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/hassan-kamara.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">HK</div><div class="ph-star">✦</div></div>
@@ -1046,7 +1066,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Samuel Mansaray" data-photo="images/samuel-mansaray.jpg" data-role="Young Generation Leader" type="button">
+<button class="portrait-btn" data-bio="Samuel Mansaray serves as Young Generation Leader of the SLPP North America New York Chapter, representing and mobilizing younger members while encouraging their active participation in party and community affairs. He supports youth engagement, leadership development, outreach, and volunteer initiatives that connect the next generation to the values and mission of the SLPP. His role is focused on creating opportunities for young people to contribute, organize, and prepare for future leadership." data-name="Samuel Mansaray" data-photo="images/samuel-mansaray.jpg" data-role="Young Generation Leader" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Samuel Mansaray" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/samuel-mansaray.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">SM</div><div class="ph-star">✦</div></div>
@@ -1062,7 +1082,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Mohamed Alimu Barrie" data-photo="images/mohamed-alimu-barrie.jpg" data-role="Imam" type="button">
+<button class="portrait-btn" data-bio="Mohamed Alimu Barrie serves as Imam of the SLPP North America New York Chapter, providing Islamic spiritual guidance, prayers, and pastoral support to members and their families. He helps promote compassion, moral responsibility, peaceful fellowship, and respect across religious and cultural backgrounds. Through his service, he supports the Chapter during meetings, ceremonies, celebrations, and moments of need while encouraging unity and community care." data-name="Mohamed Alimu Barrie" data-photo="images/mohamed-alimu-barrie.jpg" data-role="Imam" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Mohamed Alimu Barrie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/mohamed-alimu-barrie.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">MB</div><div class="ph-star">✦</div></div>
@@ -1078,7 +1098,7 @@
 </div>
 </div>
 <div class="exec-card">
-<button class="portrait-btn" data-bio="Biography to be published." data-name="Rev. Esther Matturie" data-photo="images/rev-esther-matturie.jpg" data-role="Chaplain" type="button">
+<button class="portrait-btn" data-bio="Rev. Esther Matturie serves as Chaplain of the SLPP North America New York Chapter, providing Christian spiritual guidance, prayer, encouragement, and pastoral support to members and their families. She helps foster compassion, unity, ethical leadership, and care within the Chapter, and offers support during ceremonies, meetings, celebrations, and difficult moments. Her ministry strengthens the Chapter’s commitment to service, fellowship, and mutual respect." data-name="Rev. Esther Matturie" data-photo="images/rev-esther-matturie.jpg" data-role="Chaplain" type="button">
 <div class="portrait"><div class="ring2"><div class="inner">
 <img alt="Rev. Esther Matturie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="images/rev-esther-matturie.jpg"/>
 <div class="portrait-ph" style="display:none;"><div class="initials">EM</div><div class="ph-star">✦</div></div>
@@ -1290,6 +1310,7 @@
 <div class="hotel-grid reveal">
 <!-- HILTON -->
 <div class="hotel-card primary">
+<div class="hotel-hero"><img alt="Hilton Garden Inn Queens/JFK Airport exterior" src="images/hilton-garden-exterior.jpg"/></div>
 <div class="hotel-top">
 <span class="hotel-tag hq">Official Headquarters Hotel</span>
 <h3>Hilton Garden Inn Queens/JFK Airport</h3>
@@ -1324,12 +1345,14 @@
 </ul>
 </div>
 <p class="hotel-contact">Sales Contact: Erica Del Rosario · <button class="phone-link" data-name="Erica Del Rosario — Hilton Garden Inn" data-phone="+17183224448" style="color:var(--green);" type="button"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>(718) 322-4448</button></p>
+<div class="hotel-card-actions"><button class="hotel-details-btn" id="hiltonDetailsBtn" type="button">View Hotel Details</button><a class="hotel-book-link" href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=NYCAPHX&amp;groupCode=CHH90N&amp;arrivaldate=2026-09-04&amp;departuredate=2026-09-06&amp;cid=OM,WW,HILTONLINK,EN,DirectLink&amp;fromId=HILTONLINKDIRECT" rel="noopener" target="_blank">Book Your Room</a></div>
 </div>
 </div>
 <!-- HAMPTON -->
 <div class="hotel-card">
+<div class="hotel-hero"><img alt="Hampton Inn NY-JFK lobby and bar" src="images/hampton-lobby-bar.jpg"/></div>
 <div class="hotel-top">
-<span class="hotel-tag alt">Alternate Hotel</span>
+<span class="hotel-tag alt">Courtesy Room Block</span>
 <h3>Hampton Inn NY-JFK</h3>
 <p class="addr">
 <a class="map-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=144-10+135th+Avenue%2C+Jamaica%2C+NY+11436" rel="noopener" target="_blank">
@@ -1339,29 +1362,74 @@
 </p>
 </div>
 <div class="hotel-rate">
-<span class="amount">$215</span><span class="per">/ night (Sept 4 block rate)</span>
-<span class="approx">Saturday-night rate to be confirmed — contact the hotel directly to verify before booking</span>
+<span class="amount">$215</span><span class="per">/ night group rate</span>
+<span class="approx">Available for September 4 and September 5, 2026, subject to room-block availability</span>
 </div>
 <div class="hotel-body">
 <ul class="amenity-list">
-<li>Complimentary Wi-Fi</li>
-<li>Complimentary hot breakfast</li>
-<li>Complimentary airport shuttle</li>
-<li>Fitness center</li>
-<li>On-site restaurant &amp; bar</li>
-<li>Valet parking ($50/night)</li>
+<li>King room sleeps 2</li>
+<li>Two-queen room sleeps 4</li>
+<li>Workspace and mini refrigerator</li>
+<li>Complimentary Wi-Fi and hot breakfast</li>
+<li>Complimentary JFK airport shuttle</li>
+<li>Valet parking: $50 plus tax per night, subject to availability</li>
 </ul>
 <div class="hotel-notes">
 <b>Reservation Notes</b>
 <ul>
-<li>Individual reservations</li>
+<li>Book by <b>August 5, 2026</b></li>
+<li>Rates exclude 14.75% taxes plus a $3.50 daily occupancy charge</li>
 <li>48-hour individual cancellation policy</li>
-<li>Parking is valet-only — no self-park option</li>
-<li>Contact the hotel directly to confirm current block availability</li>
-<li>Nearest subway: Sutphin Blvd–Archer Av–JFK Airport (E, J, Z) with AirTrain connection; complimentary hotel shuttle also runs directly to JFK</li>
+<li>15 two-queen rooms and 5 king rooms were placed in the courtesy block</li>
+<li>Parking is valet-only; the agreement does not list self-parking</li>
 </ul>
 </div>
+<div class="hotel-actions">
+<button class="hotel-detail-btn" id="hamptonDetailsBtn" type="button">View Photos &amp; Hotel Details</button>
+<a class="hotel-book-link" href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=NYCAPHX&amp;groupCode=CHH90N&amp;arrivaldate=2026-09-04&amp;departuredate=2026-09-06&amp;cid=OM,WW,HILTONLINK,EN,DirectLink&amp;fromId=HILTONLINKDIRECT" rel="noopener" target="_blank">Book the Group Rate</a>
+</div>
 <p class="hotel-contact">Hotel Direct: <button class="phone-link" data-name="Hampton Inn NY-JFK" data-phone="+17183227500" style="color:var(--green);" type="button"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>(718) 322-7500</button></p>
+</div>
+</div>
+<!-- COURTYARD MARRIOTT -->
+<div class="hotel-card">
+<div class="hotel-hero"><img alt="Courtyard by Marriott New York JFK Airport standard double room" src="images/courtyard-double-room.jpg"/></div>
+<div class="hotel-top">
+<span class="hotel-tag alt">Special Group Rate</span>
+<h3>Courtyard by Marriott New York JFK Airport</h3>
+<p class="addr">
+<a class="map-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=145-11+North+Conduit+Avenue%2C+Jamaica%2C+NY+11436" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+145-11 North Conduit Avenue, Jamaica, NY 11436
+</a>
+</p>
+</div>
+<div class="hotel-rate">
+<span class="amount">$249</span><span class="per">/ night group rate</span>
+<span class="approx">September 4–6, 2026 · $498 room total for two nights before taxes and fees</span>
+</div>
+<div class="hotel-body">
+<ul class="amenity-list">
+<li>Standard King Room with 1 king bed</li>
+<li>Standard Double Room with 2 double beds</li>
+<li>Accessible room options available after selecting a room</li>
+<li>Dedicated Sierra Leone PP group rate</li>
+<li>Parking terms are not included in the supplied reservation information</li>
+</ul>
+<div class="hotel-notes">
+<b>Reservation Notes</b>
+<ul>
+<li>Book by <b>August 15, 2026</b></li>
+<li>Rate shown is $249 average per night</li>
+<li>Taxes and fees are additional</li>
+<li>Room selection and availability are controlled through Marriott's booking page</li>
+<li>Confirm parking and any additional hotel charges directly with the property</li>
+</ul>
+</div>
+<div class="hotel-actions">
+<button class="hotel-detail-btn" id="courtyardDetailsBtn" type="button">View Photos &amp; Hotel Details</button>
+<a class="hotel-book-link" href="https://app.marriott.com/resview2?id=1783973816648&amp;key=GRP&amp;app=resvlink" rel="noopener" target="_blank">Book the Group Rate</a>
+</div>
 </div>
 </div>
 </div>
@@ -1619,6 +1687,95 @@
 </div>
 </div>
 </section>
+
+<!-- ============ HILTON GARDEN INN DETAILS MODAL ============ -->
+<div class="hotel-overlay" id="hiltonOverlay">
+<div aria-labelledby="hiltonModalTitle" aria-modal="true" class="hotel-modal" role="dialog">
+<div class="hotel-modal-head">
+<div class="eyebrow" style="color:var(--gold);">Official Headquarters Hotel</div>
+<h3 id="hiltonModalTitle">Hilton Garden Inn Queens/JFK Airport</h3>
+<p>148-18 134th Street, Jamaica, New York 11430</p>
+<button aria-label="Close hotel details" class="hotel-modal-close" id="hiltonClose" type="button">✕</button>
+</div>
+<div class="hotel-gallery">
+<figure><img alt="Hilton Garden Inn Queens/JFK Airport exterior" src="images/hilton-garden-exterior.jpg"/><figcaption>Hilton Garden Inn Queens/JFK Airport</figcaption></figure>
+<figure><img alt="Hilton Garden Inn room with one king bed" src="images/hilton-garden-king-room.jpg"/><figcaption>1 King Bed room · sleeps 2 · workspace · microwave</figcaption></figure>
+</div>
+<div class="hotel-modal-content">
+<div class="hotel-price-callout"><div><strong>$259</strong><br/><span>per room, per night · September 4–6, 2026</span></div><span>Book by August 5, 2026. Rooms remain subject to block availability.</span></div>
+<div class="hotel-modal-grid">
+<div class="hotel-info-box"><h4>Room Block</h4><ul><li><b>1 King Bed:</b> $259 nightly group rate</li><li><b>Run of House:</b> $259 nightly group rate</li><li>10 rooms of each category held for both September 4 and 5</li><li>Additional rooms and room types are subject to availability and prevailing rates</li></ul></div>
+<div class="hotel-info-box"><h4>Taxes &amp; Deposit</h4><ul><li>Rate excludes 14.75% state and local taxes</li><li>Additional $3.50 per room, per night</li><li>One-night deposit or major credit-card guarantee required</li><li>Guests are responsible for room, taxes and incidentals</li></ul></div>
+<div class="hotel-info-box"><h4>Reservation Terms</h4><ul><li>Reservations must be received by 1:00 PM local time on August 5, 2026</li><li>After the cut-off, rooms are offered at prevailing rates, subject to availability</li><li>Cancellations must be made at least 14 days before arrival to avoid a one-night room-and-tax charge</li><li>Early departures may incur a fee unless the stay is changed at or before check-in</li></ul></div>
+<div class="hotel-info-box"><h4>Hotel Information</h4><ul><li>Official headquarters hotel for the SLPPNY Inauguration 2026</li><li>King-room listing shows sleeps 2, workspace and microwave</li><li>Hotel reservations: (718) 322-4448</li><li>Parking terms are not specified in the signed agreement; confirm directly with the hotel</li></ul></div>
+</div>
+<div class="hotel-modal-actions">
+<a class="hotel-book-link" href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=NYCAPHX&amp;groupCode=CHH90N&amp;arrivaldate=2026-09-04&amp;departuredate=2026-09-06&amp;cid=OM,WW,HILTONLINK,EN,DirectLink&amp;fromId=HILTONLINKDIRECT" rel="noopener" target="_blank">Book Your Room</a>
+<a class="directions-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=148-18+134th+Street%2C+Jamaica%2C+NY+11430" rel="noopener" target="_blank">Get Directions</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============ HAMPTON HOTEL DETAILS MODAL ============ -->
+<div class="hotel-overlay" id="hamptonOverlay">
+<div aria-labelledby="hamptonModalTitle" aria-modal="true" class="hotel-modal" role="dialog">
+<div class="hotel-modal-head">
+<div class="eyebrow" style="color:var(--gold);">Official Group Accommodation</div>
+<h3 id="hamptonModalTitle">Hampton Inn NY-JFK</h3>
+<p>144-10 135th Avenue, Jamaica, New York 11436</p>
+<button aria-label="Close hotel details" class="hotel-modal-close" id="hamptonClose" type="button">✕</button>
+</div>
+<div class="hotel-gallery">
+<figure><img alt="Hampton Inn NY-JFK lobby and bar" src="images/hampton-lobby-bar.jpg"/><figcaption>Lobby &amp; bar</figcaption></figure>
+<figure><img alt="Hampton Inn room with one king bed" src="images/hampton-king-room.jpg"/><figcaption>1 King Bed</figcaption></figure>
+<figure><img alt="Hampton Inn room with two queen beds" src="images/hampton-two-queen-room.jpg"/><figcaption>2 Queen Beds</figcaption></figure>
+</div>
+<div class="hotel-modal-content">
+<div class="hotel-price-callout"><div><strong>$215</strong><br/><span>per room, per night · September 4–6, 2026</span></div><span>Book by August 5, 2026. Availability is limited to the contracted courtesy block.</span></div>
+<div class="hotel-modal-grid">
+<div class="hotel-info-box"><h4>Room Options</h4><ul><li><b>1 King Bed, nonsmoking:</b> sleeps 2</li><li><b>2 Queen Beds, nonsmoking:</b> sleeps 4</li><li>Workspace and mini refrigerator</li><li>15 two-queen rooms and 5 king rooms in the courtesy block</li></ul></div>
+<div class="hotel-info-box"><h4>Parking &amp; Charges</h4><ul><li><b>Valet parking:</b> $50 plus tax per night</li><li>Parking is subject to availability</li><li>No self-parking option is listed in the agreement</li><li>Room rate excludes 14.75% taxes plus a $3.50 daily occupancy charge</li></ul></div>
+<div class="hotel-info-box"><h4>Hotel Amenities</h4><ul><li>Complimentary hot breakfast</li><li>Complimentary Wi-Fi</li><li>Complimentary JFK airport shuttle</li><li>Fitness center</li><li>On-site restaurant and bar</li></ul></div>
+<div class="hotel-info-box"><h4>Reservation Terms</h4><ul><li>Individual reservations require a credit card guarantee</li><li>48-hour individual cancellation policy</li><li>Rooms requested after August 5 are subject to availability and prevailing rates</li><li>Use the dedicated SLPPNY Inauguration booking link</li></ul></div>
+</div>
+<div class="hotel-modal-actions">
+<a class="hotel-book-link" href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=NYCAPHX&amp;groupCode=CHH90N&amp;arrivaldate=2026-09-04&amp;departuredate=2026-09-06&amp;cid=OM,WW,HILTONLINK,EN,DirectLink&amp;fromId=HILTONLINKDIRECT" rel="noopener" target="_blank">Book Your Room</a>
+<a class="directions-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=144-10+135th+Avenue%2C+Jamaica%2C+NY+11436" rel="noopener" target="_blank">Get Directions</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============ COURTYARD HOTEL DETAILS MODAL ============ -->
+<div class="hotel-overlay" id="courtyardOverlay">
+<div aria-labelledby="courtyardModalTitle" aria-modal="true" class="hotel-modal" role="dialog">
+<div class="hotel-modal-head">
+<div class="eyebrow" style="color:var(--gold);">Special Group Accommodation</div>
+<h3 id="courtyardModalTitle">Courtyard by Marriott New York JFK Airport</h3>
+<p>145-11 North Conduit Avenue, Jamaica, New York 11436</p>
+<button aria-label="Close hotel details" class="hotel-modal-close" id="courtyardClose" type="button">✕</button>
+</div>
+<div class="hotel-gallery" style="grid-template-columns:1fr 1fr;">
+<figure style="grid-row:auto;min-height:320px;"><img alt="Courtyard by Marriott standard double room with two double beds" src="images/courtyard-double-room.jpg"/><figcaption>Standard Double Room · 2 Double Beds</figcaption></figure>
+<figure style="min-height:320px;"><img alt="Courtyard by Marriott standard king room with one king bed" src="images/courtyard-king-room.png"/><figcaption>Standard King Room · 1 King Bed</figcaption></figure>
+</div>
+<div class="hotel-modal-content">
+<div class="hotel-price-callout"><div><strong>$249</strong><br/><span>average per room, per night · September 4–6, 2026</span></div><span>$498 room total for two nights before taxes and fees. Book by August 15, 2026.</span></div>
+<div class="hotel-modal-grid">
+<div class="hotel-info-box"><h4>Room Options</h4><ul><li><b>Standard King Room:</b> 1 king bed</li><li><b>Standard Double Room:</b> 2 double beds</li><li>Accessible room options can be selected after choosing a room</li><li>Availability is shown on the Marriott group reservation page</li></ul></div>
+<div class="hotel-info-box"><h4>Reservation Information</h4><ul><li><b>Stay dates:</b> Friday, September 4 through Sunday, September 6, 2026</li><li><b>Last day to book:</b> August 15, 2026</li><li><b>Group name:</b> Sierra Leone PP</li><li>Taxes and fees are additional</li></ul></div>
+<div class="hotel-info-box"><h4>Parking &amp; Additional Charges</h4><ul><li>Parking details were not included in the supplied booking information</li><li>Confirm parking availability and pricing directly with the hotel</li><li>Optional group breakfast arrangements are separate from the guest-room rate</li></ul></div>
+<div class="hotel-info-box"><h4>Booking</h4><ul><li>Use the dedicated Marriott group reservation link</li><li>Select the preferred room type and complete the reservation on Marriott's website</li><li>Rates and availability remain subject to the live booking page</li></ul></div>
+</div>
+<div class="hotel-modal-actions">
+<a class="hotel-book-link" href="https://app.marriott.com/resview2?id=1783973816648&amp;key=GRP&amp;app=resvlink" rel="noopener" target="_blank">Book Your Room</a>
+<a class="directions-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=145-11+North+Conduit+Avenue%2C+Jamaica%2C+NY+11436" rel="noopener" target="_blank">Get Directions</a>
+</div>
+</div>
+</div>
+</div>
+
 <!-- ============ REVEAL MODAL (landmarks, boat ride, bios) ============ -->
 <div class="lm-modal-overlay" id="lmModalOverlay">
 <div aria-labelledby="lmModalTitle" aria-modal="true" class="lm-modal" role="dialog">
@@ -1787,6 +1944,68 @@
       <div class="g-ph" style="display:flex;">Photo ${i}</div>`;
     galleryGrid.appendChild(div);
   }
+
+
+  // Hilton Garden Inn hotel details modal
+  const hiltonOverlay=document.getElementById('hiltonOverlay');
+  const hiltonDetailsBtn=document.getElementById('hiltonDetailsBtn');
+  const hiltonClose=document.getElementById('hiltonClose');
+  function openHiltonModal(){
+    if(!hiltonOverlay) return;
+    hiltonOverlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeHiltonModal(){
+    if(!hiltonOverlay) return;
+    hiltonOverlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  if(hiltonDetailsBtn) hiltonDetailsBtn.addEventListener('click',openHiltonModal);
+  if(hiltonClose) hiltonClose.addEventListener('click',closeHiltonModal);
+  if(hiltonOverlay) hiltonOverlay.addEventListener('click',e=>{if(e.target===hiltonOverlay) closeHiltonModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && hiltonOverlay && hiltonOverlay.classList.contains('open')) closeHiltonModal();});
+
+  // Hampton hotel details modal
+  const hamptonOverlay = document.getElementById('hamptonOverlay');
+  const hamptonDetailsBtn = document.getElementById('hamptonDetailsBtn');
+  const hamptonClose = document.getElementById('hamptonClose');
+  function openHamptonModal(){
+    if(!hamptonOverlay) return;
+    hamptonOverlay.classList.add('open');
+    requestAnimationFrame(() => hamptonOverlay.classList.add('show'));
+    document.body.style.overflow='hidden';
+  }
+  function closeHamptonModal(){
+    if(!hamptonOverlay) return;
+    hamptonOverlay.classList.remove('show');
+    document.body.style.overflow='';
+    setTimeout(() => hamptonOverlay.classList.remove('open'),250);
+  }
+  if(hamptonDetailsBtn) hamptonDetailsBtn.addEventListener('click',openHamptonModal);
+  if(hamptonClose) hamptonClose.addEventListener('click',closeHamptonModal);
+  if(hamptonOverlay) hamptonOverlay.addEventListener('click',e=>{if(e.target===hamptonOverlay) closeHamptonModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && hamptonOverlay && hamptonOverlay.classList.contains('open')) closeHamptonModal();});
+
+  // Courtyard hotel details modal
+  const courtyardOverlay = document.getElementById('courtyardOverlay');
+  const courtyardDetailsBtn = document.getElementById('courtyardDetailsBtn');
+  const courtyardClose = document.getElementById('courtyardClose');
+  function openCourtyardModal(){
+    if(!courtyardOverlay) return;
+    courtyardOverlay.classList.add('open');
+    requestAnimationFrame(() => courtyardOverlay.classList.add('show'));
+    document.body.style.overflow='hidden';
+  }
+  function closeCourtyardModal(){
+    if(!courtyardOverlay) return;
+    courtyardOverlay.classList.remove('show');
+    document.body.style.overflow='';
+    setTimeout(() => courtyardOverlay.classList.remove('open'),250);
+  }
+  if(courtyardDetailsBtn) courtyardDetailsBtn.addEventListener('click',openCourtyardModal);
+  if(courtyardClose) courtyardClose.addEventListener('click',closeCourtyardModal);
+  if(courtyardOverlay) courtyardOverlay.addEventListener('click',e=>{if(e.target===courtyardOverlay) closeCourtyardModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && courtyardOverlay && courtyardOverlay.classList.contains('open')) closeCourtyardModal();});
 
   // Unified reveal modal (landmarks, boat ride, executive/guest bios)
   const lmOverlay = document.getElementById('lmModalOverlay');
