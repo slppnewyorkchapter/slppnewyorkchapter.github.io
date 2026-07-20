@@ -1597,7 +1597,10 @@
 </div>
 </div>
 </section>
-<!-- ============ GALLERY ============ -->
+<!-- ============ GALLERY ============
+     Hidden: redundant with the "Chapter Members" gallery above, and its
+     images/gallery-1.jpg ... gallery-8.jpg files were never populated.
+     Re-enable by removing this comment block once real photos are ready.
 <section class="gallery pad" id="gallery">
 <div class="wrap">
 <div class="section-intro reveal">
@@ -1607,6 +1610,7 @@
 <div class="gallery-grid reveal" id="galleryGrid"></div>
 </div>
 </section>
+============ END GALLERY ============ -->
 <!-- ============ FAQ ============ -->
 <section class="faq pad" id="faq">
 <div class="wrap" style="max-width:800px;">
@@ -1650,7 +1654,9 @@
 </div>
 </div>
 </section>
-<!-- ============ SPONSORS ============ -->
+<!-- ============ SPONSORS ============
+     Hidden until real sponsor logos are confirmed — re-enable by removing
+     this comment block.
 <section class="sponsors pad-sm">
 <div class="wrap">
 <div class="eyebrow center" style="justify-content:center;">Sponsors &amp; Partners</div>
@@ -1663,6 +1669,7 @@
 </div>
 </div>
 </section>
+============ END SPONSORS ============ -->
 <!-- ============ CONTACT ============ -->
 <section class="contact pad" id="contact">
 <div class="wrap">
@@ -1674,22 +1681,22 @@
 <div class="contact-card">
 <h4>Secretary General</h4>
 <p>Fomba Kassoh</p>
-<a href="mailto:info@slppny.org">info@slppny.org</a>
+<a href="mailto:kassohf@gmail.com">kassohf@gmail.com</a>
 </div>
 <div class="contact-card">
 <h4>General Inquiries</h4>
 <p>Executive Committee</p>
-<a href="mailto:info@slppny.org">info@slppny.org</a>
+<a href="mailto:slppnewyorkchapter@gmail.com">slppnewyorkchapter@gmail.com</a>
 </div>
 <div class="contact-card">
 <h4>Volunteer</h4>
 <p>Join the planning team</p>
-<a href="mailto:info@slppny.org">Register to volunteer</a>
+<a href="mailto:slppnewyorkchapter@gmail.com">Register to volunteer</a>
 </div>
 <div class="contact-card">
 <h4>Become a Sponsor</h4>
 <p>Partner with the Chapter</p>
-<a href="mailto:info@slppny.org">Sponsorship inquiries</a>
+<a href="mailto:slppnewyorkchapter@gmail.com">Sponsorship inquiries</a>
 </div>
 </div>
 </div>
@@ -1942,15 +1949,7 @@
     });
   });
 
-  // Gallery placeholder grid (8 slots, wired for images/gallery-1.jpg ... gallery-8.jpg)
-  const galleryGrid = document.getElementById('galleryGrid');
-  for(let i=1;i<=8;i++){
-    const div = document.createElement('div');
-    div.className = 'g-item';
-    div.innerHTML = `<img src="images/gallery-${i}.jpg" alt="Gallery photo ${i}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="g-ph" style="display:flex;">Photo ${i}</div>`;
-    galleryGrid.appendChild(div);
-  }
+  // Gallery placeholder grid — disabled along with the hidden Gallery section above.
 
 
   // Hilton Garden Inn hotel details modal
