@@ -667,6 +667,30 @@
     margin-bottom:14px;
   }
 
+  .footer-links{
+    margin:18px 0 4px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:.95rem;
+    font-weight:700;
+  }
+
+  .footer-links a{
+    color:var(--sierra-gold-light);
+    text-decoration:none;
+    transition:color .2s ease, transform .2s ease;
+  }
+
+  .footer-links a:hover{
+    color:#fff;
+    transform:translateY(-1px);
+  }
+
+  .footer-divider{ color:rgba(255,255,255,.35); }
+
   footer a.back{
     display:inline-block;
     margin-top: 18px;
@@ -676,6 +700,11 @@
     border-radius:999px;
     font-weight:700;
     font-size:.8rem;
+  }
+
+  @media (max-width:600px){
+    .footer-links{ flex-direction:column; gap:8px; }
+    .footer-divider{ display:none; }
   }
 
   /* ---------- RESPONSIVE ---------- */
@@ -1433,7 +1462,12 @@
 <section class="final-cta"><div class="section-inner"><h2>Do Not Miss the Boat</h2><p>Bring your friends, represent your chapter, and begin inauguration day with four unforgettable hours on New York Harbor. Space aboard the Avalon is limited.</p><a class="btn-gold" href="#contacts">Secure My $70 Ticket</a><a class="btn-gold" href="#hosts">Contact an Organizer</a><div class="cta-note">Tickets are confirmed only after payment.</div></div></section><footer>
 <div class="tagline">"One Country. One People. One Chapter."</div>
 <div>SLPP North America — New York Chapter · Executive Inauguration 2026</div>
-<a class="back" href="index.html">← Back to Inauguration Weekend</a>
+<div class="footer-links" aria-label="Event website links">
+  <a href="https://slppnewyorkchapter.github.io/" target="_blank" rel="noopener">🏛️ Main Event Website</a>
+  <span class="footer-divider" aria-hidden="true">|</span>
+  <a href="https://slppnewyorkchapter.github.io/hotels.html" target="_blank" rel="noopener">🏨 Official Hotels &amp; Booking</a>
+</div>
+<a class="back" href="https://slppnewyorkchapter.github.io/">← Back to Inauguration Weekend</a>
 </footer>
 </body>
 </html>
