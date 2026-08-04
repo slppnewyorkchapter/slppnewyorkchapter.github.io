@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Ticket — SLPP NY Executive Inauguration & Grand Ball</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="SLPP NY — Executive Inauguration & Grand Ball">
+<meta property="og:description" content="Saturday, September 5, 2026 · Antun's, Queens Village, NY. Tap to view your personal ticket.">
+<meta property="og:image" content="https://slppnewyorkchapter.github.io/images/ticket-link-preview.jpg">
+<meta property="og:url" content="https://slppnewyorkchapter.github.io/ticket.html">
+<meta name="twitter:card" content="summary_large_image">
+<script src="vendor/qrcode.min.js"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<style>
+  :root{
+    --navy:#1c2b6b; --gold:#c9971f; --green:#0b4a22;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; padding: 24px 16px 60px 16px;
+    background: linear-gradient(180deg,#0b2e1a,#05170d);
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .wrap { width:100%; max-width: 760px; }
+  .header {
+    text-align:center; color:#f4e6b8; margin-bottom:18px;
+  }
+  .header h1 { font-size:19px; margin:0 0 4px 0; letter-spacing:0.5px; font-weight:700;}
+  .header p { margin:0; font-size:13px; opacity:0.8; }
+
+  /* ---- Claim form card ---- */
+  .claim-card {
+    background:#fff; border-radius:12px; padding: 28px 26px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .claim-card h2 { margin: 0 0 6px 0; font-size:20px; color: var(--navy); }
+  .claim-card .tier-line { font-size:15px; color:#333; margin-bottom:18px; }
+  .claim-card .tier-line b { color: var(--green); }
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:5px; }
+  .field input {
+    width:100%; padding:12px 14px; border-radius:8px; border:1.5px solid #ccc; font-size:15px;
+  }
+  .field select {
+    width:100%; padding:12px 14px; border-radius:8px; border:1.5px solid #ccc; font-size:15px; background:#fff;
+  }
+  .field input:focus { outline:none; border-color: var(--green); }
+  .claim-btn {
+    width:100%; padding:14px; border:none; border-radius:8px; font-size:16px; font-weight:800;
+    background: linear-gradient(180deg,#1a7a42,var(--green) 60%,#062c14); color:#fff; cursor:pointer;
+    margin-top:6px;
+  }
+  .claim-btn:disabled { opacity:0.6; cursor:default; }
+  .claim-note { font-size:12px; color:#666; margin-top:12px; line-height:1.5; }
+  .claim-error {
+    background:#fdeaea; color:#8a1f1f; border:1px solid #e6b8b8; border-radius:8px;
+    padding:10px 14px; font-size:14px; margin-bottom:14px; display:none;
+  }
+
+  /* ---- Rendered ticket ---- */
+  #ticket-capture {
+    position:relative; width:100%; aspect-ratio: 1983 / 793;
+    background:#fff; border-radius:10px; overflow:hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  #ticket-capture img.bg { position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  .stub-serial-label {
+    position:absolute; left: 85.7%; top: 46.5%; width: 13%;
+    font-size: 1.35vw; font-weight:800; color: var(--navy); text-align:center; letter-spacing:0.5px;
+  }
+  .stub-serial-value {
+    position:absolute; left: 83%; top: 51%; width: 16%;
+    font-size: 1.3vw; font-weight:900; color:#111; text-align:center; letter-spacing:0px;
+  }
+  .stub-qr {
+    position:absolute; left: 88%; top: 57%; width: 7%; aspect-ratio:1/1;
+    background:#fff; border: 2px solid var(--gold); border-radius: 6px;
+  }
+  .stub-qr img { position:absolute; left:6%; top:6%; width:88%; height:88%; }
+
+  .status-pill {
+    position:absolute; left: 85.7%; top: 74%; width: 13%;
+    text-align:center; font-size: 0.85vw; font-weight:800; letter-spacing:0.5px;
+    padding: 2px 0; border-radius: 20px;
+  }
+  .status-valid { background:#0b6b33; color:#fff; }
+  .status-used  { background:#8a1f1f; color:#fff; }
+
+  .actions {
+    display:flex; gap:12px; margin-top: 22px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn {
+    appearance:none; border:none; cursor:pointer; text-decoration:none;
+    padding: 13px 22px; border-radius: 8px; font-size:15px; font-weight:700;
+    display:flex; align-items:center; gap:8px;
+  }
+  .btn-primary { background: linear-gradient(180deg,#f7e08a,var(--gold) 60%,#8a5a13); color:#1a1a1a; }
+  .btn-whatsapp { background:#25D366; color:#fff; }
+  .btn:active { transform: translateY(1px); }
+
+  .note {
+    color:#cfe8d8; font-size:12.5px; text-align:center; margin-top:18px; max-width:520px; line-height:1.5; opacity:0.85;
+  }
+
+  #state-msg { color:#fff; text-align:center; padding: 60px 20px; font-size:16px; max-width:480px; }
+  #state-msg a { color:#f4e6b8; }
+  .spinner-msg { color:#cfe8d8; text-align:center; padding: 60px 20px; font-size:15px; }
+
+  @media (max-width:600px){
+    .stub-serial-label{font-size:2.9vw;}
+    .stub-serial-value{font-size:3.4vw;}
+    .status-pill{font-size:1.9vw;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>SLPP North America — New York Chapter</h1>
+      <p>Executive Inauguration &amp; Grand Ball · Saturday, September 5, 2026</p>
+    </div>
+    <div id="ticket-root"></div>
+  </div>
+
+<script>
+(function(){
+  // ---- CONFIG ----
+  // Replace with your deployed Google Apps Script Web App URL (see apps_script.gs)
+  var API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzgOR1qtko3oEHOSN894kU2gq6Qi21-ZkU0h3UzThJx5ztAFZFlmFIy2EBJ8wLfGSLc/exec";
+
+  var TIER_BG = {
+    "single": "images/ticket-single.jpg",
+    "single_patron": "images/ticket-single-patron.jpg",
+    "double_patron": "images/ticket-double-patron.jpg"
+  };
+  var TIER_LABEL = {
+    "single": "Single — $100",
+    "single_patron": "Single Patron — $200",
+    "double_patron": "Double Patron — $300"
+  };
+
+  function qs(name){
+    var u = new URL(window.location.href);
+    return u.searchParams.get(name);
+  }
+
+  var serial = qs('s');
+  var token = qs('t');
+
+  function apiGet(params){
+    var url = API_ENDPOINT + "?" + Object.keys(params).map(function(k){
+      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+    }).join("&");
+    return fetch(url).then(function(r){ return r.json(); });
+  }
+
+  function apiPost(body){
+    return fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain"}, // avoids CORS preflight on Apps Script
+      body: JSON.stringify(body)
+    }).then(function(r){ return r.json(); });
+  }
+
+  function logEvent(eventType){
+    if(!API_ENDPOINT || API_ENDPOINT.indexOf("REPLACE_WITH") !== -1) return;
+    try{
+      apiPost({ action:"log", serial: serial, event: eventType, ua: navigator.userAgent });
+    }catch(e){ /* never block the guest on a logging failure */ }
+  }
+
+  function showMessage(html){
+    document.getElementById('ticket-root').innerHTML = '<div id="state-msg">' + html + '</div>';
+  }
+
+  function verifyUrlFor(serial, token){
+    return "https://slppnewyorkchapter.github.io/verify.html?s=" +
+        encodeURIComponent(serial) + "&t=" + encodeURIComponent(token);
+  }
+
+  function renderTicket(tier, name, status, chapter){
+    var root = document.getElementById('ticket-root');
+    root.innerHTML = '';
+
+    var wrap = document.createElement('div');
+    wrap.id = 'ticket-capture';
+
+    var bg = document.createElement('img');
+    bg.className = 'bg';
+    bg.src = TIER_BG[tier] || TIER_BG.single;
+    wrap.appendChild(bg);
+
+    var serialLabel = document.createElement('div');
+    serialLabel.className = 'stub-serial-label';
+    serialLabel.textContent = 'SERIAL NO.';
+    wrap.appendChild(serialLabel);
+
+    var serialValue = document.createElement('div');
+    serialValue.className = 'stub-serial-value';
+    serialValue.textContent = serial;
+    if(serial.length > 11){ serialValue.style.fontSize = '1.05vw'; }
+    wrap.appendChild(serialValue);
+
+    var qrBox = document.createElement('div');
+    qrBox.className = 'stub-qr';
+    wrap.appendChild(qrBox);
+
+    var statusPill = document.createElement('div');
+    statusPill.className = 'status-pill ' + (status === 'used' ? 'status-used' : 'status-valid');
+    statusPill.textContent = status === 'used' ? 'CHECKED IN' : 'VALID';
+    wrap.appendChild(statusPill);
+
+    root.appendChild(wrap);
+
+    new QRCode(qrBox, {
+      text: verifyUrlFor(serial, token),
+      width: 256, height: 256,
+      colorDark: "#111111", colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    var actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.innerHTML =
+      '<button class="btn btn-primary" id="btnDownload">⬇ Save Ticket</button>' +
+      '<a class="btn btn-whatsapp" id="btnShare" target="_blank" rel="noopener">Share on WhatsApp</a>';
+    document.querySelector('.wrap').appendChild(actions);
+
+    var shareText = "Here's my ticket to the SLPP NY Executive Inauguration & Grand Ball, Sept 5, 2026 — " +
+        (TIER_LABEL[tier] || '') + ". " + window.location.href;
+    document.getElementById('btnShare').href = "https://wa.me/?text=" + encodeURIComponent(shareText);
+
+    document.getElementById('btnDownload').addEventListener('click', function(){
+      html2canvas(document.getElementById('ticket-capture'), {useCORS:true, scale:2}).then(function(canvas){
+        var link = document.createElement('a');
+        link.download = 'SLPP-NY-Ticket-' + serial + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        logEvent('download');
+      });
+    });
+
+    var note = document.createElement('div');
+    note.className = 'note';
+    var chapterLine = chapter ? (' · ' + chapter) : '';
+    note.textContent = name
+      ? ('Ticket holder: ' + name + chapterLine + '. Please save this to your phone and present the QR code at check-in. Non-transferable and non-refundable.')
+      : 'Please save this to your phone and present the QR code at check-in. Non-transferable and non-refundable.';
+    document.querySelector('.wrap').appendChild(note);
+
+    logEvent('view');
+  }
+
+  function renderClaimForm(tier, price){
+    var root = document.getElementById('ticket-root');
+    root.innerHTML =
+      '<div class="claim-card">' +
+        '<h2>Claim Your Ticket</h2>' +
+        '<div class="tier-line">This voucher is for a <b>' + (TIER_LABEL[tier] || tier) + '</b> ticket to the ' +
+          'SLPP North America New York Chapter Executive Inauguration &amp; Grand Ball.</div>' +
+        '<div class="claim-error" id="claimError"></div>' +
+        '<div class="field"><label>Full Name</label><input type="text" id="claimName" placeholder="Your full name" /></div>' +
+        '<div class="field"><label>Phone Number (optional)</label><input type="tel" id="claimPhone" placeholder="(555) 555-5555" /></div>' +
+        '<div class="field"><label>Chapter Affiliation</label>' +
+          '<select id="claimChapterSelect">' +
+            '<option value="">Select one…</option>' +
+            '<option value="host">SLPP North America — New York Chapter (Host)</option>' +
+            '<option value="other">Another Sister Chapter</option>' +
+            '<option value="none">Not a Chapter Member</option>' +
+          '</select>' +
+        '</div>' +
+        '<div class="field" id="claimChapterOtherWrap" style="display:none;">' +
+          '<label>Which Chapter?</label><input type="text" id="claimChapterOther" placeholder="e.g., Atlanta Chapter" />' +
+        '</div>' +
+        '<button class="claim-btn" id="claimBtn">Claim This Ticket</button>' +
+        '<div class="claim-note">Once claimed, this ticket is yours — the link is unique to you and can\'t be reused by anyone else. Please double check your name before submitting.</div>' +
+      '</div>';
+
+    document.getElementById('claimChapterSelect').addEventListener('change', function(){
+      document.getElementById('claimChapterOtherWrap').style.display = (this.value === 'other') ? 'block' : 'none';
+    });
+
+    document.getElementById('claimBtn').addEventListener('click', function(){
+      var name = document.getElementById('claimName').value.trim();
+      var phone = document.getElementById('claimPhone').value.trim();
+      var chapterSelect = document.getElementById('claimChapterSelect').value;
+      var chapterOther = document.getElementById('claimChapterOther').value.trim();
+      var errEl = document.getElementById('claimError');
+      errEl.style.display = 'none';
+
+      if(!name){
+        errEl.textContent = 'Please enter your full name to claim this ticket.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if(!chapterSelect){
+        errEl.textContent = 'Please select your chapter affiliation.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if(chapterSelect === 'other' && !chapterOther){
+        errEl.textContent = 'Please tell us which chapter you belong to.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      var chapter = chapterSelect === 'host' ? 'SLPP North America — New York Chapter (Host)'
+                  : chapterSelect === 'none' ? 'Not a Chapter Member'
+                  : chapterOther;
+
+      var btn = document.getElementById('claimBtn');
+      btn.disabled = true;
+      btn.textContent = 'Claiming...';
+
+      apiPost({ action:'claim', s: serial, t: token, name: name, phone: phone, chapter: chapter })
+        .then(function(res){
+          if(res.ok){
+            renderTicket(res.tier || tier, name, 'claimed', chapter);
+          } else if(res.error === 'already_claimed'){
+            showMessage('This ticket has already been claimed' + (res.name ? (' by <b>' + res.name + '</b>') : '') +
+              '. If this looks wrong, please contact the person who gave you this link, or the chapter at ' +
+              '<a href="tel:+18182726589">(818) 272-6589</a>.');
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Claim This Ticket';
+            errEl.textContent = 'Something went wrong claiming this ticket. Please try again.';
+            errEl.style.display = 'block';
+          }
+        })
+        .catch(function(){
+          btn.disabled = false;
+          btn.textContent = 'Claim This Ticket';
+          errEl.textContent = 'Network error — please check your connection and try again.';
+          errEl.style.display = 'block';
+        });
+    });
+  }
+
+  if(!serial || !token){
+    showMessage('This link is missing information needed to load your ticket. Please use the exact link ' +
+      'that was sent to you, or contact the chapter at <a href="tel:+18182726589">(818) 272-6589</a>.');
+    return;
+  }
+
+  document.getElementById('ticket-root').innerHTML = '<div class="spinner-msg">Loading your ticket…</div>';
+
+  apiGet({ action:'lookup', s: serial, t: token }).then(function(res){
+    if(!res.ok){
+      var msg = 'We couldn\'t find a valid ticket for that link. Please contact the person who sent it to you, ' +
+        'or the chapter at <a href="tel:+18182726589">(818) 272-6589</a>.';
+      showMessage(msg);
+      return;
+    }
+    if(res.status === 'unclaimed'){
+      renderClaimForm(res.tier, res.price);
+    } else {
+      // already claimed or checked in — just show the ticket
+      renderTicket(res.tier, res.name, res.status, res.chapter);
+    }
+  }).catch(function(){
+    showMessage('Something went wrong loading your ticket. Please try again in a moment, or contact the chapter.');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate Vouchers — SLPP NY (Staff Only)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SLPP NY — Generate Vouchers (Staff Only)">
+<meta property="og:description" content="Executive Inauguration & Grand Ball · Saturday, September 5, 2026 · Antun's, Queens Village, NY.">
+<meta property="og:image" content="https://slppnewyorkchapter.github.io/images/generate-link-preview.jpg">
+<meta property="og:url" content="https://slppnewyorkchapter.github.io/generate.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{ --navy:#1c2b6b; --gold:#c9971f; --green:#0b4a22; --red:#8a1f1f; }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; padding: 24px 16px 60px 16px;
+    background: linear-gradient(180deg,#0b2e1a,#05170d);
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    min-height:100vh; color:#fff;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; }
+  .header { text-align:center; color:#f4e6b8; margin-bottom:18px; }
+  .header h1 { font-size:18px; margin:0 0 2px 0; font-weight:700; }
+  .header p { margin:0; font-size:12px; opacity:0.8; }
+
+  .card { background:#fff; color:#1a1a1a; border-radius:12px; padding:22px; }
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:5px; }
+  .field input, .field select {
+    width:100%; padding:12px 14px; border-radius:8px; border:1.5px solid #ccc; font-size:15px; background:#fff;
+  }
+  .btn {
+    width:100%; padding:14px; border:none; border-radius:8px; font-size:16px; font-weight:800;
+    cursor:pointer; margin-top:6px;
+  }
+  .btn-primary { background: linear-gradient(180deg,#f7e08a,var(--gold) 60%,#8a5a13); color:#1a1a1a; }
+  .btn-green { background: linear-gradient(180deg,#1a7a42,var(--green) 60%,#062c14); color:#fff; }
+  .btn:disabled { opacity:0.6; }
+  .error {
+    background:#fdeaea; color:var(--red); border:1px solid #e6b8b8; border-radius:8px;
+    padding:10px 14px; font-size:14px; margin-bottom:14px; display:none;
+  }
+  .lead { font-size:13px; color:#555; margin-bottom:16px; line-height:1.5; }
+
+  .results { margin-top:18px; }
+  .results h3 { margin:0 0 10px 0; font-size:15px; color:var(--green); }
+  .link-row {
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    background:#f5f5f5; border-radius:6px; padding:9px 10px; margin-bottom:6px; font-size:12px;
+  }
+  .link-row .serial { font-weight:700; white-space:nowrap; }
+  .link-row .link { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#333; flex:1; margin: 0 8px; }
+  .link-row button {
+    border:none; background:var(--navy); color:#fff; padding:6px 10px; border-radius:5px; font-size:11px; cursor:pointer; white-space:nowrap;
+  }
+  .copy-all { margin-top:10px; }
+  .success-note { font-size:12.5px; color:#0b6b33; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Generate Ticket Vouchers</h1>
+    <p>SLPP NY Executive Inauguration &amp; Grand Ball · Staff Only</p>
+  </div>
+
+  <div id="gate" class="card">
+    <div class="lead">This page creates real, redeemable tickets. Enter the staff passphrase to continue.</div>
+    <div class="error" id="gateError"></div>
+    <div class="field"><label>Passphrase</label><input type="password" id="pw" placeholder="Enter passphrase" /></div>
+    <button class="btn btn-primary" id="btnUnlock">Unlock</button>
+  </div>
+
+  <div id="formCard" class="card" style="display:none; margin-top:16px;">
+    <div class="error" id="formError"></div>
+    <div class="field"><label>Seller Name</label><input type="text" id="seller" placeholder="e.g. Desmond Pessima" /></div>
+    <div class="field">
+      <label>Ticket Tier</label>
+      <select id="tier">
+        <option value="single">Single — $100</option>
+        <option value="single_patron">Single Patron — $200</option>
+        <option value="double_patron">Double Patron — $300</option>
+      </select>
+    </div>
+    <div class="field"><label>Quantity</label><input type="number" id="quantity" min="1" max="200" placeholder="e.g. 15" /></div>
+    <button class="btn btn-green" id="btnGenerate">Generate Vouchers</button>
+
+    <div id="resultsArea" class="results"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---- CONFIG ----
+  var API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzgOR1qtko3oEHOSN894kU2gq6Qi21-ZkU0h3UzThJx5ztAFZFlmFIy2EBJ8wLfGSLc/exec";
+
+  var TIER_LABEL = {
+    "single": "Single — $100",
+    "single_patron": "Single Patron — $200",
+    "double_patron": "Double Patron — $300"
+  };
+
+  function apiPost(body){
+    return fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain"},
+      body: JSON.stringify(body)
+    }).then(function(r){ return r.json(); });
+  }
+
+  var enteredPassword = null;
+
+  document.getElementById('btnUnlock').addEventListener('click', function(){
+    var pw = document.getElementById('pw').value;
+    var errEl = document.getElementById('gateError');
+    errEl.style.display = 'none';
+    if(!pw){
+      errEl.textContent = 'Please enter the passphrase.';
+      errEl.style.display = 'block';
+      return;
+    }
+    // The password itself is verified server-side on first real generate
+    // call — we don't validate it here, just carry it forward.
+    enteredPassword = pw;
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('formCard').style.display = 'block';
+  });
+
+  document.getElementById('btnGenerate').addEventListener('click', function(){
+    var seller = document.getElementById('seller').value.trim();
+    var tier = document.getElementById('tier').value;
+    var quantity = parseInt(document.getElementById('quantity').value, 10);
+    var errEl = document.getElementById('formError');
+    errEl.style.display = 'none';
+
+    if(!seller){ errEl.textContent = 'Please enter a seller name.'; errEl.style.display='block'; return; }
+    if(!quantity || quantity < 1){ errEl.textContent = 'Please enter a valid quantity.'; errEl.style.display='block'; return; }
+
+    var btn = document.getElementById('btnGenerate');
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+
+    apiPost({ action:'generate_batch', password: enteredPassword, seller: seller, tier: tier, quantity: quantity })
+      .then(function(res){
+        btn.disabled = false;
+        btn.textContent = 'Generate Vouchers';
+
+        if(!res.ok){
+          if(res.error === 'wrong_password'){
+            // send them back to the gate — the passphrase they carried forward was wrong
+            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('gate').style.display = 'block';
+            document.getElementById('gateError').textContent = 'Incorrect passphrase.';
+            document.getElementById('gateError').style.display = 'block';
+            return;
+          }
+          errEl.textContent = 'Could not generate vouchers: ' + (res.error || 'unknown error');
+          errEl.style.display = 'block';
+          return;
+        }
+
+        renderResults(res);
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = 'Generate Vouchers';
+        errEl.textContent = 'Network error — please check your connection and try again.';
+        errEl.style.display = 'block';
+      });
+  });
+
+  function renderResults(res){
+    var area = document.getElementById('resultsArea');
+    var html = '<h3>' + res.count + ' vouchers created for ' + res.seller + '</h3>' +
+      '<div class="success-note">These are already saved to the Vouchers sheet — nothing else to paste in. Send each link below to one buyer, one at a time, after payment.</div>';
+
+    res.vouchers.forEach(function(v){
+      html += '<div class="link-row">' +
+        '<span class="serial">' + v.serial + '</span>' +
+        '<span class="link">' + v.link + '</span>' +
+        '<button data-link="' + v.link + '">Copy</button>' +
+        '</div>';
+    });
+
+    html += '<button class="btn btn-primary copy-all" id="btnCopyAll">Copy All Links</button>';
+    area.innerHTML = html;
+
+    area.querySelectorAll('button[data-link]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        navigator.clipboard.writeText(btn.getAttribute('data-link'));
+        btn.textContent = 'Copied';
+        setTimeout(function(){ btn.textContent = 'Copy'; }, 1200);
+      });
+    });
+
+    document.getElementById('btnCopyAll').addEventListener('click', function(){
+      var all = res.vouchers.map(function(v){ return v.serial + ': ' + v.link; }).join('\n');
+      navigator.clipboard.writeText(all);
+      document.getElementById('btnCopyAll').textContent = 'Copied all links';
+      setTimeout(function(){ document.getElementById('btnCopyAll').textContent = 'Copy All Links'; }, 1500);
+    });
+  }
+})();
+</script>
+</body>
+</html>
