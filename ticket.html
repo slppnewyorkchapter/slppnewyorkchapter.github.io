@@ -105,6 +105,24 @@
     color:#cfe8d8; font-size:12.5px; text-align:center; margin-top:18px; max-width:520px; line-height:1.5; opacity:0.85;
   }
 
+  .explore {
+    margin-top: 26px; text-align:center; width:100%; max-width:520px;
+  }
+  .explore .explore-label {
+    font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+    color:#f4e6b8; opacity:0.8; margin-bottom:12px;
+  }
+  .explore-links {
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  }
+  .explore-links a {
+    display:flex; align-items:center; gap:7px;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(244,230,184,0.35);
+    color:#f4e6b8; text-decoration:none; font-size:13.5px; font-weight:700;
+    padding:10px 16px; border-radius:20px;
+  }
+  .explore-links a:active { background:rgba(255,255,255,0.16); }
+
   #state-msg { color:#fff; text-align:center; padding: 60px 20px; font-size:16px; max-width:480px; }
   #state-msg a { color:#f4e6b8; }
   .spinner-msg { color:#cfe8d8; text-align:center; padding: 60px 20px; font-size:15px; }
@@ -140,6 +158,14 @@
     "single": "Single — $100",
     "single_patron": "Single Patron — $200",
     "double_patron": "Double Patron — $300"
+  };
+
+  // Related event pages — shown as quick links once a guest's ticket is
+  // displayed. Update these if the site's page names ever change.
+  var SITE_LINKS = {
+    event:  "https://slppnewyorkchapter.github.io/index.html",
+    hotel:  "https://slppnewyorkchapter.github.io/hotels.html",
+    boat:   "https://slppnewyorkchapter.github.io/boatride.html"
   };
 
   function qs(name){
@@ -250,6 +276,17 @@
       ? ('Ticket holder: ' + name + chapterLine + '. Please save this to your phone and present the QR code at check-in. Non-transferable and non-refundable.')
       : 'Please save this to your phone and present the QR code at check-in. Non-transferable and non-refundable.';
     document.querySelector('.wrap').appendChild(note);
+
+    var explore = document.createElement('div');
+    explore.className = 'explore';
+    explore.innerHTML =
+      '<div class="explore-label">More About the Weekend</div>' +
+      '<div class="explore-links">' +
+        '<a href="' + SITE_LINKS.event + '" target="_blank" rel="noopener">🌐 Event Website</a>' +
+        '<a href="' + SITE_LINKS.hotel + '" target="_blank" rel="noopener">🏨 Hotel Info</a>' +
+        '<a href="' + SITE_LINKS.boat + '" target="_blank" rel="noopener">⛴️ Boat Ride</a>' +
+      '</div>';
+    document.querySelector('.wrap').appendChild(explore);
 
     logEvent('view');
   }
