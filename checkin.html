@@ -245,6 +245,10 @@
   function lookupBySerial(serial, token){
     apiPost({ action:'lookup', s: serial, t: token || '' }).then(function(res){
       showLookupResult(res, serial);
+    }).catch(function(){
+      renderResult('<div class="result-card result-error"><div class="result-msg">' +
+        'Could not reach the ticket system. Check your internet connection and try scanning again, ' +
+        'or use manual entry below.</div></div>');
     });
   }
 
@@ -262,6 +266,9 @@
       } else {
         renderResult('<div class="result-card result-error"><div class="result-msg">Could not check in: ' + (res.error||'unknown error') + '</div></div>');
       }
+    }).catch(function(){
+      renderResult('<div class="result-card result-error"><div class="result-msg">' +
+        'Could not reach the ticket system. Check your internet connection and try again.</div></div>');
     });
   }
 
@@ -272,6 +279,9 @@
       } else {
         renderResult('<div class="result-card result-error"><div class="result-msg">Could not undo: ' + (res.error||'unknown error') + '</div></div>');
       }
+    }).catch(function(){
+      renderResult('<div class="result-card result-error"><div class="result-msg">' +
+        'Could not reach the ticket system. Check your internet connection and try again.</div></div>');
     });
   }
 
@@ -353,11 +363,14 @@
         var btn = document.createElement('button');
         btn.textContent = 'Undo';
         btn.addEventListener('click', function(){
-          apiPost({ action:'uncheckin', s: r.serial, t:'' }).then(function(){ loadRecent(); });
+          apiPost({ action:'uncheckin', s: r.serial, t:'' }).then(function(){ loadRecent(); })
+            .catch(function(){ alert('Could not undo — check your internet connection and try again.'); });
         });
         div.appendChild(btn);
         list.appendChild(div);
       });
+    }).catch(function(){
+      document.getElementById('recentSummary').textContent = 'Could not reach the ticket system — check your internet connection.';
     });
   }
   document.getElementById('btnRefresh').addEventListener('click', loadRecent);
