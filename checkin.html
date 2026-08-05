@@ -203,6 +203,7 @@
   function showLookupResult(res, serialFallback){
     if(!res.ok){
       renderResult('<div class="result-card result-error"><div class="result-msg">Ticket not found. Please check the number and try again.</div></div>');
+      resumeScanning();
       return;
     }
     var tierLabel = TIER_LABEL[res.tier] || res.tier;
@@ -213,6 +214,7 @@
         '<div class="result-tier">' + tierLabel + '</div>' +
         '<div class="result-msg">This voucher hasn\'t been claimed by a guest yet — it cannot be checked in.</div>' +
         '</div>');
+      resumeScanning();
       return;
     }
     if(res.status === 'used'){
@@ -226,9 +228,16 @@
       document.getElementById('btnUndo').addEventListener('click', function(){
         doUncheckin(serialFallback);
       });
+      // Nothing further required from the volunteer to move on to the next
+      // guest — Undo remains available, but scanning can safely resume.
+      resumeScanning();
       return;
     }
-    // status === 'claimed' — valid, not yet checked in
+    // status === 'claimed' — valid, not yet checked in.
+    // Scanning intentionally stays paused here: this is a deliberate pause
+    // for the volunteer to check the name and tap Confirm. Resuming the
+    // camera while this card is up is what caused it to keep re-triggering
+    // and overwriting this exact screen.
     renderResult('<div class="result-card result-valid">' +
       '<div class="result-name">' + (res.name || 'Guest') + '</div>' +
       '<div class="result-tier">' + tierLabel + '</div>' +
@@ -243,6 +252,8 @@
 
   var lastScan = { serial: null, token: null };
 
+  function resumeScanning(){ scanning = true; }
+
   function lookupBySerial(serial, token){
     apiPost({ action:'lookup', s: serial, t: token || '' }).then(function(res){
       showLookupResult(res, serial);
@@ -250,6 +261,7 @@
       renderResult('<div class="result-card result-error"><div class="result-msg">' +
         'Could not reach the ticket system. Check your internet connection and try scanning again, ' +
         'or use manual entry below.</div></div>');
+      resumeScanning();
     });
   }
 
@@ -262,14 +274,17 @@
           '<div class="result-tier">' + (TIER_LABEL[res.tier] || res.tier) + '</div>' +
           '<div class="result-msg">✓ Checked in.</div>' +
           '</div>');
+        resumeScanning();
       } else if(res.error === 'already_used'){
         showLookupResult({ ok:true, status:'used', name: res.name, tier: res.tier }, serial);
       } else {
         renderResult('<div class="result-card result-error"><div class="result-msg">Could not check in: ' + (res.error||'unknown error') + '</div></div>');
+        resumeScanning();
       }
     }).catch(function(){
       renderResult('<div class="result-card result-error"><div class="result-msg">' +
         'Could not reach the ticket system. Check your internet connection and try again.</div></div>');
+      resumeScanning();
     });
   }
 
@@ -280,9 +295,11 @@
       } else {
         renderResult('<div class="result-card result-error"><div class="result-msg">Could not undo: ' + (res.error||'unknown error') + '</div></div>');
       }
+      resumeScanning();
     }).catch(function(){
       renderResult('<div class="result-card result-error"><div class="result-msg">' +
         'Could not reach the ticket system. Check your internet connection and try again.</div></div>');
+      resumeScanning();
     });
   }
 
@@ -310,9 +327,23 @@
   function startCamera(){
     var video = document.getElementById('video');
     var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
+    // willReadFrequently tells the browser this canvas will have getImageData
+    // called on it repeatedly (every frame) — without this hint, some
+    // browsers back the canvas with a GPU surface that's slow to read back
+    // from on the CPU side, adding real per-frame cost to every scan attempt.
+    var ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream){
+    // Cap the resolution actually used for QR detection. A QR code doesn't
+    // need full camera resolution to decode reliably, and processing a
+    // full 1080p+ frame 60 times a second is real, avoidable CPU cost that
+    // shows up as slower detection, especially on older/lower-end Android
+    // phones. Requesting a smaller capture size up front (and, as a
+    // fallback, downscaling in software below) cuts that cost substantially.
+    var SCAN_MAX_DIM = 640;
+
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment", width: { ideal: SCAN_MAX_DIM }, height: { ideal: SCAN_MAX_DIM } }
+    }).then(function(stream){
       video.srcObject = stream;
       video.setAttribute('playsinline', true);
       video.play();
@@ -323,11 +354,20 @@
 
     function tick(){
       if(scanning && video.readyState === video.HAVE_ENOUGH_DATA){
-        canvas.height = video.videoHeight;
-        canvas.width = video.videoWidth;
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        var code = jsQR(imageData.data, imageData.width, imageData.height);
+        // Downscale defensively even if the camera ignored our resolution
+        // hint above (some devices/browsers do) — never process more
+        // pixels than SCAN_MAX_DIM on the longer side.
+        var vw = video.videoWidth, vh = video.videoHeight;
+        var scale = Math.min(1, SCAN_MAX_DIM / Math.max(vw, vh));
+        var cw = Math.round(vw * scale), ch = Math.round(vh * scale);
+        if(canvas.width !== cw) canvas.width = cw;
+        if(canvas.height !== ch) canvas.height = ch;
+        ctx.drawImage(video, 0, 0, cw, ch);
+        var imageData = ctx.getImageData(0, 0, cw, ch);
+        // Our tickets only ever produce standard black-on-white QR codes —
+        // skipping the inverted-color pass jsQR normally also attempts
+        // saves real per-frame time for no loss of detection ability here.
+        var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
         if(code){
           var parsed = parseVerifyUrl(code.data);
           if(parsed && parsed.serial){
@@ -335,7 +375,12 @@
             lastScan = parsed;
             renderResult('<div class="result-card"><div class="result-msg">Ticket found — checking status…</div></div>');
             lookupBySerial(parsed.serial, parsed.token);
-            setTimeout(function(){ scanning = true; }, 2500); // debounce re-scan
+            // Scanning resumes only when the current ticket's flow actually
+            // finishes (see resumeScanning() calls below) — not on a fixed
+            // timer. A blind timer can fire before a slow lookup returns,
+            // or while the QR is still in frame waiting on a human decision,
+            // which caused the camera to re-trigger and overwrite whatever
+            // was on screen (the "oscillating" bug).
           }
         }
       }
