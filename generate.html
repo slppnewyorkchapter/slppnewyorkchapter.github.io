@@ -47,54 +47,102 @@
   .results { margin-top:18px; }
   .results h3 { margin:0 0 10px 0; font-size:15px; color:var(--green); }
   .link-row {
-    display:flex; justify-content:space-between; align-items:center; gap:8px;
-    background:#f5f5f5; border-radius:6px; padding:9px 10px; margin-bottom:6px; font-size:12px;
+    background:#f5f5f5; border-radius:8px; padding:11px 12px; margin-bottom:8px;
   }
-  .link-row .serial { font-weight:700; white-space:nowrap; }
-  .link-row .link { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#333; flex:1; margin: 0 8px; }
-  .link-row button {
-    border:none; background:var(--navy); color:#fff; padding:6px 10px; border-radius:5px; font-size:11px; cursor:pointer; white-space:nowrap;
+  .link-row .serial { font-weight:800; font-size:13px; display:block; margin-bottom:9px; }
+  .link-row .lr-actions { display:flex; gap:8px; }
+  .btn-wa {
+    flex:1; text-align:center; background:#25D366; color:#fff; text-decoration:none;
+    padding:9px 0; border-radius:6px; font-size:13px; font-weight:700;
+  }
+  .btn-copy {
+    flex:0 0 auto; border:none; background:var(--navy); color:#fff; padding:9px 14px;
+    border-radius:6px; font-size:13px; font-weight:700; cursor:pointer;
   }
   .copy-all { margin-top:10px; }
   .success-note { font-size:12.5px; color:#0b6b33; margin-top:10px; }
+
+  .tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .tab {
+    flex:1; text-align:center; padding:10px; border-radius:8px; font-weight:700; font-size:13.5px;
+    background:rgba(255,255,255,0.08); cursor:pointer; color:#fff;
+  }
+  .tab.active { background: linear-gradient(180deg,#f7e08a,var(--gold) 60%,#8a5a13); color:#1a1a1a; }
+
+  .voucher-row {
+    border:1px solid #e2e2e2; border-radius:8px; padding:12px; margin-bottom:8px;
+  }
+  .voucher-row .vr-top { display:flex; justify-content:space-between; align-items:center; }
+  .voucher-row .vr-serial { font-weight:800; font-size:13px; }
+  .voucher-row .vr-status {
+    font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px; text-transform:uppercase;
+  }
+  .vr-status-unclaimed { background:#eee; color:#666; }
+  .vr-status-claimed { background:#eafaf0; color:#0b6b33; }
+  .vr-status-used { background:#e8eefb; color:#1c2b6b; }
+  .voucher-row .vr-detail { font-size:12.5px; color:#444; margin-top:6px; }
+  .voucher-row .vr-note { font-size:11.5px; color:#999; margin-top:6px; font-style:italic; }
+  .btn-release {
+    margin-top:8px; width:auto; padding:8px 14px; font-size:13px;
+    background: linear-gradient(180deg,#a83a3a,var(--red) 60%,#4a0f0f); color:#fff;
+  }
+  .dashboard-link-box {
+    background:#f5f5f5; border-radius:8px; padding:12px; margin-top:14px; font-size:12.5px;
+    word-break:break-all;
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="header">
-    <h1>Generate Ticket Vouchers</h1>
+    <h1>Voucher &amp; Seller Tools</h1>
     <p>SLPP NY Executive Inauguration &amp; Grand Ball · Staff Only</p>
   </div>
 
   <div id="gate" class="card">
-    <div class="lead">This page creates real, redeemable tickets. Enter the staff passphrase to continue.</div>
+    <div class="lead">These tools create or release real, redeemable tickets. Enter the staff passphrase to continue.</div>
     <div class="error" id="gateError"></div>
     <div class="field"><label>Passphrase</label><input type="password" id="pw" placeholder="Enter passphrase" /></div>
     <button class="btn btn-primary" id="btnUnlock">Unlock</button>
   </div>
 
-  <div id="formCard" class="card" style="display:none; margin-top:16px;">
-    <div class="error" id="formError"></div>
-    <div class="field"><label>Seller Name</label><input type="text" id="seller" placeholder="e.g. Desmond Pessima" /></div>
-    <div class="field">
-      <label>Ticket Tier</label>
-      <select id="tier">
-        <option value="single">Single — $100</option>
-        <option value="single_patron">Single Patron — $200</option>
-        <option value="double_patron">Double Patron — $300</option>
-      </select>
+  <div id="afterUnlock" style="display:none;">
+    <div class="tabs">
+      <div class="tab active" data-tab="generate">Generate Vouchers</div>
+      <div class="tab" data-tab="dashboard">Seller Dashboard Link</div>
     </div>
-    <div class="field"><label>Quantity</label><input type="number" id="quantity" min="1" max="200" placeholder="e.g. 15" /></div>
-    <button class="btn btn-green" id="btnGenerate">Generate Vouchers</button>
 
-    <div id="resultsArea" class="results"></div>
+    <div id="tab-generate" class="card">
+      <div class="error" id="formError"></div>
+      <div class="field"><label>Seller Name</label><input type="text" id="seller" placeholder="e.g. Desmond Pessima" /></div>
+      <div class="field">
+        <label>Ticket Tier</label>
+        <select id="tier">
+          <option value="single">Single — $100</option>
+          <option value="single_patron">Single Patron — $200</option>
+          <option value="double_patron">Double Patron — $300</option>
+        </select>
+      </div>
+      <div class="field"><label>Quantity</label><input type="number" id="quantity" min="1" max="200" placeholder="e.g. 15" /></div>
+      <button class="btn btn-green" id="btnGenerate">Generate Vouchers</button>
+
+      <div id="resultsArea" class="results"></div>
+    </div>
+
+    <div id="tab-dashboard" class="card" style="display:none;">
+      <div class="lead">Give each seller their own link to see which of their tickets are claimed, and release any that were claimed but never paid for.</div>
+      <div class="error" id="dashError"></div>
+      <div class="field"><label>Seller Name</label><input type="text" id="dashSeller" placeholder="e.g. Desmond Pessima" /></div>
+      <button class="btn btn-primary" id="btnGetDashLink">Get Dashboard Link</button>
+      <div id="dashResultArea"></div>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
   // ---- CONFIG ----
-  var API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzgOR1qtko3oEHOSN894kU2gq6Qi21-ZkU0h3UzThJx5ztAFZFlmFIy2EBJ8wLfGSLc/exec";
+  var API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwKfLaEsF38fmxONK40b9_xkewnBaHpK93u_iZyxn6f6lMTM_o96q6XG1NAAobg_28w/exec";
 
   var TIER_LABEL = {
     "single": "Single — $100",
@@ -121,11 +169,21 @@
       errEl.style.display = 'block';
       return;
     }
-    // The password itself is verified server-side on first real generate
-    // call — we don't validate it here, just carry it forward.
+    // The password itself is verified server-side on first real call —
+    // we don't validate it here, just carry it forward.
     enteredPassword = pw;
     document.getElementById('gate').style.display = 'none';
-    document.getElementById('formCard').style.display = 'block';
+    document.getElementById('afterUnlock').style.display = 'block';
+  });
+
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      var which = tab.dataset.tab;
+      document.getElementById('tab-generate').style.display = which === 'generate' ? '' : 'none';
+      document.getElementById('tab-dashboard').style.display = which === 'dashboard' ? '' : 'none';
+    });
   });
 
   document.getElementById('btnGenerate').addEventListener('click', function(){
@@ -150,7 +208,7 @@
         if(!res.ok){
           if(res.error === 'wrong_password'){
             // send them back to the gate — the passphrase they carried forward was wrong
-            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('afterUnlock').style.display = 'none';
             document.getElementById('gate').style.display = 'block';
             document.getElementById('gateError').textContent = 'Incorrect passphrase.';
             document.getElementById('gateError').style.display = 'block';
@@ -174,24 +232,33 @@
   function renderResults(res){
     var area = document.getElementById('resultsArea');
     var html = '<h3>' + res.count + ' vouchers created for ' + res.seller + '</h3>' +
-      '<div class="success-note">These are already saved to the Vouchers sheet — nothing else to paste in. Send each link below to one buyer, one at a time, after payment.</div>';
+      '<div class="success-note">These are already saved to the Vouchers sheet — nothing else to paste in. Tap \u201CSend via WhatsApp\u201D on one link per buyer, after payment — it opens WhatsApp with the message already written, just pick who it\u2019s going to.</div>';
 
     res.vouchers.forEach(function(v){
+      var message = "Hello! Here's your ticket to the SLPP North America New York Chapter " +
+        "Executive Inauguration & Grand Ball — " + (TIER_LABEL[res.tier] || res.tier) + ".\n" +
+        "Saturday, September 5, 2026 \u00b7 Doors open 8:00 PM \u00b7 Antun's, Queens Village, NY.\n" +
+        "Your ticket: " + v.link + "\n" +
+        "Tap the link, enter your name to claim it, then save the ticket to your phone.";
+      var waHref = "https://wa.me/?text=" + encodeURIComponent(message);
+
       html += '<div class="link-row">' +
         '<span class="serial">' + v.serial + '</span>' +
-        '<span class="link">' + v.link + '</span>' +
-        '<button data-link="' + v.link + '">Copy</button>' +
+        '<div class="lr-actions">' +
+          '<a class="btn-wa" href="' + waHref + '" target="_blank" rel="noopener">\u{1F4F1} Send via WhatsApp</a>' +
+          '<button class="btn-copy" data-link="' + v.link + '">Copy Link</button>' +
+        '</div>' +
         '</div>';
     });
 
-    html += '<button class="btn btn-primary copy-all" id="btnCopyAll">Copy All Links</button>';
+    html += '<button class="btn btn-primary copy-all" id="btnCopyAll">Copy All Links (for your own records)</button>';
     area.innerHTML = html;
 
-    area.querySelectorAll('button[data-link]').forEach(function(btn){
+    area.querySelectorAll('.btn-copy').forEach(function(btn){
       btn.addEventListener('click', function(){
         navigator.clipboard.writeText(btn.getAttribute('data-link'));
         btn.textContent = 'Copied';
-        setTimeout(function(){ btn.textContent = 'Copy'; }, 1200);
+        setTimeout(function(){ btn.textContent = 'Copy Link'; }, 1200);
       });
     });
 
@@ -199,9 +266,62 @@
       var all = res.vouchers.map(function(v){ return v.serial + ': ' + v.link; }).join('\n');
       navigator.clipboard.writeText(all);
       document.getElementById('btnCopyAll').textContent = 'Copied all links';
-      setTimeout(function(){ document.getElementById('btnCopyAll').textContent = 'Copy All Links'; }, 1500);
+      setTimeout(function(){ document.getElementById('btnCopyAll').textContent = 'Copy All Links (for your own records)'; }, 1500);
     });
   }
+
+  // ---- Seller Dashboard Link ----
+  document.getElementById('btnGetDashLink').addEventListener('click', function(){
+    var seller = document.getElementById('dashSeller').value.trim();
+    var errEl = document.getElementById('dashError');
+    errEl.style.display = 'none';
+
+    if(!seller){ errEl.textContent = 'Please enter a seller name.'; errEl.style.display='block'; return; }
+
+    var btn = document.getElementById('btnGetDashLink');
+    btn.disabled = true;
+    btn.textContent = 'Getting link…';
+
+    apiPost({ action:'get_seller_token', password: enteredPassword, seller: seller })
+      .then(function(res){
+        btn.disabled = false;
+        btn.textContent = 'Get Dashboard Link';
+
+        if(!res.ok){
+          if(res.error === 'wrong_password'){
+            document.getElementById('afterUnlock').style.display = 'none';
+            document.getElementById('gate').style.display = 'block';
+            document.getElementById('gateError').textContent = 'Incorrect passphrase.';
+            document.getElementById('gateError').style.display = 'block';
+            return;
+          }
+          errEl.textContent = 'Could not get dashboard link: ' + (res.error || 'unknown error');
+          errEl.style.display = 'block';
+          return;
+        }
+
+        document.getElementById('dashResultArea').innerHTML =
+          '<div class="dashboard-link-box">' +
+            '<div style="margin-bottom:8px;"><b>' + res.seller + '</b>\u2019s personal dashboard link — send this to them once. ' +
+            'It\u2019s reusable and shows only their own tickets.</div>' +
+            '<div id="dashLinkText">' + res.link + '</div>' +
+            '<button class="btn btn-primary" id="btnCopyDashLink" style="margin-top:10px;">Copy Link</button>' +
+          '</div>';
+
+        document.getElementById('btnCopyDashLink').addEventListener('click', function(){
+          navigator.clipboard.writeText(res.link);
+          this.textContent = 'Copied';
+          var self = this;
+          setTimeout(function(){ self.textContent = 'Copy Link'; }, 1200);
+        });
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = 'Get Dashboard Link';
+        errEl.textContent = 'Network error — please check your connection and try again.';
+        errEl.style.display = 'block';
+      });
+  });
 })();
 </script>
 </body>
