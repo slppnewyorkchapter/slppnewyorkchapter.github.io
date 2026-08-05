@@ -236,6 +236,7 @@
       '<button class="btn btn-checkin" id="btnConfirmCheckin">Confirm Check-In</button>' +
       '</div>');
     document.getElementById('btnConfirmCheckin').addEventListener('click', function(){
+      this.disabled = true;
       doCheckin(serialFallback);
     });
   }
@@ -332,6 +333,7 @@
           if(parsed && parsed.serial){
             scanning = false;
             lastScan = parsed;
+            renderResult('<div class="result-card"><div class="result-msg">Ticket found — checking status…</div></div>');
             lookupBySerial(parsed.serial, parsed.token);
             setTimeout(function(){ scanning = true; }, 2500); // debounce re-scan
           }
