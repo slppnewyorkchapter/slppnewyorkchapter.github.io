@@ -1,4 +1,4 @@
-/* SLPP North America Regional Ticket Master Renderer v2
+/* SLPP North America Regional Ticket Master Renderer
  * Browser-only Canvas renderer for GitHub Pages.
  * Requires qrcode.min.js (QRCode library) for QR generation.
  */
@@ -183,7 +183,7 @@
       { family: fonts.serif, size: 78, weight: '700', color: palette.goldLight, maxWidth: w - 40 });
     drawOrnamentLine(ctx, x + 45, x + w - 45, y + 290, palette.gold);
     const admitCount = Number(ticket.admitCount || 1);
-    drawCentered(ctx, admitCount === 1 ? 'ADMIT ONE' : admitCount === 2 ? 'ADMIT TWO' : `ADMIT ${admitCount}`, x + w / 2, y + 340,
+    drawCentered(ctx, admitCount === 1 ? 'ADMIT ONE' : `ADMIT ${admitCount}`, x + w / 2, y + 340,
       { family: fonts.serif, size: 34, weight: '700', color: '#fff', maxWidth: w - 50 });
     ctx.restore();
   }
@@ -379,7 +379,7 @@
     drawCentered(ctx, 'ADMISSION STUB', sx + stubW / 2, 64, { size: 30, weight: '700', color: '#fff', maxWidth: stubW - 70 });
     drawCentered(ctx, String(cfg.ticket.label).toUpperCase(), sx + stubW / 2, 160, { family: fonts.serif, size: 40, weight: '700', color: palette.green, maxWidth: stubW - 70 });
     drawCentered(ctx, money(cfg.ticket.price, cfg.ticket.currency), sx + stubW / 2, 235, { family: fonts.serif, size: 62, weight: '700', color: palette.gold, maxWidth: stubW - 70 });
-    drawCentered(ctx, Number(cfg.ticket.admitCount) === 1 ? 'ADMIT ONE' : Number(cfg.ticket.admitCount) === 2 ? 'ADMIT TWO' : `ADMIT ${cfg.ticket.admitCount}`, sx + stubW / 2, 300, { size: 28, weight: '700', color: palette.ink });
+    drawCentered(ctx, Number(cfg.ticket.admitCount) === 1 ? 'ADMIT ONE' : `ADMIT ${cfg.ticket.admitCount}`, sx + stubW / 2, 300, { size: 28, weight: '700', color: palette.ink });
 
     const qrCanvas = await makeQrCanvas(cfg.ticket.qrValue, 220).catch(() => null);
     if (qrCanvas) {

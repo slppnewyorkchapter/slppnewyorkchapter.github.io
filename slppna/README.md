@@ -1,22 +1,60 @@
-# SLPP North America Regional Ticketing v6
+# SLPP Hybrid Ticketing - GitHub Upload
 
-This version fixes GitHub Pages <-> Google Apps Script browser transport.
+This public folder keeps the proven SLPP Tickets workflow/UI and replaces only the final ticket artwork generation with the SLPP North America regional master renderer.
 
-## What changed
-- Read-only GET actions (`eventConfig`, `voucher`, `batch`, `validateTicket`) support JSONP.
-- Write/admin actions use a hidden POST form + iframe + `postMessage`, keeping attendee/admin data out of URLs.
-- Apps Script only posts iframe responses back to `https://greenprofessionals.github.io`.
-- The ticket renderer remains unchanged.
+## Upload hierarchy
 
-## Deploy
-1. In the bound Google Apps Script project, replace the current code with `Code.gs`.
-2. Deploy > Manage deployments > Edit > New version > Deploy. Keep the same web app `/exec` URL.
-3. Replace GitHub `slppna/claim.html` with this `claim.html`.
-4. Keep `assets/js/ticket-renderer.js` as-is (included for completeness).
-5. Commit and push GitHub. Wait for Pages deployment to finish.
-6. Hard-refresh the event URL.
+Copy the **slppna** folder into the root of `slppnewyorkchapter.github.io` using GitHub Desktop.
 
-## Test
-Open the Apps Script URL with:
-`?action=eventConfig&chapter=NEC&event=NEC-2026-INAUGURATION&callback=testCallback`
-The response should be JavaScript beginning with `testCallback(`.
+```text
+slppnewyorkchapter.github.io/
+└── slppna/
+    ├── .nojekyll
+    ├── index.html
+    ├── claim.html
+    ├── v.html
+    ├── assets/
+    │   └── js/
+    │       ├── app-config.js
+    │       └── ticket-renderer.js
+    └── tickets/
+        ├── azc/skyline-bg.png
+        ├── canc/skyline-bg.png
+        ├── casc/skyline-bg.png
+        ├── drc/skyline-bg.png
+        ├── dvc/skyline-bg.png
+        ├── flc/skyline-bg.png
+        ├── gac/skyline-bg.png
+        ├── iac/skyline-bg.png
+        ├── ilc/skyline-bg.png
+        ├── mnc/skyline-bg.png
+        ├── ndc/skyline-bg.png
+        ├── nec/skyline-bg.png
+        ├── njc/skyline-bg.png
+        ├── nyc/skyline-bg.png
+        ├── ohc/skyline-bg.png
+        ├── swc/skyline-bg.png
+        ├── txdc/skyline-bg.png
+        ├── txhc/skyline-bg.png
+        ├── vac/skyline-bg.png
+        └── wdc/skyline-bg.png
+```
+
+## Website URLs
+
+Default New York page:
+`https://slppnewyorkchapter.github.io/slppna/claim.html?chapter=NYC&event=NYC-2026-INAUGURATION`
+
+New England page:
+`https://slppnewyorkchapter.github.io/slppna/claim.html?chapter=NEC&event=NEC-2026-INAUGURATION`
+
+## Two backend roles
+
+- `workflowEndpoint` = the existing SLPP Tickets backend. It remains responsible for claims, vouchers, distribution, admin unlock, check-in, walk-ins and reporting.
+- `ticketConfigEndpoint` = the regional configuration endpoint. It is read only when building the actual ticket image, supplying chapter/event/tier/skyline/colors.
+
+Both URLs are in `assets/js/app-config.js`.
+
+## Important
+
+Do **not** put the private Apps Script source or spreadsheets from the companion private setup packet in a public GitHub repository. The legacy workflow backend contains administrator passcodes.
