@@ -1,0 +1,116 @@
+SLPP REGIONAL CONFIG BACKEND v4 - INSTALL
+=========================================
+
+IMPORTANT
+---------
+This Code.gs REPLACES the old Regional Ticket Rendering Config Apps Script code.
+Do not append it to the old file. The purpose of v4 is to remove the duplicate,
+conflicting, and incomplete functions from the accumulated code.
+
+It belongs in:
+  SLPP_Regional_Ticket_Rendering_Config
+  -> Extensions
+  -> Apps Script
+  -> Code.gs
+
+It does NOT belong in SLPP_Tickets_Workflow.
+
+STEP 1 - BACK UP
+----------------
+In Apps Script, make a copy of the current Code.gs locally before replacing it.
+
+STEP 2 - REPLACE CODE
+---------------------
+Delete all current contents of the Regional Config Code.gs and paste the complete
+v4 Code.gs from this package.
+
+STEP 3 - SAVE
+-------------
+Save the Apps Script project.
+
+STEP 4 - RUN SETUP/UPGRADE ONCE
+-------------------------------
+From the function dropdown run:
+  setupRegionalConfigWorkbook
+
+Authorize when prompted.
+
+This function is idempotent. It preserves existing rows, adds missing sheets and
+columns, and migrates known legacy names into the v4 canonical columns.
+
+STEP 5 - SYSTEM OWNER
+---------------------
+If OWNER-001 already exists with a valid hashed passcode, you do not need to
+recreate it.
+
+If you want to create/reset it, run:
+  bootstrapSystemOwner
+
+The passcode is requested at runtime and is NOT stored in Code.gs.
+
+STEP 6 - DEPLOY
+---------------
+Apps Script:
+  Deploy -> Manage deployments -> Edit -> New version -> Deploy
+
+Keep:
+  Execute as: Me
+  Who has access: Anyone
+
+If the /exec URL stays the same, app-config.js requires no change.
+If Google gives you a different /exec URL, update only ticketConfigEndpoint in:
+  slppna/assets/js/app-config.js
+
+STEP 7 - TEST HEALTH
+--------------------
+Open the Apps Script /exec URL. You should receive JSON containing:
+  "ok": true
+  "version": "4.0.0"
+
+STEP 8 - TEST OWNER PORTAL
+--------------------------
+Open:
+  https://slppnewyorkchapter.github.io/slppna/admin.html
+
+Unlock with the System Owner passcode.
+
+Test:
+  - list admins
+  - add an Event Organizer
+  - set/reset their passcode
+  - deactivate/reactivate
+  - grant event permissions
+  - set voucher generation dates
+  - set ticket configuration expiration
+  - revoke permission
+
+STEP 9 - TEST TICKET CONFIG
+---------------------------
+Open, for example:
+  https://slppnewyorkchapter.github.io/slppna/config.html?org=SLPPNA&chapter=NYC&event=NYC-2026-INAUGURATION
+
+Test:
+  - owner unlock
+  - organizer unlock with CanConfigureTicket=true
+  - ticket text
+  - dynamic tiers
+  - FIXED / DONATION / FREE
+  - skyline scale
+  - logo upload
+  - reset to chapter default logo
+
+SECURITY NOTE
+-------------
+The old combined code contained a plain-text System Owner passcode in a helper
+function. v4 intentionally contains no embedded passcodes. Since that secret was
+previously stored in source code, reset/rotate the System Owner passcode using
+bootstrapSystemOwner after deploying v4.
+
+CANONICAL PERMISSION EXPIRATIONS
+--------------------------------
+GenerationStart      voucher generation opens
+GenerationExpires    voucher generation closes
+ConfigExpires        ticket configuration access closes
+
+There is no longer an ExpiresAt runtime dependency. setupRegionalConfigWorkbook
+copies an old ExpiresAt value into ConfigExpires when ConfigExpires is blank.
