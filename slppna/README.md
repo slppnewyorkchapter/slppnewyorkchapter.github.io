@@ -67,3 +67,7 @@ Do **not** put the private Apps Script source or spreadsheets from the companion
 - The ticket renderer supports a dynamic number of tiers and pricing modes `FIXED`, `DONATION`, and `FREE` when supplied by the backend.
 - The chapter skyline is rendered about 25% larger than the prior version for stronger visual presence.
 - System-owner / event-organizer permissions and voucher-generation expiration are backend authorization concerns and should not be stored in this public repository.
+
+
+## Ticket Configuration UI
+Open `config.html?org=SLPPNA&chapter=NYC&event=NYC-2026-INAUGURATION`. The page requires an authorized owner/event-organizer passcode from the ticket configuration Apps Script. It edits ticket text, dynamic tiers, skyline size, and an optional event-specific logo. Chapter default logos live under `tickets/<chapter>/logo.png`.

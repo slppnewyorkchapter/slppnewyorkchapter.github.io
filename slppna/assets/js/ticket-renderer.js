@@ -257,7 +257,7 @@
       chapter: {
         code: chapter.code || chapter.chapterCode || '',
         name: chapter.name || chapter.chapterName || 'Chapter',
-        logoUrl: chapter.logoUrl || chapter.logo || '',
+        logoUrl: chapter.logoUrl || chapter.logo || (chapter.code || chapter.chapterCode ? `tickets/${String(chapter.code || chapter.chapterCode).toLowerCase()}/logo.png` : ''),
         skylineUrl: chapter.skylineUrl || chapter.skylineImage || '',
         website: chapter.website || '',
         contactPhone: chapter.contactPhone || chapter.phone || '',
@@ -275,7 +275,15 @@
         address: event.address || '',
         dressCode: event.dressCode || 'FORMAL / TRADITIONAL',
         footerNotice: event.footerNotice || 'Ticket must be presented for admission',
-        refundNotice: event.refundNotice || 'No refunds or replacements'
+        refundNotice: event.refundNotice || 'No refunds or replacements',
+        organizationLine: event.organizationLine || event.ticketOrgText || 'SLPP NORTH AMERICA',
+        stubTitle: event.stubTitle || 'ADMISSION STUB',
+        infoLabel: event.infoLabel || 'FOR MORE INFO:',
+        contactLabel: event.contactLabel || 'CONTACT:',
+        dressCodeLabel: event.dressCodeLabel || 'DRESS CODE:',
+        website: event.website || event.ticketWebsite || '',
+        contactPhone: event.contactPhone || event.ticketContactPhone || '',
+        skylineScale: Math.max(0.8, Math.min(1.6, Number(event.skylineScale || 1.25)))
       },
       ticket: {
         code: ticket.code || ticket.tierCode || '',
@@ -343,7 +351,7 @@
     }
 
     // headings
-    drawCentered(ctx, 'SLPP NORTH AMERICA', 950, 64, { size: 38, weight: '700', color: palette.green, maxWidth: 700 });
+    drawCentered(ctx, cfg.event.organizationLine.toUpperCase(), 950, 64, { size: 38, weight: '700', color: palette.green, maxWidth: 700 });
     drawOrnamentLine(ctx, 635, 760, 64, palette.gold);
     drawOrnamentLine(ctx, 1140, 1265, 64, palette.gold);
     drawCentered(ctx, cfg.chapter.name.toUpperCase(), 950, 132, { family: fonts.serif, size: 68, weight: '700', color: palette.greenDeep, maxWidth: 1150 });
@@ -363,13 +371,16 @@
     drawLeft(ctx, cfg.event.venue, textX, 485, { size: 25, weight: '700', color: palette.blue, maxWidth: 430 });
     wrapText(ctx, cfg.event.address, textX, 512, 450, 27, { size: 19, color: palette.ink, maxLines: 2 });
     drawInfoIcon(ctx, infoX, 590, 'dress', palette);
-    drawLeft(ctx, 'DRESS CODE:', textX, 580, { size: 20, weight: '700', color: palette.ink });
+    drawLeft(ctx, cfg.event.dressCodeLabel, textX, 580, { size: 20, weight: '700', color: palette.ink });
     drawLeft(ctx, cfg.event.dressCode, textX, 610, { size: 22, weight: '700', color: palette.ink, maxWidth: 390 });
 
     // skyline centered behind lower ticket body
     if (skylineImg) {
-      // Slightly larger skyline for stronger chapter identity while staying clear of the tier badge.
-      drawImageContain(ctx, skylineImg, 370, 275, 1260, 390, 0.68);
+      // Configurable skyline scale; 1.25 is the production default.
+      const ss = cfg.event.skylineScale;
+      const sw = 1260 * ss, sh = 390 * ss;
+      const sx = 1000 - sw / 2, sy = 470 - sh / 2;
+      drawImageContain(ctx, skylineImg, sx, sy, sw, sh, 0.68);
     }
 
     // main ticket badge
@@ -383,10 +394,10 @@
     // footer bar
     ctx.fillStyle = palette.greenDeep; ctx.fillRect(18, 650, mainW - 36, 130);
     ctx.fillStyle = palette.gold; ctx.fillRect(18, 648, mainW - 36, 4);
-    drawLeft(ctx, 'FOR MORE INFO:', 155, 688, { size: 19, weight: '700', color: palette.goldLight });
-    drawLeft(ctx, cfg.chapter.website || '—', 155, 721, { size: 18, weight: '400', color: '#fff', maxWidth: 455 });
-    drawLeft(ctx, 'CONTACT:', 720, 688, { size: 19, weight: '700', color: palette.goldLight });
-    drawLeft(ctx, cfg.chapter.contactPhone || '—', 720, 721, { size: 20, weight: '400', color: '#fff' });
+    drawLeft(ctx, cfg.event.infoLabel, 155, 688, { size: 19, weight: '700', color: palette.goldLight });
+    drawLeft(ctx, cfg.event.website || cfg.chapter.website || '—', 155, 721, { size: 18, weight: '400', color: '#fff', maxWidth: 455 });
+    drawLeft(ctx, cfg.event.contactLabel, 720, 688, { size: 19, weight: '700', color: palette.goldLight });
+    drawLeft(ctx, cfg.event.contactPhone || cfg.chapter.contactPhone || '—', 720, 721, { size: 20, weight: '400', color: '#fff' });
     wrapText(ctx, cfg.event.footerNotice, 1090, 684, 300, 27, { size: 18, color: '#fff', maxLines: 2 });
     wrapText(ctx, cfg.event.refundNotice, 1480, 684, 255, 27, { size: 18, color: '#fff', maxLines: 2 });
 
@@ -394,7 +405,7 @@
     const sx = mainW;
     drawPerforation(ctx, sx, H);
     ctx.fillStyle = palette.greenDeep; ctx.fillRect(sx + 6, 18, stubW - 24, 92);
-    drawCentered(ctx, 'ADMISSION STUB', sx + stubW / 2, 64, { size: 30, weight: '700', color: '#fff', maxWidth: stubW - 70 });
+    drawCentered(ctx, cfg.event.stubTitle.toUpperCase(), sx + stubW / 2, 64, { size: 30, weight: '700', color: '#fff', maxWidth: stubW - 70 });
     drawCentered(ctx, String(cfg.ticket.label).toUpperCase(), sx + stubW / 2, 160, { family: fonts.serif, size: 40, weight: '700', color: palette.green, maxWidth: stubW - 70 });
     drawCentered(ctx, ticketPriceText(cfg.ticket), sx + stubW / 2, 235, { family: fonts.serif, size: 62, weight: '700', color: palette.gold, maxWidth: stubW - 70 });
     drawCentered(ctx, Number(cfg.ticket.admitCount) === 1 ? 'ADMIT ONE' : `ADMIT ${cfg.ticket.admitCount}`, sx + stubW / 2, 300, { size: 28, weight: '700', color: palette.ink });

@@ -1,3 +1,2 @@
-SLPP Hybrid Ticketing Public UI v2
-Updated: 2026-08-08
-Changes: organization/event URL scope, dynamic pricing display support, enlarged skyline, configuration kept private.
+SLPP Hybrid Ticketing Frontend v3
+Added owner/event-organizer config.html, dynamic tier editor, ticket text controls, per-event logo upload support, chapter default logos, and configurable skyline sizing.

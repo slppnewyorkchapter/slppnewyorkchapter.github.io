@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Ticket Configuration | SLPP North America</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--green:#0b3d24;--gold:#c9a24b;--cream:#faf7ef;--ink:#1d241f;--muted:#69756e;--border:#d7ded9;--danger:#9f2d2d}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6f4;color:var(--ink)}header{background:var(--green);color:white;padding:18px 24px;border-bottom:4px solid var(--gold)}header h1{margin:0;font-size:24px}header p{margin:5px 0 0;color:#e8efe9}.wrap{max-width:1450px;margin:24px auto;padding:0 18px}.gate,.panel{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.05)}.gate{max-width:620px;margin:60px auto;padding:26px}.panel{padding:22px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:minmax(520px,1fr) minmax(500px,1.05fr);gap:22px;align-items:start}.section{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px}.section h2{margin:0 0 14px;color:var(--green);font-size:20px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}label{display:block;font-weight:700;font-size:13px;margin:0 0 6px}input,select,textarea,button{font:inherit}input,select,textarea{width:100%;padding:10px 11px;border:1px solid #bfc9c2;border-radius:8px;background:white}textarea{min-height:72px;resize:vertical}.field{margin-bottom:12px}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:#eef3ef;color:var(--green);border:1px solid #cad6cd}.danger{background:#fff2f2;color:var(--danger);border:1px solid #e0b5b5}.toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.status{margin-top:10px;padding:10px 12px;border-radius:8px;background:#eef6f0;color:#225b34;display:none}.status.error{background:#fff0f0;color:#8d2424}.tiers{overflow:auto}.tiers table{width:100%;border-collapse:collapse;min-width:850px}.tiers th,.tiers td{border-bottom:1px solid #e1e6e2;padding:8px;vertical-align:middle}.tiers th{text-align:left;font-size:12px;color:#536158;background:#f7f9f7}.tiers input,.tiers select{padding:8px}.preview-wrap{position:sticky;top:16px}.preview-card{background:#e8ece9;border-radius:12px;padding:12px;overflow:auto}.preview-card canvas{width:100%;height:auto;display:block;background:white;box-shadow:0 5px 18px rgba(0,0,0,.12)}.logo-preview{width:100px;height:100px;object-fit:contain;border:1px solid var(--border);border-radius:50%;background:#fff}.small{font-size:12px;color:var(--muted)}.event-badge{font-size:13px;color:#eef5f0}.topline{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:16px}@media(max-width:1050px){.grid{grid-template-columns:1fr}.preview-wrap{position:static}.two,.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>Ticket Configuration</h1><p id="scopeLine">SLPP North America</p></header>
+<div class="wrap">
+  <div id="gate" class="gate">
+    <h2>Owner / Event Organizer Access</h2>
+    <p class="small">This page is locked. Your backend permission determines which event you may configure.</p>
+    <div class="field"><label for="passcode">Admin passcode</label><input id="passcode" type="password" autocomplete="current-password"></div>
+    <button id="unlock" class="btn primary">Unlock Configuration</button>
+    <div id="gateStatus" class="status"></div>
+  </div>
+
+  <div id="editor" class="hidden">
+    <div class="topline"><div><strong id="adminName"></strong><div class="event-badge" id="eventScope"></div></div><div class="toolbar"><button id="previewBtn" class="btn secondary">Refresh Preview</button><button id="saveBtn" class="btn primary">Save Configuration</button></div></div>
+    <div class="grid">
+      <div>
+        <div class="panel">
+          <div class="section">
+            <h2>Ticket Text</h2>
+            <div class="field"><label>Organization line</label><input id="organizationLine" placeholder="SLPP NORTH AMERICA"></div>
+            <div class="field"><label>Chapter title shown on ticket</label><input id="chapterTitle"></div>
+            <div class="field"><label>Event title</label><input id="eventName"></div>
+            <div class="field"><label>Subtitle</label><input id="subtitle"></div>
+            <div class="two"><div class="field"><label>Date text</label><input id="dateDisplay"></div><div class="field"><label>Time text</label><input id="timeDisplay"></div></div>
+            <div class="field"><label>Venue</label><input id="venue"></div>
+            <div class="field"><label>Address</label><textarea id="address"></textarea></div>
+            <div class="two"><div class="field"><label>Dress code label</label><input id="dressCodeLabel"></div><div class="field"><label>Dress code</label><input id="dressCode"></div></div>
+            <div class="two"><div class="field"><label>Stub title</label><input id="stubTitle"></div><div class="field"><label>Skyline size (%)</label><input id="skylinePercent" type="number" min="80" max="160" step="5"></div></div>
+          </div>
+
+          <div class="section">
+            <h2>Footer Text</h2>
+            <div class="two"><div class="field"><label>Information label</label><input id="infoLabel"></div><div class="field"><label>Website / information text</label><input id="website"></div></div>
+            <div class="two"><div class="field"><label>Contact label</label><input id="contactLabel"></div><div class="field"><label>Contact phone / text</label><input id="contactPhone"></div></div>
+            <div class="field"><label>Admission notice</label><input id="footerNotice"></div>
+            <div class="field"><label>Refund / replacement notice</label><input id="refundNotice"></div>
+          </div>
+
+          <div class="section">
+            <h2>Logo</h2>
+            <div class="toolbar"><img id="logoPreview" class="logo-preview" alt="Current ticket logo"><div><input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp"><div class="small">PNG, JPG or WebP, maximum 2 MB. Uploading here replaces the logo for this event only.</div></div></div>
+            <div class="toolbar" style="margin-top:12px"><button id="clearLogoBtn" class="btn secondary" type="button">Use Chapter Default Logo</button></div>
+          </div>
+
+          <div class="section tiers">
+            <div class="topline"><h2 style="margin:0">Ticket Tiers</h2><button id="addTier" class="btn secondary" type="button">+ Add Tier</button></div>
+            <p class="small">Add as many tiers as needed. Fixed, donation and complimentary/free tiers are supported.</p>
+            <table><thead><tr><th>Code</th><th>Title</th><th>Pricing</th><th>Price</th><th>Min Donation</th><th>Suggested</th><th>Admit</th><th>Active</th><th></th></tr></thead><tbody id="tierRows"></tbody></table>
+          </div>
+          <div id="saveStatus" class="status"></div>
+        </div>
+      </div>
+
+      <div class="preview-wrap"><div class="panel"><h2 style="margin-top:0;color:var(--green)">Live Ticket Preview</h2><div class="preview-card"><canvas id="previewCanvas"></canvas></div><p class="small">Preview serial and QR are samples only. Saved configuration is used when real tickets are generated.</p></div></div>
+    </div>
+  </div>
+</div>
+<script src="assets/js/app-config.js"></script>
+<script src="assets/js/ticket-renderer.js"></script>
+<script>
+const Q=new URLSearchParams(location.search), APP=window.SLPP_APP_CONFIG||{};
+const SCOPE={organizationId:Q.get('org')||APP.defaultOrganization||'SLPPNA',chapterCode:(Q.get('chapter')||APP.defaultChapter||'NYC').toUpperCase(),eventId:(Q.get('event')||APP.defaultEvent||'NYC-2026-INAUGURATION').toUpperCase()};
+const ENDPOINT=APP.ticketConfigEndpoint; let ACCESS=null, CURRENT=null, selectedLogoData='';
+const $=id=>document.getElementById(id); $('scopeLine').textContent=`${SCOPE.organizationId} · ${SCOPE.chapterCode} · ${SCOPE.eventId}`;
+function status(el,msg,error=false){el.textContent=msg;el.className='status'+(error?' error':'');el.style.display='block'}
+async function post(action,extra={}){const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,organizationId:SCOPE.organizationId,chapterCode:SCOPE.chapterCode,eventId:SCOPE.eventId,adminPasscode:$('passcode').value,...extra})}); return r.json()}
+function val(id,v){$(id).value=v??''} function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function defaultLogo(){return `tickets/${SCOPE.chapterCode.toLowerCase()}/logo.png`}
+$('unlock').onclick=async()=>{try{status($('gateStatus'),'Checking access…');const d=await post('verifyConfigAccess');if(!d.ok)throw new Error(d.error||'Access denied');ACCESS=d.admin;CURRENT=d.config; $('gate').classList.add('hidden');$('editor').classList.remove('hidden');$('adminName').textContent=`${d.admin.adminName} · ${d.admin.role}`;$('eventScope').textContent=`${SCOPE.chapterCode} / ${SCOPE.eventId}`;loadConfig(d.config);await preview()}catch(e){status($('gateStatus'),e.message,true)}};
+function loadConfig(c){const ch=c.chapter||{},ev=c.event||{};val('organizationLine',ev.organizationLine||'SLPP NORTH AMERICA');val('chapterTitle',ch.name||'');val('eventName',ev.name||'');val('subtitle',ev.subtitle||'');val('dateDisplay',ev.dateDisplay||'');val('timeDisplay',ev.timeDisplay||'');val('venue',ev.venue||'');val('address',ev.address||'');val('dressCodeLabel',ev.dressCodeLabel||'DRESS CODE:');val('dressCode',ev.dressCode||'FORMAL / TRADITIONAL');val('stubTitle',ev.stubTitle||'ADMISSION STUB');val('skylinePercent',Math.round((Number(ev.skylineScale)||1.25)*100));val('infoLabel',ev.infoLabel||'FOR MORE INFO:');val('website',ev.website||ch.website||'');val('contactLabel',ev.contactLabel||'CONTACT:');val('contactPhone',ev.contactPhone||ch.contactPhone||'');val('footerNotice',ev.footerNotice||'Ticket must be presented for admission');val('refundNotice',ev.refundNotice||'No refunds or replacements');$('logoPreview').src=ch.logoUrl||defaultLogo();renderTierRows(c.tiers||[])}
+function tierRow(t={}){const tr=document.createElement('tr');tr.innerHTML=`<td><input data-k="tierCode" value="${esc(t.tierCode||'')}"></td><td><input data-k="label" value="${esc(t.label||'')}"></td><td><select data-k="pricingType"><option>FIXED</option><option>DONATION</option><option>FREE</option></select></td><td><input data-k="price" type="number" min="0" step="0.01" value="${Number(t.price||0)}"></td><td><input data-k="minimumAmount" type="number" min="0" step="0.01" value="${Number(t.minimumAmount||0)}"></td><td><input data-k="suggestedAmount" type="number" min="0" step="0.01" value="${Number(t.suggestedAmount||0)}"></td><td><input data-k="admitCount" type="number" min="1" step="1" value="${Number(t.admitCount||1)}"></td><td><input data-k="active" type="checkbox" ${t.active===false?'':'checked'} style="width:auto"></td><td><button type="button" class="btn danger remove">Remove</button></td>`;tr.querySelector('[data-k=pricingType]').value=(t.pricingType||'FIXED').toUpperCase();tr.querySelector('.remove').onclick=()=>{tr.remove();preview()};tr.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',preview));return tr}
+function renderTierRows(ts){$('tierRows').innerHTML='';(ts.length?ts:[{tierCode:'single',label:'Single',pricingType:'FIXED',price:100,admitCount:1,active:true}]).forEach(t=>$('tierRows').appendChild(tierRow(t)))}
+$('addTier').onclick=()=>{$('tierRows').appendChild(tierRow({active:true,admitCount:1}));preview()};
+function collectTiers(){return [...$('tierRows').querySelectorAll('tr')].map((tr,i)=>{const g=k=>tr.querySelector(`[data-k=${k}]`);return{tierCode:g('tierCode').value.trim().toLowerCase(),label:g('label').value.trim(),pricingType:g('pricingType').value,price:Number(g('price').value||0),minimumAmount:Number(g('minimumAmount').value||0),suggestedAmount:Number(g('suggestedAmount').value||0),currency:'USD',admitCount:Math.max(1,Number(g('admitCount').value||1)),sortOrder:i+1,active:g('active').checked}})}
+function collectEvent(){return{organizationLine:$('organizationLine').value.trim(),ticketChapterName:$('chapterTitle').value.trim(),name:$('eventName').value.trim(),subtitle:$('subtitle').value.trim(),dateDisplay:$('dateDisplay').value.trim(),timeDisplay:$('timeDisplay').value.trim(),venue:$('venue').value.trim(),address:$('address').value.trim(),dressCodeLabel:$('dressCodeLabel').value.trim(),dressCode:$('dressCode').value.trim(),stubTitle:$('stubTitle').value.trim(),skylineScale:Math.max(.8,Math.min(1.6,Number($('skylinePercent').value||125)/100)),infoLabel:$('infoLabel').value.trim(),website:$('website').value.trim(),contactLabel:$('contactLabel').value.trim(),contactPhone:$('contactPhone').value.trim(),footerNotice:$('footerNotice').value.trim(),refundNotice:$('refundNotice').value.trim()}}
+async function preview(){if(!$('previewCanvas')||$('editor').classList.contains('hidden'))return;const ev=collectEvent(),tiers=collectTiers(),t=tiers.find(x=>x.active)||tiers[0]||{label:'Admission',pricingType:'FIXED',price:0,admitCount:1};const ch={...(CURRENT?.chapter||{}),code:SCOPE.chapterCode,name:ev.ticketChapterName||CURRENT?.chapter?.name||SCOPE.chapterCode,logoUrl:selectedLogoData||$('logoPreview').src||defaultLogo()};await window.SLPPTicketRenderer.render($('previewCanvas'),{chapter:ch,event:ev,ticket:{...t,serial:`${ch.serialPrefix||SCOPE.chapterCode}-009`,qrValue:'SLPP-CONFIG-PREVIEW'}})}
+['organizationLine','chapterTitle','eventName','subtitle','dateDisplay','timeDisplay','venue','address','dressCodeLabel','dressCode','stubTitle','skylinePercent','infoLabel','website','contactLabel','contactPhone','footerNotice','refundNotice'].forEach(id=>$(id).addEventListener('input',preview));$('previewBtn').onclick=preview;
+$('logoFile').addEventListener('change',()=>{const f=$('logoFile').files[0];if(!f)return;if(f.size>2*1024*1024){status($('saveStatus'),'Logo must be smaller than 2 MB.',true);$('logoFile').value='';return}const r=new FileReader();r.onload=()=>{selectedLogoData=r.result;$('logoPreview').src=r.result;preview()};r.readAsDataURL(f)});
+$('clearLogoBtn').onclick=async()=>{try{const d=await post('clearEventLogo');if(!d.ok)throw new Error(d.error||'Could not reset logo');selectedLogoData='';$('logoFile').value='';$('logoPreview').src=defaultLogo();status($('saveStatus'),'Event logo cleared. The chapter default logo will be used.');preview()}catch(e){status($('saveStatus'),e.message,true)}};
+$('saveBtn').onclick=async()=>{const b=$('saveBtn');b.disabled=true;b.textContent='Saving…';try{const tiers=collectTiers();if(!tiers.length)throw new Error('Add at least one ticket tier.');if(tiers.some(t=>!t.tierCode||!t.label))throw new Error('Every tier needs a code and title.');const d=await post('saveTicketConfig',{event:collectEvent(),tiers});if(!d.ok)throw new Error(d.error||'Save failed');if(selectedLogoData){const f=$('logoFile').files[0];const u=await post('uploadEventLogo',{dataUrl:selectedLogoData,fileName:f?.name||'event-logo.png'});if(!u.ok)throw new Error(u.error||'Configuration saved, but logo upload failed');selectedLogoData=''}CURRENT=d.config||CURRENT;status($('saveStatus'),'Configuration saved. New tickets will use these settings.');if(d.config)loadConfig(d.config);await preview()}catch(e){status($('saveStatus'),e.message,true)}finally{b.disabled=false;b.textContent='Save Configuration'}};
+</script>
+</body></html>
