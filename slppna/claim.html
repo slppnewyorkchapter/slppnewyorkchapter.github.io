@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim Your Ticket — SLPP North America Event</title>
+<meta name="description" content="Claim your ticket to the SLPP North America chapter event. Instant digital voucher — no printing required.">
+<link rel="canonical" href="https://greenprofessionals.github.io/slppna/claim.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://greenprofessionals.github.io/slppna/claim.html">
+<meta property="og:site_name" content="SLPP North America">
+<meta property="og:title" content="Claim Your Ticket — SLPP North America Event">
+<meta property="og:description" content="Claim your ticket to the SLPP North America chapter event. Instant digital voucher — no printing required.">
+<meta property="og:image" content="https://slppnewenglandchapter.github.io/images/claim-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="SLPP North America Executive Inauguration Celebration — Claim Your Ticket">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claim Your Ticket — SLPP North America Event">
+<meta name="twitter:description" content="Claim your ticket to the SLPP North America chapter event. Instant digital voucher — no printing required.">
+<meta name="twitter:image" content="https://slppnewenglandchapter.github.io/images/claim-og.jpg">
+<meta name="twitter:image:alt" content="SLPP North America Executive Inauguration Celebration — Claim Your Ticket">
+<style>
+  :root{
+    --green:#0b3d24; --green-deep:#082c19; --gold:#c9a24b; --gold-light:#e8d39a; --cream:#faf7ef; --ink:#1b1b1b;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--green-deep); color:var(--cream); min-height:100vh; }
+  header{ text-align:center; padding:40px 20px 24px; border-bottom:2px solid var(--gold); background:#062015; }
+  header .eyebrow{ letter-spacing:.18em; font-size:12px; color:var(--gold-light); text-transform:uppercase; }
+  header h1{ margin:8px 0 4px; font-size:clamp(22px,4vw,34px); color:#fff; }
+  header p{ margin:0; color:rgba(250,247,239,.75); font-size:14px; }
+  main{ max-width:640px; margin:0 auto; padding:32px 20px 60px; }
+  .card{ background:var(--cream); color:var(--ink); border-radius:14px; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,.35); }
+  #formCard{ background:#faf7ef; }
+  .admin-section{ border-radius:12px; padding:18px; margin-top:18px; }
+  .admin-section-generate{ background:#e4ecf3; border:1px solid #c9d6e0; }
+  .admin-section-checkin{ background:#fdf1e3; border:1px solid #e9d3ac; }
+  .admin-section-summary{ background:#eef7ee; border:1px solid #c9e0c9; }
+  .card h2{ margin-top:0; font-size:18px; color:var(--green);}
+  .card h3{ font-size:14px; margin:16px 0 8px; }
+  label{ display:block; font-size:13px; font-weight:600; margin:16px 0 6px; }
+  input, select{ width:100%; padding:12px 14px; border:1px solid #d8d2c2; border-radius:8px; font-size:15px; background:#fff; }
+  input:focus, select:focus{ outline:2px solid var(--gold); border-color:var(--gold); }
+  .tiers{ display:grid; gap:10px; margin-top:8px; }
+  .tier{ border:1px solid #d8d2c2; border-radius:10px; padding:12px 14px; display:flex; align-items:center; gap:12px; cursor:pointer; }
+  .tier input{ width:auto; }
+  .tier .price{ margin-left:auto; font-weight:700; color:var(--green); }
+  .tier.selected{ border-color:var(--gold); background:#fbf3de; }
+  button.submit{ margin-top:22px; width:100%; padding:14px; border:none; border-radius:8px; background:var(--green); color:#fff; font-size:16px; font-weight:700; cursor:pointer; }
+  button.submit:disabled{ opacity:.6; cursor:wait; }
+  button.submit:hover:not(:disabled){ background:var(--green-deep); }
+  .error{ margin-top:14px; padding:12px 14px; background:#fdeaea; color:#8a1f1f; border-radius:8px; font-size:14px; display:none; }
+  .result{ display:none; text-align:center; margin-top:10px; }
+  .result canvas{ max-width:100%; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .result .serial{ margin:16px 0 6px; font-size:20px; font-weight:700; color:var(--green); }
+  .invite-banner{ background:#fbf3de; border:1px solid var(--gold); color:#5c4a1a; padding:12px 14px; border-radius:8px; font-size:13px; margin-bottom:6px; }
+  select:disabled, input:disabled{ background:#f0eee5; color:#555; }
+  .actions-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+  .save-note{ font-size:12px; color:#8a8a8a; margin-top:10px; }
+  .voucher-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid #d8d2c2; border-radius:10px; padding:12px 14px; margin-top:10px; flex-wrap:wrap; }
+  .voucher-row .voucher-label{ font-weight:600; }
+  .voucher-row .voucher-status{ font-size:13px; color:#8a8a8a; }
+  .voucher-row .voucher-actions{ display:flex; gap:8px; }
+  .tab-bar{ display:none; justify-content:center; gap:8px; flex-wrap:wrap; padding:16px 20px 0; }
+  .tab-bar.visible{ display:flex; }
+  .tab-btn{ padding:8px 16px; border-radius:20px; border:1px solid rgba(232,211,154,.4); background:transparent; color:rgba(250,247,239,.75); font-size:13px; font-weight:600; cursor:pointer; }
+  .tab-btn.active{ background:var(--gold); color:var(--green-deep); border-color:var(--gold); }
+  #adminPasscodeWrap{ max-width:640px; margin:16px auto 0; padding:0 20px; display:none; }
+  #adminPasscodeWrap input{ background:#fff; }
+  .voucher-row button{ padding:8px 14px; background:var(--green); color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:13px; }
+  .voucher-row button.secondary{ background:transparent; color:var(--green); border:1px solid var(--green); }
+  .voucher-row button:disabled{ background:#ccc; color:#fff; cursor:default; border:none; }
+  .result-box{ margin-top:12px; padding:12px 14px; background:#fbf3de; border:1px solid var(--gold); border-radius:8px; font-size:13px; }
+  .chapter-summary{ margin-bottom:14px; }
+  .chapter-summary .chapter-title{ font-weight:700; color:var(--green); font-size:13px; margin-bottom:4px; }
+  .chapter-summary .person-row{ font-size:13px; padding:4px 0; border-bottom:1px solid #eee; }
+  a.download{ display:inline-block; margin-top:14px; padding:12px 22px; background:var(--gold); color:var(--green-deep); font-weight:700; border-radius:8px; text-decoration:none; }
+  footer{ text-align:center; padding:24px 20px 40px; font-size:12px; color:rgba(250,247,239,.55); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SLPP North America · Regional Ticketing</div>
+  <h1 id="eventHeading">Chapter Event</h1>
+  <p id="eventSubheading">Claim your ticket below — your voucher is generated instantly.</p>
+  <div class="tab-bar" id="tabBar">
+    <button type="button" class="tab-btn" data-tab="claim">Claim Ticket</button>
+    <button type="button" class="tab-btn" data-tab="generate">Generate Vouchers</button>
+    <button type="button" class="tab-btn" data-tab="checkin">Check-In</button>
+    <button type="button" class="tab-btn" data-tab="summary">Summary</button>
+  </div>
+</header>
+
+<div id="adminPasscodeWrap">
+  <label for="adminPasscode" style="color:var(--gold-light);">Admin passcode</label>
+  <input type="password" id="adminPasscode" placeholder="Enter your admin passcode" autocomplete="off">
+</div>
+
+<main>
+
+  <!-- DISTRIBUTOR VIEW: shown when opened with ?batch=TOKEN -->
+  <div class="card" id="batchCard" style="display:none;">
+    <h2>Vouchers to Distribute</h2>
+    <p id="batchIntro" style="font-size:14px;color:#444;">You've received <strong id="batchCount"></strong> ticket voucher(s). Tap Share to send one to a different person via Text or WhatsApp, or Claim one for yourself. Once sent or claimed, that voucher is locked in and can't be reused.</p>
+    <div id="batchList"></div>
+    <div class="error" id="batchViewError"></div>
+  </div>
+
+  <!-- CLAIMANT FORM: open self-serve, or prefilled via ?voucher=TOKEN -->
+  <div class="card" id="formCard">
+    <h2>Ticket Claim Form</h2>
+    <div class="invite-banner" id="inviteBanner" style="display:none;"></div>
+    <form id="claimForm">
+      <label for="fullName">Full name</label>
+      <input type="text" id="fullName" required autocomplete="name">
+
+      <label for="email">Email <span style="font-weight:400;color:#8a8a8a;">(optional)</span></label>
+      <input type="email" id="email" autocomplete="email">
+
+      <label for="phone">Phone <span style="font-weight:400;color:#8a8a8a;">(optional)</span></label>
+      <input type="tel" id="phone" autocomplete="tel">
+
+      <label for="chapter">Chapter</label>
+      <select id="chapter">
+        <option value="No Chapter" selected>No Chapter</option>
+        <option value="Arizona Chapter (AZC)">Arizona Chapter (AZC)</option>
+        <option value="Atlanta GA Chapter (GAC)">Atlanta GA Chapter (GAC)</option>
+        <option value="Chicago Chapter (ILC)">Chicago Chapter (ILC)</option>
+        <option value="Dallas Chapter (TXDC)">Dallas Chapter (TXDC)</option>
+        <option value="Delaware Valley Chapter (DVC)">Delaware Valley Chapter (DVC)</option>
+        <option value="DRC Chapter (DRC)">DRC Chapter (DRC)</option>
+        <option value="Florida Chapter (FLC)">Florida Chapter (FLC)</option>
+        <option value="Houston Chapter (TXHC)">Houston Chapter (TXHC)</option>
+        <option value="Iowa Chapter (IAC)">Iowa Chapter (IAC)</option>
+        <option value="Minnesota Chapter (MNC)">Minnesota Chapter (MNC)</option>
+        <option value="New England Chapter (NEC)">New England Chapter (NEC)</option>
+        <option value="New Jersey Chapter (NJC)">New Jersey Chapter (NJC)</option>
+        <option value="New York Chapter (NYC)">New York Chapter (NYC)</option>
+        <option value="North Dakota Chapter (NDC)">North Dakota Chapter (NDC)</option>
+        <option value="Northern California Chapter (CANC)">Northern California Chapter (CANC)</option>
+        <option value="Ohio Chapter (OHC)">Ohio Chapter (OHC)</option>
+        <option value="Seattle Washington Chapter (SWC)">Seattle Washington Chapter (SWC)</option>
+        <option value="Southern California Chapter (CASC)">Southern California Chapter (CASC)</option>
+        <option value="Virginia Chapter (VAC)">Virginia Chapter (VAC)</option>
+        <option value="Washington DC Chapter (WDC)">Washington DC Chapter (WDC)</option>
+      </select>
+
+      <label>Ticket type <span id="tierHelp" style="font-weight:400;color:#8a8a8a;">(select one)</span></label>
+      <div class="tiers" id="tierPicker">
+        <p class="save-note" id="tierLoading">Loading ticket options…</p>
+      </div>
+
+      <button type="submit" class="submit" id="submitBtn">Claim My Ticket</button>
+      <div class="error" id="errorBox"></div>
+    </form>
+  </div>
+
+  <div class="card result" id="resultCard">
+    <h2 id="resultHeading">Your ticket is ready</h2>
+    <div class="invite-banner" id="alreadyClaimedBanner" style="display:none;"></div>
+    <div class="serial" id="serialLabel"></div>
+    <canvas id="ticketCanvas"></canvas><br>
+    <div class="actions-row">
+      <a class="download" id="downloadLink" download="slpp-ticket.png">Download Ticket</a>
+      <button type="button" class="download" id="shareBtn" style="border:none;cursor:pointer;">Share via Text / WhatsApp</button>
+    </div>
+    <p class="save-note">On phones, "Share" opens Messages, WhatsApp, or Save to Photos directly. On desktop, use Download and share the saved image.</p>
+    <button type="button" class="submit" id="claimAnotherBtn" style="margin-top:20px;background:transparent;color:var(--green);border:1px solid var(--green);">Claim Another Ticket</button>
+  </div>
+
+  <!-- ============== GENERATE VOUCHERS (unified: 1 to 10) ============== -->
+  <div class="card admin-section-generate" id="panelGenerate" style="display:none;">
+    <h2>Generate Vouchers</h2>
+    <p style="font-size:12px;color:#555;margin:0 0 12px;">Always produces ONE link for a distributor — even a single voucher for one known person works the same way as a stack of ten for a chapter leader to hand out.</p>
+
+    <p style="font-size:13px;font-weight:600;margin:14px 0 4px;">How many of each tier? <span style="font-weight:400;color:#555;">(total 1–10)</span></p>
+    <div id="voucherTierCounts"><p class="save-note">Loading ticket options…</p></div>
+    <label for="vOpenCount">No fixed tier <span style="font-weight:400;color:#555;">(recipient picks their own)</span></label>
+    <input type="number" id="vOpenCount" min="0" max="10" value="1">
+
+    <label for="vRecipientName">Recipient name <span style="font-weight:400;color:#555;">(only used if total = 1, not locked)</span></label>
+    <input type="text" id="vRecipientName">
+    <label for="vRecipientPhone">Recipient phone <span style="font-weight:400;color:#555;">(only used if total = 1, not locked)</span></label>
+    <input type="tel" id="vRecipientPhone">
+
+    <label for="vChapter">Chapter to suggest <span style="font-weight:400;color:#555;">(optional — blank lets recipient(s) choose)</span></label>
+    <select id="vChapter">
+      <option value="">— Let recipient(s) choose —</option>
+      <option value="No Chapter">No Chapter</option>
+      <option value="Arizona Chapter (AZC)">Arizona Chapter (AZC)</option>
+      <option value="Atlanta GA Chapter (GAC)">Atlanta GA Chapter (GAC)</option>
+      <option value="Chicago Chapter (ILC)">Chicago Chapter (ILC)</option>
+      <option value="Dallas Chapter (TXDC)">Dallas Chapter (TXDC)</option>
+      <option value="Delaware Valley Chapter (DVC)">Delaware Valley Chapter (DVC)</option>
+      <option value="DRC Chapter (DRC)">DRC Chapter (DRC)</option>
+      <option value="Florida Chapter (FLC)">Florida Chapter (FLC)</option>
+      <option value="Houston Chapter (TXHC)">Houston Chapter (TXHC)</option>
+      <option value="Iowa Chapter (IAC)">Iowa Chapter (IAC)</option>
+      <option value="Minnesota Chapter (MNC)">Minnesota Chapter (MNC)</option>
+      <option value="New England Chapter (NEC)">New England Chapter (NEC)</option>
+      <option value="New Jersey Chapter (NJC)">New Jersey Chapter (NJC)</option>
+      <option value="New York Chapter (NYC)">New York Chapter (NYC)</option>
+      <option value="North Dakota Chapter (NDC)">North Dakota Chapter (NDC)</option>
+      <option value="Northern California Chapter (CANC)">Northern California Chapter (CANC)</option>
+      <option value="Ohio Chapter (OHC)">Ohio Chapter (OHC)</option>
+      <option value="Seattle Washington Chapter (SWC)">Seattle Washington Chapter (SWC)</option>
+      <option value="Southern California Chapter (CASC)">Southern California Chapter (CASC)</option>
+      <option value="Virginia Chapter (VAC)">Virginia Chapter (VAC)</option>
+      <option value="Washington DC Chapter (WDC)">Washington DC Chapter (WDC)</option>
+    </select>
+
+    <button type="button" class="submit" id="generateBtn" style="margin-top:16px;">Generate Vouchers</button>
+    <div class="error" id="generateError"></div>
+    <div id="generateResult" class="result-box" style="display:none;"></div>
+  </div>
+
+  <!-- ============== CHECK-IN: GUEST WITH TICKET + WALK-IN ============== -->
+  <div class="card admin-section-checkin" id="panelCheckin" style="display:none;">
+    <h2>Check-In</h2>
+    <h3>Guest With Ticket</h3>
+    <label for="checkInSerial">Ticket number</label>
+    <input type="text" id="checkInSerial" placeholder="e.g. MA-007 or just 007">
+    <label for="checkInPhone1">Phone <span style="font-weight:400;color:#555;">(optional — overrides ticket's on file)</span></label>
+    <input type="tel" id="checkInPhone1">
+    <label for="checkInPayment1">Payment status</label>
+    <select id="checkInPayment1">
+      <option value="Paid">Paid</option>
+      <option value="Pending">Pending</option>
+    </select>
+    <button type="button" class="submit" id="checkInSerialBtn" style="margin-top:16px;">Check In</button>
+    <div class="error" id="checkInSerialError"></div>
+    <div id="checkInSerialResult" class="result-box" style="display:none;"></div>
+
+    <hr style="margin:24px 0;border:none;border-top:1px solid #e9d3ac;">
+
+    <h3>Walk-In (sell + check in)</h3>
+    <label for="wiName">Full name</label>
+    <input type="text" id="wiName" required>
+    <label for="wiChapter">Chapter</label>
+    <select id="wiChapter">
+      <option value="No Chapter">No Chapter</option>
+      <option value="Arizona Chapter (AZC)">Arizona Chapter (AZC)</option>
+      <option value="Atlanta GA Chapter (GAC)">Atlanta GA Chapter (GAC)</option>
+      <option value="Chicago Chapter (ILC)">Chicago Chapter (ILC)</option>
+      <option value="Dallas Chapter (TXDC)">Dallas Chapter (TXDC)</option>
+      <option value="Delaware Valley Chapter (DVC)">Delaware Valley Chapter (DVC)</option>
+      <option value="DRC Chapter (DRC)">DRC Chapter (DRC)</option>
+      <option value="Florida Chapter (FLC)">Florida Chapter (FLC)</option>
+      <option value="Houston Chapter (TXHC)">Houston Chapter (TXHC)</option>
+      <option value="Iowa Chapter (IAC)">Iowa Chapter (IAC)</option>
+      <option value="Minnesota Chapter (MNC)">Minnesota Chapter (MNC)</option>
+      <option value="New England Chapter (NEC)">New England Chapter (NEC)</option>
+      <option value="New Jersey Chapter (NJC)">New Jersey Chapter (NJC)</option>
+      <option value="New York Chapter (NYC)">New York Chapter (NYC)</option>
+      <option value="North Dakota Chapter (NDC)">North Dakota Chapter (NDC)</option>
+      <option value="Northern California Chapter (CANC)">Northern California Chapter (CANC)</option>
+      <option value="Ohio Chapter (OHC)">Ohio Chapter (OHC)</option>
+      <option value="Seattle Washington Chapter (SWC)">Seattle Washington Chapter (SWC)</option>
+      <option value="Southern California Chapter (CASC)">Southern California Chapter (CASC)</option>
+      <option value="Virginia Chapter (VAC)">Virginia Chapter (VAC)</option>
+      <option value="Washington DC Chapter (WDC)">Washington DC Chapter (WDC)</option>
+    </select>
+    <label for="wiTier">Ticket type</label>
+    <select id="wiTier"><option value="">Loading ticket options…</option></select>
+    <label for="wiPhone">Phone <span style="font-weight:400;color:#555;">(optional)</span></label>
+    <input type="tel" id="wiPhone">
+    <label for="wiPayment">Payment status</label>
+    <select id="wiPayment">
+      <option value="Paid">Paid</option>
+      <option value="Pending">Pending</option>
+    </select>
+    <button type="button" class="submit" id="walkInBtn" style="margin-top:16px;">Sell &amp; Check In</button>
+    <div class="error" id="walkInError"></div>
+  </div>
+
+  <!-- ============== CHECK-IN SUMMARY ============== -->
+  <div class="card admin-section-summary" id="panelSummary" style="display:none;">
+    <h2>Check-In Summary</h2>
+    <button type="button" class="submit" id="viewSummaryBtn" style="background:transparent;color:var(--green);border:1px solid var(--green);">View Check-In Summary</button>
+    <div class="error" id="summaryError"></div>
+    <div id="summaryResult" style="display:none;margin-top:12px;"></div>
+  </div>
+
+</main>
+
+<footer id="pageFooter">SLPP North America Region</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="assets/js/ticket-renderer.js"></script>
+<script>
+/* ======================= CONFIG ======================= */
+const CONFIG = {
+  ENDPOINT: 'https://script.google.com/macros/s/AKfycbzlMiozn4uggplThfTpr7E2iqshLaGxO-ec4WiZ0QeVeOYQT5PYxpCn49IsVSwhPmGQUQ/exec',
+  chapterCode: new URLSearchParams(window.location.search).get('chapter') || 'NEC',
+  eventId: new URLSearchParams(window.location.search).get('event') || 'NEC-2026-INAUGURATION',
+  serialPrefix: 'MA',
+  chapterName: 'New England Chapter',
+  eventName: 'Executive Inauguration Celebration',
+  chapter: {},
+  event: {},
+  tiers: [],
+  tierMap: {}};
+let TIER_LABELS = {};
+/* ========================================================= */
+
+const submitBtn = document.getElementById('submitBtn');
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el && value) el.textContent = value;
+}
+
+function applyEventConfig(data) {
+  CONFIG.chapterCode = data.chapterCode || CONFIG.chapterCode;
+  CONFIG.eventId = data.eventId || CONFIG.eventId;
+  CONFIG.serialPrefix = data.serialPrefix || CONFIG.serialPrefix;
+  CONFIG.chapterName = data.chapterName || CONFIG.chapterName;
+  CONFIG.eventName = data.eventName || CONFIG.eventName;
+  CONFIG.chapter = data.chapter || {
+    code: CONFIG.chapterCode,
+    name: CONFIG.chapterName,
+    serialPrefix: CONFIG.serialPrefix,
+    logoUrl: data.logoUrl || '',
+    skylineUrl: data.skylineUrl || '',
+    website: data.website || '',
+    contactPhone: data.contactPhone || '',
+    primaryColor: data.theme?.green || '#0b3d24',
+    secondaryColor: data.theme?.gold || '#c9a24b'
+  };
+  CONFIG.event = data.event || {
+    id: CONFIG.eventId,
+    name: CONFIG.eventName,
+    subtitle: data.ticketSubtitle || '',
+    dateDisplay: data.eventDateDisplay || data.eventDate || '',
+    timeDisplay: data.eventTime || '',
+    venue: data.venue || '',
+    address: data.address || '',
+    dressCode: data.dressCode || 'FORMAL / TRADITIONAL',
+    footerNotice: data.footerNotice || 'Ticket must be presented for admission',
+    refundNotice: data.refundNotice || 'No refunds or replacements'
+  };
+
+  document.querySelector('header .eyebrow').textContent = `SLPP North America · ${CONFIG.chapterName}`;
+  setText('eventHeading', CONFIG.eventName);
+  const eventDetails = [data.eventDate, data.eventTime, data.venue].filter(Boolean).join(' · ');
+  setText('eventSubheading', eventDetails || data.subheading || 'Claim your ticket below — your voucher is generated instantly.');
+  setText('pageFooter', `SLPP North America — ${CONFIG.chapterName}`);
+
+  document.title = `Claim Your Ticket — ${CONFIG.chapterName} ${CONFIG.eventName}`;
+
+  if (data.theme) {
+    const root = document.documentElement;
+    Object.entries(data.theme).forEach(([key, value]) => root.style.setProperty(`--${key}`, value));
+  }
+
+  const incomingTiers = Array.isArray(data.tiers)
+    ? data.tiers
+    : Object.entries(data.tiers || {}).map(([tierCode, tier]) => ({ tierCode, ...tier }));
+
+  CONFIG.tiers = incomingTiers
+    .filter(tier => tier.active !== false)
+    .sort((a, b) => Number(a.sortOrder || 0) - Number(b.sortOrder || 0));
+  CONFIG.tierMap = Object.fromEntries(CONFIG.tiers.map(tier => [tier.tierCode, tier]));
+  TIER_LABELS = Object.fromEntries(CONFIG.tiers.map(tier => [tier.tierCode, tierDisplayLabel(tier)]));
+  renderTierControls();
+}
+
+function formatMoney(value, currency) {
+  const amount = Number(value || 0);
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency', currency: currency || 'USD', maximumFractionDigits: 2
+    }).format(amount);
+  } catch (e) {
+    return `$${amount.toFixed(2)}`;
+  }
+}
+
+function tierDisplayLabel(tier) {
+  return `${tier.label || tier.tierCode} (${formatMoney(tier.price, tier.currency)})`;
+}
+
+function renderTierControls() {
+  const picker = document.getElementById('tierPicker');
+  const voucherCounts = document.getElementById('voucherTierCounts');
+  const walkInSelect = document.getElementById('wiTier');
+  picker.replaceChildren();
+  voucherCounts.replaceChildren();
+  walkInSelect.replaceChildren();
+
+  if (!CONFIG.tiers.length) {
+    const unavailable = document.createElement('p');
+    unavailable.className = 'save-note';
+    unavailable.textContent = 'No ticket types are currently available for this event.';
+    picker.appendChild(unavailable);
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'No ticket types available';
+    walkInSelect.appendChild(option);
+    submitBtn.disabled = true;
+    return;
+  }
+
+  CONFIG.tiers.forEach((tier, index) => {
+    const label = document.createElement('label');
+    label.className = 'tier';
+    label.dataset.tier = tier.tierCode;
+
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'tier';
+    radio.value = tier.tierCode;
+    if (index === 0) radio.checked = true;
+
+    const name = document.createElement('span');
+    name.textContent = tier.label || tier.tierCode;
+    const price = document.createElement('span');
+    price.className = 'price';
+    price.textContent = formatMoney(tier.price, tier.currency);
+    label.append(radio, name, price);
+    if (index === 0) label.classList.add('selected');
+    picker.appendChild(label);
+
+    const countLabel = document.createElement('label');
+    const inputId = `voucherCount_${tier.tierCode}`;
+    countLabel.htmlFor = inputId;
+    countLabel.textContent = tierDisplayLabel(tier);
+    const countInput = document.createElement('input');
+    countInput.type = 'number';
+    countInput.id = inputId;
+    countInput.dataset.tierCode = tier.tierCode;
+    countInput.min = '0';
+    countInput.max = '10';
+    countInput.value = '0';
+    voucherCounts.append(countLabel, countInput);
+
+    const option = document.createElement('option');
+    option.value = tier.tierCode;
+    option.textContent = tierDisplayLabel(tier);
+    walkInSelect.appendChild(option);
+  });
+  submitBtn.disabled = false;
+}
+
+/* ======================= API TRANSPORT =======================
+ * GitHub Pages -> Google Apps Script transport using fetch().
+ * All responses are read as text first so an HTML error page is reported
+ * clearly instead of causing an opaque "Unexpected token <" JSON error.
+ */
+async function parseApiResponse(res) {
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(`Ticket server returned HTTP ${res.status}.`);
+  }
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    const preview = String(text || '').replace(/\s+/g, ' ').slice(0, 180);
+    throw new Error(`Ticket server did not return JSON. Response begins: ${preview || '(empty response)'}`);
+  }
+}
+
+async function apiGet(params) {
+  const query = new URLSearchParams(params);
+  const url = `${CONFIG.ENDPOINT}?${query.toString()}`;
+  const res = await fetch(url, {
+    method: 'GET',
+    redirect: 'follow',
+    cache: 'no-store'
+  });
+  return parseApiResponse(res);
+}
+
+async function apiPost(payload) {
+  const res = await fetch(CONFIG.ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload),
+    redirect: 'follow',
+    cache: 'no-store'
+  });
+  return parseApiResponse(res);
+}
+/* ============================================================= */
+
+async function loadEventConfig() {
+  try {
+    const data = await apiGet({
+      action: 'eventConfig',
+      chapter: CONFIG.chapterCode,
+      event: CONFIG.eventId
+    });
+    if (data.ok) { applyEventConfig(data); } else { throw new Error(data.error || 'Event configuration could not be loaded.'); }
+  } catch (err) {
+    console.error('Event configuration could not be loaded.', err);
+    const box = document.getElementById('errorBox');
+    if (box) { box.textContent = err.message || 'Event configuration could not be loaded.'; box.style.display = 'block'; }
+    submitBtn.disabled = true;
+  }
+}
+
+const eventConfigReady = loadEventConfig();
+
+const tierPicker = document.getElementById('tierPicker');
+tierPicker.addEventListener('change', () => {
+  document.querySelectorAll('.tier').forEach(el => el.classList.remove('selected'));
+  const checked = tierPicker.querySelector('input:checked');
+  if (checked) checked.closest('.tier').classList.add('selected');
+});
+
+const form = document.getElementById('claimForm');
+const errorBox = document.getElementById('errorBox');
+const formCard = document.getElementById('formCard');
+const resultCard = document.getElementById('resultCard');
+const serialLabel = document.getElementById('serialLabel');
+const canvas = document.getElementById('ticketCanvas');
+const downloadLink = document.getElementById('downloadLink');
+const shareBtn = document.getElementById('shareBtn');
+const claimAnotherBtn = document.getElementById('claimAnotherBtn');
+const inviteBanner = document.getElementById('inviteBanner');
+
+function showError(msg){ errorBox.textContent = msg; errorBox.style.display = 'block'; }
+
+/* ======================= TAB NAVIGATION ======================= */
+// Four sections, one visible at a time: Claim Ticket (default), Generate
+// Vouchers, Check-In, Summary. Only shown when NOT in a distributor (?batch=)
+// or voucher (?voucher=) context — those override with their own dedicated view.
+// Declared early since the page-load branch below needs it immediately.
+const tabPanels = {
+  claim: formCard,
+  generate: document.getElementById('panelGenerate'),
+  checkin: document.getElementById('panelCheckin'),
+  summary: document.getElementById('panelSummary')
+};
+const tabBar = document.getElementById('tabBar');
+const adminPasscodeWrap = document.getElementById('adminPasscodeWrap');
+
+function showTab(name) {
+  Object.entries(tabPanels).forEach(([key, el]) => { el.style.display = key === name ? 'block' : 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
+  adminPasscodeWrap.style.display = name === 'claim' ? 'none' : 'block';
+  resultCard.style.display = 'none'; // switching tabs always leaves the "ticket ready" view
+}
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+
+/* -------- Voucher links: ?voucher=TOKEN. Name/phone/chapter prefill only
+   (never locked); tier is the one field that locks if the admin set it. -------- */
+async function applyVoucherParams() {
+  await eventConfigReady;
+  const token = new URLSearchParams(window.location.search).get('voucher');
+  if (!token) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Loading your voucher…';
+
+  try {
+    const data = await apiGet({
+      action: 'voucher',
+      token,
+      chapter: CONFIG.chapterCode,
+      event: CONFIG.eventId
+    });
+
+    if (!data.ok) {
+      if (data.alreadyClaimed && data.tier && data.serial) {
+        try {
+          await renderTicket(data.tier, data.serial, data.validationUrl || data.qrValue || data.validationToken || data.serial);
+          document.getElementById('resultHeading').textContent = 'This voucher was already claimed';
+          const banner = document.getElementById('alreadyClaimedBanner');
+          banner.textContent = 'This voucher has already been used. Here is the ticket it issued — save or share it again below.';
+          banner.style.display = 'block';
+          formCard.style.display = 'none';
+          resultCard.style.display = 'block';
+        } catch (e) {
+          showError('This voucher has already been claimed, and the ticket image could not be reloaded. Contact an admin with serial ' + data.serial + ' if you need it resent.');
+        }
+      } else {
+        showError(data.error || 'This voucher link is not valid.');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Claim My Ticket';
+      return;
+    }
+
+    let prefillNotes = [], lockedNotes = [];
+    if (data.name) { document.getElementById('fullName').value = data.name; prefillNotes.push('name'); }
+    if (data.phone) { document.getElementById('phone').value = data.phone; prefillNotes.push('phone number'); }
+    if (data.chapter) {
+      const sel = document.getElementById('chapter');
+      const match = Array.from(sel.options).find(o => o.value === data.chapter);
+      if (match) sel.value = data.chapter;
+      prefillNotes.push('chapter');
+    }
+    if (data.tier) {
+      const radio = tierPicker.querySelector(`input[value="${data.tier}"]`);
+      if (radio) {
+        radio.checked = true;
+        radio.closest('.tier').classList.add('selected');
+        tierPicker.querySelectorAll('input[name="tier"]').forEach(r => { if (r !== radio) r.disabled = true; });
+        lockedNotes.push('ticket type');
+      }
+    }
+
+    let bannerText = 'This link was sent to you personally. ';
+    if (prefillNotes.length) bannerText += `Your ${prefillNotes.join(', ')} ${prefillNotes.length > 1 ? 'have' : 'has'} been filled in — feel free to change ${prefillNotes.length > 1 ? 'them' : 'it'}. `;
+    if (lockedNotes.length) bannerText += `Your ${lockedNotes.join(', ')} is locked and can't be changed. `;
+    bannerText += 'Tap Claim to receive your ticket.';
+    inviteBanner.textContent = bannerText;
+    inviteBanner.style.display = 'block';
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Claim My Ticket';
+  } catch (err) {
+    showError('Could not load this voucher link. Please check your connection and try again.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Claim My Ticket';
+  }
+}
+
+/* -------- Distributor view: ?batch=TOKEN -------- */
+async function loadBatch(batchId) {
+  await eventConfigReady;
+  formCard.style.display = 'none';
+  const batchCard = document.getElementById('batchCard');
+  const batchViewError = document.getElementById('batchViewError');
+  batchCard.style.display = 'block';
+
+  try {
+    const data = await apiGet({
+      action: 'batch',
+      batch: batchId,
+      chapter: CONFIG.chapterCode,
+      event: CONFIG.eventId
+    });
+    if (!data.ok) { batchViewError.textContent = data.error || 'This distributor link is not valid.'; batchViewError.style.display = 'block'; return; }
+
+    document.getElementById('batchCount').textContent = data.vouchers.length;
+    const listEl = document.getElementById('batchList');
+    listEl.innerHTML = '';
+
+    data.vouchers.forEach((v, idx) => {
+      const row = document.createElement('div');
+      row.className = 'voucher-row';
+
+      const labelWrap = document.createElement('div');
+      const label = document.createElement('div');
+      label.className = 'voucher-label';
+      label.textContent = `Voucher #${idx + 1}`;
+      labelWrap.appendChild(label);
+      const tierLine = document.createElement('div');
+      tierLine.style.cssText = 'font-size:12px;color:#8a8a8a;margin-top:2px;';
+      tierLine.textContent = TIER_LABELS[v.tier] || 'Recipient chooses tier';
+      labelWrap.appendChild(tierLine);
+      row.appendChild(labelWrap);
+
+      if (v.claimed) {
+        const status = document.createElement('span');
+        status.className = 'voucher-status';
+        status.textContent = 'Claimed ✓';
+        row.appendChild(status);
+      } else if (v.dispatched) {
+        const status = document.createElement('span');
+        status.className = 'voucher-status';
+        status.textContent = 'Sent ✓';
+        row.appendChild(status);
+      } else {
+        const actions = document.createElement('div');
+        actions.className = 'voucher-actions';
+
+        const voucherUrl = `${window.location.origin}${window.location.pathname}?chapter=${encodeURIComponent(CONFIG.chapterCode)}&event=${encodeURIComponent(CONFIG.eventId)}&voucher=${v.token}`;
+
+        const shareBtnEl = document.createElement('button');
+        shareBtnEl.type = 'button';
+        shareBtnEl.textContent = 'Share';
+        shareBtnEl.addEventListener('click', async () => {
+          const shareData = { title: 'SLPP North America Ticket', text: 'Claim your ticket to the SLPP North America Executive Inauguration:', url: voucherUrl };
+          let sent = false;
+          if (navigator.share) {
+            try { await navigator.share(shareData); sent = true; } catch (e) { /* cancelled */ }
+          } else {
+            try { await navigator.clipboard.writeText(voucherUrl); alert('Link copied — paste it into Messages or WhatsApp.'); sent = true; }
+            catch (e) { window.prompt('Copy this link:', voucherUrl); sent = true; }
+          }
+          if (sent) {
+            try {
+              await apiPost({ action: 'dispatchVoucher', chapterCode: CONFIG.chapterCode, eventId: CONFIG.eventId, token: v.token });
+            } catch (e) { /* best-effort */ }
+            shareBtnEl.disabled = true;
+            shareBtnEl.textContent = 'Sent ✓';
+            claimBtnEl.disabled = true;
+          }
+        });
+
+        const claimBtnEl = document.createElement('button');
+        claimBtnEl.type = 'button';
+        claimBtnEl.className = 'secondary';
+        claimBtnEl.textContent = 'Claim for Myself';
+        claimBtnEl.addEventListener('click', () => {
+          window.location.href = `${window.location.pathname}?chapter=${encodeURIComponent(CONFIG.chapterCode)}&event=${encodeURIComponent(CONFIG.eventId)}&voucher=${v.token}`;
+        });
+
+        actions.appendChild(shareBtnEl);
+        actions.appendChild(claimBtnEl);
+        row.appendChild(actions);
+      }
+      listEl.appendChild(row);
+    });
+  } catch (err) {
+    batchViewError.textContent = 'Could not load this distributor link. Please check your connection and try again.';
+    batchViewError.style.display = 'block';
+  }
+}
+
+const batchIdParam = new URLSearchParams(window.location.search).get('batch');
+const voucherIdParam = new URLSearchParams(window.location.search).get('voucher');
+if (batchIdParam) {
+  loadBatch(batchIdParam);
+} else if (voucherIdParam) {
+  applyVoucherParams(); // tab bar stays hidden — this is a dedicated claimant link, not general navigation
+} else {
+  tabBar.classList.add('visible');
+  showTab('claim');
+}
+
+/* -------- Claimant form submission -------- */
+form.addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  errorBox.style.display = 'none';
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const chapter = document.getElementById('chapter').value;
+  const tierInput = form.querySelector('input[name="tier"]:checked');
+  const voucherToken = new URLSearchParams(window.location.search).get('voucher');
+
+  if (!fullName) { showError('Please fill in your name.'); return; }
+  const tier = tierInput ? tierInput.value : (CONFIG.tiers[0]?.tierCode || '');
+
+  await eventConfigReady;
+  await submitClaim({ fullName, email, phone, chapter, tier, voucher: voucherToken || undefined, chapterCode: CONFIG.chapterCode, eventId: CONFIG.eventId });
+});
+
+async function submitClaim(payload) {
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Claiming your ticket…';
+
+  try {
+    const data = await apiPost(payload);
+
+    if (!data.ok) {
+      if (data.duplicateWarning) {
+        const proceed = window.confirm((data.error || 'This contact info has already claimed a ticket.') + ' Claim another ticket anyway?');
+        if (proceed) { await submitClaim({ ...payload, confirmDuplicate: true }); return; }
+        submitBtn.disabled = false; submitBtn.textContent = 'Claim My Ticket';
+        return;
+      }
+      showError(data.error || 'Something went wrong. Please try again.');
+      submitBtn.disabled = false; submitBtn.textContent = 'Claim My Ticket';
+      return;
+    }
+
+    try {
+      document.getElementById('resultHeading').textContent = 'Your ticket is ready';
+      document.getElementById('alreadyClaimedBanner').style.display = 'none';
+      canvas.style.display = '';
+      document.querySelector('.actions-row').style.display = '';
+      await renderTicket(data.tier, data.serial, data.validationUrl || data.qrValue || data.validationToken || data.serial);
+      formCard.style.display = 'none';
+      resultCard.style.display = 'block';
+    } catch (renderErr) {
+      formCard.style.display = 'none';
+      resultCard.style.display = 'block';
+      serialLabel.textContent = data.serial;
+      canvas.style.display = 'none';
+      document.querySelector('.actions-row').style.display = 'none';
+      document.querySelector('.save-note').textContent =
+        'Your ticket was claimed successfully — serial ' + data.serial + '. The ticket image couldn\'t load right now, but your number is already saved. Contact an admin if you need the image resent.';
+    }
+  } catch (err) {
+    showError('Could not reach the ticket server. Please check your connection and try again.');
+    submitBtn.disabled = false; submitBtn.textContent = 'Claim My Ticket';
+  }
+}
+
+claimAnotherBtn.addEventListener('click', () => { window.location.href = `${window.location.pathname}?chapter=${encodeURIComponent(CONFIG.chapterCode)}&event=${encodeURIComponent(CONFIG.eventId)}`; });
+
+shareBtn.addEventListener('click', async () => {
+  try {
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    const file = new File([blob], `slpp-ticket-${serialLabel.textContent}.png`, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: 'My SLPP Ticket', text: `My SLPP North America ticket — ${serialLabel.textContent}` });
+    } else {
+      alert('Sharing isn\'t supported on this browser. Please use Download instead, then share the saved image from your Photos app.');
+    }
+  } catch (err) { /* cancelled */ }
+});
+
+async function renderTicket(tier, serial, qrValue) {
+  const tierConfig = CONFIG.tierMap[tier];
+  if (!tierConfig) throw new Error(`Unknown or inactive ticket type: ${tier}`);
+  if (!window.SLPPTicketRenderer) throw new Error('The master ticket renderer is not loaded.');
+
+  const chapterConfig = {
+    ...(CONFIG.chapter || {}),
+    code: CONFIG.chapter?.code || CONFIG.chapterCode,
+    name: CONFIG.chapter?.name || CONFIG.chapterName,
+    serialPrefix: CONFIG.chapter?.serialPrefix || CONFIG.serialPrefix
+  };
+  const eventConfig = {
+    ...(CONFIG.event || {}),
+    id: CONFIG.event?.id || CONFIG.eventId,
+    name: CONFIG.event?.name || CONFIG.eventName
+  };
+
+  await window.SLPPTicketRenderer.render(canvas, {
+    chapter: chapterConfig,
+    event: eventConfig,
+    ticket: {
+      code: tierConfig.tierCode,
+      label: tierConfig.label || tierConfig.tierCode,
+      price: tierConfig.price,
+      currency: tierConfig.currency || 'USD',
+      admitCount: tierConfig.admitCount || 1,
+      badgeColor: tierConfig.badgeColor || chapterConfig.primaryColor,
+      serial,
+      qrValue: qrValue || serial
+    }
+  });
+
+  serialLabel.textContent = serial;
+  downloadLink.href = canvas.toDataURL('image/png');
+  downloadLink.download = `slpp-ticket-${serial}.png`;
+}
+
+function adminPasscodeValue() { return document.getElementById('adminPasscode').value.trim(); }
+
+/* -------- Generate Vouchers -------- */
+const generateBtn = document.getElementById('generateBtn');
+const generateError = document.getElementById('generateError');
+const generateResult = document.getElementById('generateResult');
+
+generateBtn.addEventListener('click', async () => {
+  generateError.style.display = 'none';
+  generateResult.style.display = 'none';
+  generateBtn.disabled = true;
+  generateBtn.textContent = 'Generating…';
+
+  try {
+    const data = await apiPost({
+      action: 'adminGenerateVouchers',
+      chapterCode: CONFIG.chapterCode,
+      eventId: CONFIG.eventId,
+      adminPasscode: adminPasscodeValue(),
+      tierCounts: Object.fromEntries(
+        Array.from(document.querySelectorAll('#voucherTierCounts input[data-tier-code]'))
+          .map(input => [input.dataset.tierCode, Number(input.value || 0)])
+      ),
+      openCount: Number(document.getElementById('vOpenCount').value || 0),
+      recipientName: document.getElementById('vRecipientName').value.trim(),
+      recipientPhone: document.getElementById('vRecipientPhone').value.trim(),
+      chapter: document.getElementById('vChapter').value
+    });
+
+    if (!data.ok) {
+      generateError.textContent = data.error || 'Could not generate vouchers.';
+      generateError.style.display = 'block';
+    } else {
+      const breakdownText = Object.entries(data.breakdown || {})
+        .filter(([, count]) => Number(count) > 0)
+        .map(([tierCode, count]) => `${count} ${tierCode === 'open' ? 'no fixed tier' : (TIER_LABELS[tierCode] || tierCode)}`)
+        .join(', ');
+      generateResult.innerHTML = `<strong>${data.count} voucher(s) ready:</strong><br>${data.distributorUrl}` +
+        `<br><br>Breakdown: ${breakdownText || 'None'}.` +
+        `<br><br>Issued by: ${data.issuedBy}` +
+        `<br><br><button type="button" id="shareGenBtn" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Share via Text / WhatsApp</button>` +
+        `<span id="shareGenFallback" style="display:none;font-size:12px;color:#8a8a8a;margin-left:8px;">Sharing isn't supported here — copy the link above instead.</span>`;
+      generateResult.style.display = 'block';
+
+      document.getElementById('shareGenBtn').addEventListener('click', async () => {
+        const shareData = { title: 'SLPP North America — Ticket Voucher(s)', text: `You have ${data.count} ticket voucher(s) for ${CONFIG.chapterName} — ${CONFIG.eventName}:`, url: data.distributorUrl };
+        if (navigator.share) { try { await navigator.share(shareData); } catch (e) { /* cancelled */ } }
+        else { document.getElementById('shareGenFallback').style.display = 'inline'; }
+      });
+    }
+  } catch (err) {
+    generateError.textContent = 'Could not reach the server. Please try again.';
+    generateError.style.display = 'block';
+  } finally {
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generate Vouchers';
+  }
+});
+
+/* -------- Check-In: Guest With Ticket -------- */
+const checkInSerialBtn = document.getElementById('checkInSerialBtn');
+const checkInSerialError = document.getElementById('checkInSerialError');
+const checkInSerialResult = document.getElementById('checkInSerialResult');
+
+checkInSerialBtn.addEventListener('click', async () => {
+  checkInSerialError.style.display = 'none';
+  checkInSerialResult.style.display = 'none';
+
+  const serial = document.getElementById('checkInSerial').value.trim();
+  if (!serial) { checkInSerialError.textContent = 'Enter a ticket number.'; checkInSerialError.style.display = 'block'; return; }
+
+  checkInSerialBtn.disabled = true;
+  checkInSerialBtn.textContent = 'Checking in…';
+
+  try {
+    const data = await apiPost({
+      action: 'checkInWithTicket',
+      chapterCode: CONFIG.chapterCode,
+      eventId: CONFIG.eventId,
+      adminPasscode: adminPasscodeValue(),
+      serial,
+      phone: document.getElementById('checkInPhone1').value.trim(),
+      paymentStatus: document.getElementById('checkInPayment1').value
+    });
+
+    if (!data.ok) {
+      if (data.alreadyCheckedIn) {
+        checkInSerialResult.innerHTML = `⚠️ Already checked in — ${data.name} (${data.tier}, ${data.chapter}).`;
+        checkInSerialResult.style.display = 'block';
+      } else {
+        checkInSerialError.textContent = data.error || 'Could not check in this ticket.';
+        checkInSerialError.style.display = 'block';
+      }
+    } else {
+      checkInSerialResult.innerHTML = `✅ Checked in: <strong>${data.name}</strong> — ${data.tier} — $${Number(data.price || 0).toLocaleString()} — ${data.chapter} (${data.serial}) — ${data.paymentStatus}`;
+      checkInSerialResult.style.display = 'block';
+      document.getElementById('checkInSerial').value = '';
+    }
+  } catch (err) {
+    checkInSerialError.textContent = 'Could not reach the server. Please try again.';
+    checkInSerialError.style.display = 'block';
+  } finally {
+    checkInSerialBtn.disabled = false;
+    checkInSerialBtn.textContent = 'Check In';
+  }
+});
+
+/* -------- Check-In: Walk-In -------- */
+const walkInBtn = document.getElementById('walkInBtn');
+const walkInError = document.getElementById('walkInError');
+
+walkInBtn.addEventListener('click', async () => {
+  walkInError.style.display = 'none';
+
+  const fullName = document.getElementById('wiName').value.trim();
+  if (!fullName) { walkInError.textContent = 'Name is required.'; walkInError.style.display = 'block'; return; }
+
+  walkInBtn.disabled = true;
+  walkInBtn.textContent = 'Selling…';
+
+  try {
+    const data = await apiPost({
+      action: 'checkInWalkIn',
+      chapterCode: CONFIG.chapterCode,
+      eventId: CONFIG.eventId,
+      adminPasscode: adminPasscodeValue(),
+      fullName,
+      chapter: document.getElementById('wiChapter').value,
+      tier: document.getElementById('wiTier').value,
+      phone: document.getElementById('wiPhone').value.trim(),
+      paymentStatus: document.getElementById('wiPayment').value
+    });
+
+    if (!data.ok) {
+      walkInError.textContent = data.error || 'Could not sell/check in this guest.';
+      walkInError.style.display = 'block';
+    } else {
+      document.getElementById('resultHeading').textContent = 'Sold & checked in';
+      document.getElementById('alreadyClaimedBanner').textContent = `${data.name} — ${data.chapter} — $${Number(data.price || 0).toLocaleString()} — ${data.paymentStatus}`;
+      document.getElementById('alreadyClaimedBanner').style.display = 'block';
+      canvas.style.display = '';
+      document.querySelector('.actions-row').style.display = '';
+      await renderTicket(data.tier, data.serial, data.validationUrl || data.qrValue || data.validationToken || data.serial);
+      tabPanels.checkin.style.display = 'none';
+      formCard.style.display = 'none';
+      resultCard.style.display = 'block';
+    }
+  } catch (err) {
+    walkInError.textContent = 'Could not reach the server. Please try again.';
+    walkInError.style.display = 'block';
+  } finally {
+    walkInBtn.disabled = false;
+    walkInBtn.textContent = 'Sell & Check In';
+  }
+});
+
+/* -------- Check-In Summary -------- */
+const viewSummaryBtn = document.getElementById('viewSummaryBtn');
+const summaryError = document.getElementById('summaryError');
+const summaryResult = document.getElementById('summaryResult');
+
+viewSummaryBtn.addEventListener('click', async () => {
+  summaryError.style.display = 'none';
+  summaryResult.style.display = 'none';
+  viewSummaryBtn.disabled = true;
+  viewSummaryBtn.textContent = 'Loading…';
+
+  try {
+    const data = await apiPost({
+      action: 'viewCheckInSummary',
+      chapterCode: CONFIG.chapterCode,
+      eventId: CONFIG.eventId,
+      adminPasscode: adminPasscodeValue()
+    });
+
+    if (!data.ok) {
+      summaryError.textContent = data.error || 'Could not load summary.';
+      summaryError.style.display = 'block';
+    } else {
+      const chapters = Object.keys(data.byChapter).sort();
+      if (!chapters.length) {
+        summaryResult.innerHTML = `<p style="font-size:13px;color:#8a8a8a;">No one has checked in yet.</p>`;
+      } else {
+        let html = `<p style="font-size:13px;font-weight:700;margin-bottom:8px;">${data.total} checked in total — ${data.paidTotal} paid ($${Number(data.paidAmount || 0).toLocaleString()}), ${data.pendingTotal} pending ($${Number(data.pendingAmount || 0).toLocaleString()})</p>`;
+        chapters.forEach(chapter => {
+          const c = data.byChapter[chapter];
+          html += `<div class="chapter-summary"><div class="chapter-title">${chapter} — ${c.people.length} (${c.paid} paid, ${c.pending} pending)</div>`;
+          c.people.forEach(p => { html += `<div class="person-row">${p.name} — ${p.tier} — $${Number(p.price || 0).toLocaleString()} — ${p.serial} — ${p.paymentStatus}</div>`; });
+          html += `</div>`;
+        });
+        summaryResult.innerHTML = html;
+      }
+      summaryResult.style.display = 'block';
+    }
+  } catch (err) {
+    summaryError.textContent = 'Could not reach the server. Please try again.';
+    summaryError.style.display = 'block';
+  } finally {
+    viewSummaryBtn.disabled = false;
+    viewSummaryBtn.textContent = 'View Check-In Summary';
+  }
+});
+</script>
+<!-- regional fetch transport v7 2026-08-08 -->
+</body>
+</html>
