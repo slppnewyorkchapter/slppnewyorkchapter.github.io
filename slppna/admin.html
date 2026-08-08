@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>System Administration | SLPP North America</title>
+<style>
+:root{--green:#0b3d24;--green2:#145d37;--gold:#c9a24b;--cream:#faf7ef;--ink:#18231c;--muted:#66736b;--border:#d6ded8;--danger:#a52c2c;--bg:#f3f6f4}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}header{background:var(--green);color:#fff;border-bottom:4px solid var(--gold);padding:18px 22px}header .head{max-width:1380px;margin:auto;display:flex;justify-content:space-between;gap:16px;align-items:center}header h1{margin:0;font-size:24px}header p{margin:5px 0 0;color:#e7efe9}.wrap{max-width:1380px;margin:24px auto;padding:0 18px}.card{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.05)}.gate{max-width:600px;margin:60px auto;padding:26px}.hidden{display:none!important}.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:#eef3ef;color:var(--green);border:1px solid #cad6cd}.danger{background:#fff1f1;color:var(--danger);border:1px solid #e0b8b8}.ghost{background:#fff;color:var(--green);border:1px solid var(--border)}input,select,textarea,button{font:inherit}input,select,textarea{width:100%;padding:10px 11px;border:1px solid #bdc8c0;border-radius:8px;background:#fff}textarea{min-height:70px;resize:vertical}label{display:block;font-weight:700;font-size:12px;margin:0 0 5px}.field{margin-bottom:12px}.toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.status{display:none;margin-top:10px;border-radius:8px;padding:10px 12px;background:#edf7ef;color:#245f35}.status.error{background:#fff0f0;color:#922626}.topbar{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{background:#fff;color:var(--green);border:1px solid var(--border)}.tab.active{background:var(--green);color:#fff}.panel{padding:20px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.tablewrap{overflow:auto;border:1px solid var(--border);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:970px}th,td{padding:10px 9px;border-bottom:1px solid #e3e8e4;text-align:left;vertical-align:middle}th{font-size:12px;color:#4f5e54;background:#f7f9f7;position:sticky;top:0}td{font-size:13px}.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;background:#edf3ef;color:var(--green)}.badge.off{background:#f2f2f2;color:#777}.sectionhead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.sectionhead h2{margin:0;color:var(--green);font-size:20px}.modalback{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:14px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25)}.modal h2{margin:0 0 16px;color:var(--green)}.hint{font-size:12px;color:var(--muted)}.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.check{display:flex;gap:8px;align-items:center;padding:9px;border:1px solid var(--border);border-radius:8px}.check input{width:auto}.scope{font-size:13px;color:#e9f1eb}.right{text-align:right}@media(max-width:800px){.grid2,.grid3,.checks{grid-template-columns:1fr}.topbar,.sectionhead{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="head"><div><h1>SLPP System Administration</h1><p>Administrators, event access and permissions</p></div><div class="scope" id="scopeLine">SLPPNA</div></div></header>
+<div class="wrap">
+  <div id="gate" class="card gate">
+    <h2 style="margin-top:0;color:var(--green)">System Owner Access</h2>
+    <p class="hint">Only a System Owner can use this page to create administrators and grant event permissions.</p>
+    <div class="field"><label>System Owner Passcode</label><input id="ownerPasscode" type="password" autocomplete="current-password"></div>
+    <button id="unlockBtn" class="btn primary">Unlock Administration</button>
+    <div id="gateStatus" class="status"></div>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="topbar"><div><strong id="ownerName"></strong><div class="hint">Changes are written directly to the Regional Ticket Rendering Config workbook.</div></div><div class="toolbar"><button id="refreshBtn" class="btn secondary">Refresh</button><button id="lockBtn" class="btn ghost">Lock</button></div></div>
+    <div class="tabs"><button class="btn tab active" data-tab="admins">Administrators</button><button class="btn tab" data-tab="permissions">Event Permissions</button></div>
+
+    <section id="adminsPanel" class="card panel">
+      <div class="sectionhead"><div><h2>Administrators</h2><div class="hint">Create owners, regional admins, chapter admins, event organizers and gate staff.</div></div><button id="newAdminBtn" class="btn primary">+ Add Administrator</button></div>
+      <div class="tablewrap"><table><thead><tr><th>Admin ID</th><th>Name</th><th>Role</th><th>Organization</th><th>Chapter</th><th>Event</th><th>Status</th><th>Email</th><th>Actions</th></tr></thead><tbody id="adminRows"></tbody></table></div>
+      <div id="adminStatus" class="status"></div>
+    </section>
+
+    <section id="permissionsPanel" class="card panel hidden">
+      <div class="sectionhead"><div><h2>Event Permissions</h2><div class="hint">Grant event-specific access and expiration dates.</div></div><button id="newPermissionBtn" class="btn primary">+ Grant Permission</button></div>
+      <div class="tablewrap"><table><thead><tr><th>Admin</th><th>Event</th><th>Configure</th><th>Vouchers</th><th>Check-In</th><th>Reports</th><th>Manage</th><th>Voucher Expiration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="permissionRows"></tbody></table></div>
+      <div id="permissionStatus" class="status"></div>
+    </section>
+  </div>
+</div>
+
+<div id="adminModalBack" class="modalback hidden"><div class="modal"><h2 id="adminModalTitle">Add Administrator</h2>
+  <div class="grid2"><div class="field"><label>Admin ID</label><input id="aAdminId" placeholder="ADMIN-NYC-001"></div><div class="field"><label>Admin Name</label><input id="aAdminName"></div></div>
+  <div class="grid3"><div class="field"><label>Role</label><select id="aRole"><option>System Owner</option><option>Regional Admin</option><option>Chapter Admin</option><option>Event Organizer</option><option>Gate Staff</option></select></div><div class="field"><label>Organization</label><input id="aOrg" value="SLPPNA"></div><div class="field"><label>Chapter</label><input id="aChapter" placeholder="ALL or NYC"></div></div>
+  <div class="field"><label>Event</label><select id="aEvent"><option value="ALL">ALL</option></select></div>
+  <div class="grid2"><div class="field"><label>Email</label><input id="aEmail" type="email"></div><div class="field"><label>Phone</label><input id="aPhone"></div></div>
+  <div class="field"><label id="passLabel">Passcode</label><input id="aPasscode" type="password" autocomplete="new-password"><div class="hint">For an existing admin, leave blank to keep the current passcode.</div></div>
+  <div class="field"><label><input id="aActive" type="checkbox" checked style="width:auto"> Active</label></div>
+  <div class="toolbar right"><button id="cancelAdminBtn" class="btn ghost">Cancel</button><button id="saveAdminBtn" class="btn primary">Save Administrator</button></div><div id="adminModalStatus" class="status"></div>
+</div></div>
+
+<div id="permModalBack" class="modalback hidden"><div class="modal"><h2 id="permModalTitle">Grant Event Permission</h2>
+  <div class="grid2"><div class="field"><label>Administrator</label><select id="pAdmin"></select></div><div class="field"><label>Event</label><select id="pEvent"></select></div></div>
+  <div class="checks">
+    <label class="check"><input id="pConfigure" type="checkbox"> Configure ticket</label>
+    <label class="check"><input id="pVouchers" type="checkbox"> Generate vouchers</label>
+    <label class="check"><input id="pCheckin" type="checkbox"> Check in guests</label>
+    <label class="check"><input id="pReports" type="checkbox"> View reports</label>
+    <label class="check"><input id="pManage" type="checkbox"> Manage event</label>
+    <label class="check"><input id="pActive" type="checkbox" checked> Permission active</label>
+  </div>
+  <div class="grid2" style="margin-top:14px"><div class="field"><label>Voucher Generation Start</label><input id="pGenStart" type="datetime-local"></div><div class="field"><label>Voucher Generation Expires</label><input id="pGenExpires" type="datetime-local"></div></div>
+  <div class="grid2"><div class="field"><label>Ticket Configuration Expires</label><input id="pConfigExpires" type="datetime-local"></div><div class="field"><label>Notes</label><input id="pNotes"></div></div>
+  <div class="toolbar right"><button id="cancelPermBtn" class="btn ghost">Cancel</button><button id="savePermBtn" class="btn primary">Save Permission</button></div><div id="permModalStatus" class="status"></div>
+</div></div>
+
+<script src="assets/js/app-config.js"></script>
+<script>
+const APP=window.SLPP_APP_CONFIG||{}; const ENDPOINT=APP.ticketConfigEndpoint; let DATA={admins:[],events:[],permissions:[]}, EDIT_ADMIN=null, EDIT_PERMISSION=null;
+const $=id=>document.getElementById(id); $('scopeLine').textContent=APP.defaultOrganization||'SLPPNA';
+function status(el,msg,error=false){el.textContent=msg;el.className='status'+(error?' error':'');el.style.display='block'}
+function clearStatus(el){el.style.display='none';el.textContent=''}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function api(action,payload={}){if(!ENDPOINT)throw new Error('ticketConfigEndpoint is missing from app-config.js');const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,ownerPasscode:$('ownerPasscode').value,...payload})});const text=await r.text();let d;try{d=JSON.parse(text)}catch(_){throw new Error('The server did not return JSON. Check the Apps Script deployment.')}if(!d.ok)throw new Error(d.error||'Request failed.');return d}
+function eventLabel(e){return `${e.eventId} — ${e.eventName||e.eventId}${e.chapterCode?' ('+e.chapterCode+')':''}`}
+function toLocalInput(v){if(!v)return'';const d=new Date(v);if(isNaN(d))return'';const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`}
+function inputDateValue(v){return v?new Date(v).toISOString():''}
+async function loadData(){const d=await api('adminPortalData');DATA={admins:d.admins||[],events:d.events||[],permissions:d.permissions||[]};renderAdmins();renderPermissions();populateEventSelects()}
+$('unlockBtn').onclick=async()=>{try{status($('gateStatus'),'Checking owner access…');const d=await api('verifyAdminPortal');$('ownerName').textContent=`${d.admin.adminName} · ${d.admin.role}`;$('gate').classList.add('hidden');$('app').classList.remove('hidden');clearStatus($('gateStatus'));await loadData()}catch(e){status($('gateStatus'),e.message,true)}};
+$('refreshBtn').onclick=async()=>{try{await loadData()}catch(e){status($('adminStatus'),e.message,true)}};
+$('lockBtn').onclick=()=>{location.reload()};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));$('adminsPanel').classList.toggle('hidden',b.dataset.tab!=='admins');$('permissionsPanel').classList.toggle('hidden',b.dataset.tab!=='permissions')});
+function renderAdmins(){const tb=$('adminRows');tb.innerHTML='';DATA.admins.forEach(a=>{const tr=document.createElement('tr');tr.innerHTML=`<td><strong>${esc(a.adminId)}</strong></td><td>${esc(a.adminName)}</td><td>${esc(a.role)}</td><td>${esc(a.organizationId||'SLPPNA')}</td><td>${esc(a.chapterCode||'')}</td><td>${esc(a.eventId||'')}</td><td><span class="badge ${a.active?'':'off'}">${a.active?'Active':'Inactive'}</span></td><td>${esc(a.email||'')}</td><td><div class="toolbar"><button class="btn secondary edit">Edit</button><button class="btn ${a.active?'danger':'primary'} toggle">${a.active?'Deactivate':'Activate'}</button></div></td>`;tr.querySelector('.edit').onclick=()=>openAdmin(a);tr.querySelector('.toggle').onclick=()=>toggleAdmin(a);tb.appendChild(tr)})}
+function populateEventSelects(){const opts=DATA.events.map(e=>`<option value="${esc(e.eventId)}">${esc(eventLabel(e))}</option>`).join('');$('aEvent').innerHTML='<option value="ALL">ALL</option>'+opts;$('pEvent').innerHTML=opts;$('pAdmin').innerHTML=DATA.admins.filter(a=>a.active&&a.role!=='System Owner').map(a=>`<option value="${esc(a.adminId)}">${esc(a.adminName)} — ${esc(a.adminId)}</option>`).join('')}
+function openAdmin(a=null){EDIT_ADMIN=a;$('adminModalTitle').textContent=a?'Edit Administrator':'Add Administrator';$('aAdminId').value=a?.adminId||'';$('aAdminId').disabled=!!a;$('aAdminName').value=a?.adminName||'';$('aRole').value=a?.role||'Event Organizer';$('aOrg').value=a?.organizationId||'SLPPNA';$('aChapter').value=a?.chapterCode||'';$('aEvent').value=a?.eventId||'ALL';$('aEmail').value=a?.email||'';$('aPhone').value=a?.phone||'';$('aPasscode').value='';$('aActive').checked=a?!!a.active:true;clearStatus($('adminModalStatus'));$('adminModalBack').classList.remove('hidden')}
+$('newAdminBtn').onclick=()=>openAdmin();$('cancelAdminBtn').onclick=()=>$('adminModalBack').classList.add('hidden');
+$('aRole').onchange=()=>{const r=$('aRole').value;if(r==='System Owner'||r==='Regional Admin'){$('aChapter').value='ALL';$('aEvent').value='ALL'}else if(r==='Chapter Admin'){$('aEvent').value='ALL'}};
+$('saveAdminBtn').onclick=async()=>{try{const p={admin:{adminId:$('aAdminId').value.trim().toUpperCase(),adminName:$('aAdminName').value.trim(),role:$('aRole').value,organizationId:$('aOrg').value.trim().toUpperCase()||'SLPPNA',chapterCode:$('aChapter').value.trim().toUpperCase()||'ALL',eventId:$('aEvent').value||'ALL',email:$('aEmail').value.trim(),phone:$('aPhone').value.trim(),active:$('aActive').checked},newPasscode:$('aPasscode').value};if(!p.admin.adminId||!p.admin.adminName)throw new Error('Admin ID and name are required.');if(!EDIT_ADMIN&&!p.newPasscode)throw new Error('A passcode is required for a new administrator.');await api('saveAdminPortalAdmin',p);$('adminModalBack').classList.add('hidden');await loadData();status($('adminStatus'),'Administrator saved.')}catch(e){status($('adminModalStatus'),e.message,true)}};
+async function toggleAdmin(a){if(a.role==='System Owner'&&a.adminId==='OWNER-001'&&a.active&&!confirm('Deactivate the System Owner account?'))return;try{await api('setAdminPortalStatus',{adminId:a.adminId,active:!a.active});await loadData();status($('adminStatus'),`${a.adminName} ${a.active?'deactivated':'activated'}.`)}catch(e){status($('adminStatus'),e.message,true)}}
+function renderPermissions(){const tb=$('permissionRows');tb.innerHTML='';DATA.permissions.forEach(p=>{const a=DATA.admins.find(x=>x.adminId===p.adminId);const e=DATA.events.find(x=>x.eventId===p.eventId);const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(a?.adminName||p.adminId)}<div class="hint">${esc(p.adminId)}</div></td><td>${esc(e?.eventName||p.eventId)}<div class="hint">${esc(p.eventId)}</div></td><td>${p.canConfigureTicket?'Yes':'No'}</td><td>${p.canGenerateVouchers?'Yes':'No'}</td><td>${p.canCheckIn?'Yes':'No'}</td><td>${p.canViewReports?'Yes':'No'}</td><td>${p.canManageEvent?'Yes':'No'}</td><td>${esc(p.generationExpiresDisplay||'')}</td><td><span class="badge ${p.active?'':'off'}">${p.active?'Active':'Revoked'}</span></td><td><div class="toolbar"><button class="btn secondary edit">Edit</button><button class="btn danger revoke">Revoke</button></div></td>`;tr.querySelector('.edit').onclick=()=>openPermission(p);tr.querySelector('.revoke').onclick=()=>revokePermission(p);tb.appendChild(tr)})}
+function openPermission(p=null){EDIT_PERMISSION=p;populateEventSelects();$('permModalTitle').textContent=p?'Edit Event Permission':'Grant Event Permission';$('pAdmin').value=p?.adminId||$('pAdmin').value;$('pEvent').value=p?.eventId||$('pEvent').value;$('pAdmin').disabled=!!p;$('pEvent').disabled=!!p;$('pConfigure').checked=!!p?.canConfigureTicket;$('pVouchers').checked=!!p?.canGenerateVouchers;$('pCheckin').checked=!!p?.canCheckIn;$('pReports').checked=!!p?.canViewReports;$('pManage').checked=!!p?.canManageEvent;$('pActive').checked=p?!!p.active:true;$('pGenStart').value=toLocalInput(p?.generationStart);$('pGenExpires').value=toLocalInput(p?.generationExpires);$('pConfigExpires').value=toLocalInput(p?.configExpires);$('pNotes').value=p?.notes||'';clearStatus($('permModalStatus'));$('permModalBack').classList.remove('hidden')}
+$('newPermissionBtn').onclick=()=>openPermission();$('cancelPermBtn').onclick=()=>$('permModalBack').classList.add('hidden');
+$('savePermBtn').onclick=async()=>{try{const permission={adminId:$('pAdmin').value,eventId:$('pEvent').value,canConfigureTicket:$('pConfigure').checked,canGenerateVouchers:$('pVouchers').checked,canCheckIn:$('pCheckin').checked,canViewReports:$('pReports').checked,canManageEvent:$('pManage').checked,active:$('pActive').checked,generationStart:inputDateValue($('pGenStart').value),generationExpires:inputDateValue($('pGenExpires').value),configExpires:inputDateValue($('pConfigExpires').value),notes:$('pNotes').value.trim()};if(!permission.adminId||!permission.eventId)throw new Error('Administrator and event are required.');await api('saveAdminPortalPermission',{permission});$('permModalBack').classList.add('hidden');await loadData();status($('permissionStatus'),'Event permission saved.')}catch(e){status($('permModalStatus'),e.message,true)}};
+async function revokePermission(p){if(!confirm(`Revoke ${p.adminId} access to ${p.eventId}?`))return;try{await api('revokeAdminPortalPermission',{adminId:p.adminId,eventId:p.eventId,organizationId:p.organizationId||'SLPPNA'});await loadData();status($('permissionStatus'),'Permission revoked.')}catch(e){status($('permissionStatus'),e.message,true)}}
+</script>
+</body>
+</html>
