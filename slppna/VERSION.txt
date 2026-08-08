@@ -1,0 +1,3 @@
+SLPP Hybrid Ticketing Public UI v2
+Updated: 2026-08-08
+Changes: organization/event URL scope, dynamic pricing display support, enlarged skyline, configuration kept private.

@@ -270,6 +270,7 @@ const PUBLIC_CONFIG = window.SLPP_APP_CONFIG || {};
 const CONFIG = {
   ENDPOINT: PUBLIC_CONFIG.workflowEndpoint || 'https://script.google.com/macros/s/AKfycbxcfrPorclAPXv0vCg0hBjxiWR8yUq43Hfhegrmt_HnX2otsvjMx1h9-JFYRCQ2qau2/exec',
   TICKET_CONFIG_ENDPOINT: PUBLIC_CONFIG.ticketConfigEndpoint || 'https://script.google.com/macros/s/AKfycbzlMiozn4uggplThfTpr7E2iqshLaGxO-ec4WiZ0QeVeOYQT5PYxpCn49IsVSwhPmGQUQ/exec',
+  organizationId: URL_PARAMS.get('org') || PUBLIC_CONFIG.defaultOrganization || 'SLPPNA',
   chapterCode: URL_PARAMS.get('chapter') || PUBLIC_CONFIG.defaultChapter || 'NYC',
   eventId: URL_PARAMS.get('event') || PUBLIC_CONFIG.defaultEvent || 'NYC-2026-INAUGURATION'
 };
@@ -278,6 +279,7 @@ let REGIONAL_TICKET_CONFIG = null;
 // Populated from the EventConfig sheet on load — see loadEventConfig() below.
 // Defaults here only matter for the brief instant before that fetch resolves.
 let EVENT_CONFIG = {
+  OrganizationID: 'SLPPNA',
   OrgName: 'SLPP North America',
   ChapterName: 'New England Chapter',
   EventTitle: 'Executive Inauguration Celebration',
@@ -288,6 +290,23 @@ let EVENT_CONFIG = {
 };
 let TIER_LABELS = { single: 'Single ($100)', patron: 'Single Patron ($150)', double: 'Double Patron ($250)' };
 let TIER_PRICES = { single: { label: 'Single', price: 100 }, patron: { label: 'Single Patron', price: 150 }, double: { label: 'Double Patron', price: 250 } };
+
+function normalizePricingType(cfg) {
+  return String((cfg && (cfg.pricingType || cfg.PricingType || cfg.priceType)) || 'FIXED').trim().toUpperCase();
+}
+
+function tierPriceDisplay(cfg, currencySymbol) {
+  const type = normalizePricingType(cfg);
+  if (type === 'FREE') return 'Complimentary';
+  if (type === 'DONATION') {
+    const suggested = Number(cfg.suggestedAmount || cfg.SuggestedAmount || 0);
+    const minimum = Number(cfg.minimumAmount || cfg.MinimumAmount || 0);
+    if (suggested > 0) return `Donation · Suggested ${currencySymbol}${suggested.toLocaleString()}`;
+    if (minimum > 0) return `Donation · Minimum ${currencySymbol}${minimum.toLocaleString()}`;
+    return 'Donation';
+  }
+  return `${currencySymbol}${Number(cfg.price || 0).toLocaleString()}`;
+}
 
 /**
  * Pulls current tier labels/prices from the Settings sheet (via Code.gs's
@@ -328,21 +347,28 @@ async function loadPageConfig() {
       wiTierEl.innerHTML = '';
 
       Object.entries(data.tiers).forEach(([key, cfg], idx) => {
-        TIER_LABELS[key] = `${cfg.label} (${currency}${cfg.price})`;
-        TIER_PRICES[key] = { label: cfg.label, price: cfg.price };
+        const priceDisplay = tierPriceDisplay(cfg, currency);
+        TIER_LABELS[key] = `${cfg.label} (${priceDisplay})`;
+        TIER_PRICES[key] = {
+          label: cfg.label,
+          price: Number(cfg.price || 0),
+          pricingType: normalizePricingType(cfg),
+          minimumAmount: Number(cfg.minimumAmount || cfg.MinimumAmount || 0),
+          suggestedAmount: Number(cfg.suggestedAmount || cfg.SuggestedAmount || 0)
+        };
 
         // Claimant tier picker
         const label = document.createElement('label');
         label.className = 'tier';
         label.dataset.tier = key;
-        label.innerHTML = `<input type="radio" name="tier" value="${key}"><span class="tier-name">${cfg.label}</span> <span class="price">${currency}${cfg.price}</span>`;
+        label.innerHTML = `<input type="radio" name="tier" value="${key}"><span class="tier-name">${cfg.label}</span> <span class="price">${priceDisplay}</span>`;
         tierPickerEl.appendChild(label);
 
         // Generate Vouchers count field
         const wrap = document.createElement('div');
         const fieldLabel = document.createElement('label');
         fieldLabel.setAttribute('for', `tierCount_${key}`);
-        fieldLabel.textContent = `${cfg.label} (${currency}${cfg.price})`;
+        fieldLabel.textContent = `${cfg.label} (${priceDisplay})`;
         const input = document.createElement('input');
         input.type = 'number'; input.min = '0'; input.max = '10'; input.value = '0';
         input.id = `tierCount_${key}`;
@@ -354,7 +380,7 @@ async function loadPageConfig() {
         // Walk-in tier select
         const option = document.createElement('option');
         option.value = key;
-        option.textContent = `${cfg.label} (${currency}${cfg.price})`;
+        option.textContent = `${cfg.label} (${priceDisplay})`;
         wiTierEl.appendChild(option);
       });
     }
@@ -420,6 +446,7 @@ function regionalJsonp(params) {
 async function loadRegionalTicketConfig() {
   const data = await regionalJsonp({
     action: 'eventConfig',
+    org: CONFIG.organizationId,
     chapter: CONFIG.chapterCode,
     event: CONFIG.eventId
   });
@@ -834,7 +861,7 @@ async function submitClaim(payload) {
   }
 }
 
-claimAnotherBtn.addEventListener('click', () => { window.location.href = window.location.pathname; });
+claimAnotherBtn.addEventListener('click', () => { window.location.href = `${window.location.pathname}?org=${encodeURIComponent(CONFIG.organizationId)}&chapter=${encodeURIComponent(CONFIG.chapterCode)}&event=${encodeURIComponent(CONFIG.eventId)}`; });
 
 shareBtn.addEventListener('click', async () => {
   try {
@@ -877,6 +904,9 @@ async function renderTicket(tier, serial, checkInToken) {
     tierCode: tier,
     label: workflowTier.label || tier,
     price: Number(workflowTier.price || 0),
+    pricingType: workflowTier.pricingType || 'FIXED',
+    minimumAmount: Number(workflowTier.minimumAmount || 0),
+    suggestedAmount: Number(workflowTier.suggestedAmount || 0),
     currency: 'USD',
     admitCount: String(tier).toLowerCase() === 'double' ? 2 : 1,
     badgeColor: (cfg.chapter && cfg.chapter.primaryColor) || '#0b3d24'
@@ -913,6 +943,9 @@ async function renderTicket(tier, serial, checkInToken) {
       code: ticketDef.tierCode || tier,
       label: ticketDef.label || ticketDef.tierLabel || workflowTier.label || tier,
       price: Number(ticketDef.price ?? workflowTier.price ?? 0),
+      pricingType: ticketDef.pricingType || ticketDef.PricingType || workflowTier.pricingType || 'FIXED',
+      minimumAmount: Number(ticketDef.minimumAmount || ticketDef.MinimumAmount || workflowTier.minimumAmount || 0),
+      suggestedAmount: Number(ticketDef.suggestedAmount || ticketDef.SuggestedAmount || workflowTier.suggestedAmount || 0),
       currency: ticketDef.currency || 'USD',
       admitCount: Number(ticketDef.admitCount || (String(tier).toLowerCase() === 'double' ? 2 : 1)),
       badgeColor: ticketDef.badgeColor || chapterConfig.primaryColor,

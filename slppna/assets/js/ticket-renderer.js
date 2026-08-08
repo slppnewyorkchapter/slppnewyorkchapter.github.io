@@ -36,6 +36,20 @@
     }
   };
 
+  function pricingType(ticket) {
+    return String(ticket.pricingType || ticket.priceType || 'FIXED').trim().toUpperCase();
+  }
+
+  function ticketPriceText(ticket) {
+    const type = pricingType(ticket);
+    if (type === 'FREE') return 'COMPLIMENTARY';
+    if (type === 'DONATION') {
+      const amount = Number(ticket.price || ticket.amount || 0);
+      return amount > 0 ? money(amount, ticket.currency) : 'DONATION';
+    }
+    return money(ticket.price, ticket.currency);
+  }
+
   function roundedRect(ctx, x, y, w, h, r) {
     const rr = Math.min(r, w / 2, h / 2);
     ctx.beginPath();
@@ -179,7 +193,7 @@
     drawCentered(ctx, String(ticket.label || ticket.tierLabel || 'ADMISSION').toUpperCase(), x + w / 2, y + 100,
       { family: fonts.serif, size: 50, weight: '700', color: '#fff', maxWidth: w - 50 });
     drawOrnamentLine(ctx, x + 45, x + w - 45, y + 148, palette.gold);
-    drawCentered(ctx, money(ticket.price, ticket.currency), x + w / 2, y + 225,
+    drawCentered(ctx, ticketPriceText(ticket), x + w / 2, y + 225,
       { family: fonts.serif, size: 78, weight: '700', color: palette.goldLight, maxWidth: w - 40 });
     drawOrnamentLine(ctx, x + 45, x + w - 45, y + 290, palette.gold);
     const admitCount = Number(ticket.admitCount || 1);
@@ -266,7 +280,10 @@
       ticket: {
         code: ticket.code || ticket.tierCode || '',
         label: ticket.label || ticket.tierLabel || ticket.name || 'Admission',
-        price: Number(ticket.price || 0),
+        price: Number(ticket.price ?? ticket.amount ?? 0),
+        pricingType: ticket.pricingType || ticket.priceType || 'FIXED',
+        minimumAmount: Number(ticket.minimumAmount || 0),
+        suggestedAmount: Number(ticket.suggestedAmount || 0),
         currency: ticket.currency || 'USD',
         admitCount: Number(ticket.admitCount || 1),
         serial: ticket.serial || '',
@@ -351,7 +368,8 @@
 
     // skyline centered behind lower ticket body
     if (skylineImg) {
-      drawImageContain(ctx, skylineImg, 440, 300, 1110, 325, 0.62);
+      // Slightly larger skyline for stronger chapter identity while staying clear of the tier badge.
+      drawImageContain(ctx, skylineImg, 370, 275, 1260, 390, 0.68);
     }
 
     // main ticket badge
@@ -378,7 +396,7 @@
     ctx.fillStyle = palette.greenDeep; ctx.fillRect(sx + 6, 18, stubW - 24, 92);
     drawCentered(ctx, 'ADMISSION STUB', sx + stubW / 2, 64, { size: 30, weight: '700', color: '#fff', maxWidth: stubW - 70 });
     drawCentered(ctx, String(cfg.ticket.label).toUpperCase(), sx + stubW / 2, 160, { family: fonts.serif, size: 40, weight: '700', color: palette.green, maxWidth: stubW - 70 });
-    drawCentered(ctx, money(cfg.ticket.price, cfg.ticket.currency), sx + stubW / 2, 235, { family: fonts.serif, size: 62, weight: '700', color: palette.gold, maxWidth: stubW - 70 });
+    drawCentered(ctx, ticketPriceText(cfg.ticket), sx + stubW / 2, 235, { family: fonts.serif, size: 62, weight: '700', color: palette.gold, maxWidth: stubW - 70 });
     drawCentered(ctx, Number(cfg.ticket.admitCount) === 1 ? 'ADMIT ONE' : `ADMIT ${cfg.ticket.admitCount}`, sx + stubW / 2, 300, { size: 28, weight: '700', color: palette.ink });
 
     const qrCanvas = await makeQrCanvas(cfg.ticket.qrValue, 220).catch(() => null);
@@ -408,5 +426,5 @@
     return new Promise(resolve => canvas.toBlob(resolve, type, quality));
   }
 
-  global.SLPPTicketRenderer = { render, download, toBlob, normalizeConfig, money, defaults: DEFAULTS };
+  global.SLPPTicketRenderer = { render, download, toBlob, normalizeConfig, money, ticketPriceText, defaults: DEFAULTS };
 })(window);

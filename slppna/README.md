@@ -43,10 +43,10 @@ slppnewyorkchapter.github.io/
 ## Website URLs
 
 Default New York page:
-`https://slppnewyorkchapter.github.io/slppna/claim.html?chapter=NYC&event=NYC-2026-INAUGURATION`
+`https://slppnewyorkchapter.github.io/slppna/claim.html?org=SLPPNA&chapter=NYC&event=NYC-2026-INAUGURATION`
 
 New England page:
-`https://slppnewyorkchapter.github.io/slppna/claim.html?chapter=NEC&event=NEC-2026-INAUGURATION`
+`https://slppnewyorkchapter.github.io/slppna/claim.html?org=SLPPNA&chapter=NEC&event=NEC-2026-INAUGURATION`
 
 ## Two backend roles
 
@@ -58,3 +58,12 @@ Both URLs are in `assets/js/app-config.js`.
 ## Important
 
 Do **not** put the private Apps Script source or spreadsheets from the companion private setup packet in a public GitHub repository. The legacy workflow backend contains administrator passcodes.
+
+
+## Updated design rules
+
+- Ticket configuration remains private in Google Sheets / Apps Script. No public configuration interface is exposed.
+- Public URLs support `org`, `chapter`, and `event` filters.
+- The ticket renderer supports a dynamic number of tiers and pricing modes `FIXED`, `DONATION`, and `FREE` when supplied by the backend.
+- The chapter skyline is rendered about 25% larger than the prior version for stronger visual presence.
+- System-owner / event-organizer permissions and voucher-generation expiration are backend authorization concerns and should not be stored in this public repository.
