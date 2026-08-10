@@ -106,22 +106,22 @@ header{position:sticky;top:0;z-index:50;background:rgba(10,36,23,.97);border-bot
 .hero-wm{position:absolute;pointer-events:none;opacity:.5}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,.72fr);gap:clamp(30px,5vw,64px);align-items:end;padding-bottom:56px}
 .hero-copy{padding-top:14px}
-.hero h1{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(2.6rem,5vw,4.35rem);line-height:1.02;margin:16px 0 6px;letter-spacing:-.01em}
+.hero h1{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(2.6rem,5vw,4.35rem);line-height:1.05;margin:16px 0 6px;letter-spacing:-.01em;text-wrap:balance;hyphens:none}
 .hero-title-small{display:block;font-weight:900;font-size:.32em;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:14px;font-family:Lato,Arial,sans-serif}
 .hero-role{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(1.05rem,1.6vw,1.32rem);color:#f0e4bd;line-height:1.5;max-width:640px}
 .hero-lede{max-width:640px;color:#dbe6de;font-size:1rem;margin:20px 0 0}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 .portrait-wrap{position:relative;justify-self:end;width:100%;max-width:360px}
 .portrait-frame{aspect-ratio:4/5;background:var(--white);padding:9px;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.38)}
-.portrait-frame img{width:100%;height:100%;object-fit:cover;object-position:center 14%}
+.portrait-frame img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
 .portrait-corner{position:absolute;width:26px;height:26px;pointer-events:none}
 .portrait-corner.tl{top:-11px;left:-11px}
 .portrait-corner.tr{top:-11px;right:-11px;transform:scaleX(-1)}
 .portrait-corner.bl{bottom:-11px;left:-11px;transform:scaleY(-1)}
 .portrait-corner.br{bottom:-11px;right:-11px;transform:scale(-1,-1)}
-.speaker-plaque{margin-top:-24px;position:relative;z-index:2;margin-left:auto;margin-right:auto;width:max-content;max-width:92%;padding:12px 22px;border:1px solid var(--gold);background:var(--navy);text-align:center;box-shadow:0 16px 34px rgba(0,0,0,.34)}
-.speaker-plaque strong{display:block;color:var(--gold-light);font-size:.68rem;letter-spacing:.16em;font-weight:900}
-.speaker-plaque span{font-size:.85rem;font-weight:700}
+.portrait-caption{margin-top:22px;text-align:center;padding:0 6px}
+.portrait-caption strong{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.35}
+.portrait-caption span{display:block;margin-top:5px;font-size:.72rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-light)}
 
 .motto{background:linear-gradient(90deg,#a9821a,var(--gold),#a9821a);color:#1c1503;text-align:center;padding:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem}
 .motto b{color:#fff9df;margin:0 12px;font-weight:900}
@@ -215,8 +215,9 @@ section{padding:96px 0}
 /* ---------- welcome ---------- */
 .welcome{background:var(--white)}
 .welcome-card{display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:center;max-width:940px;margin:auto}
-.chairman-monogram{width:150px;height:150px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(150deg,var(--forest),var(--navy));color:var(--gold-light);font-family:'Playfair Display',Georgia,serif;font-size:2.5rem;font-weight:700;border:1px solid var(--gold);position:relative}
-.chairman-monogram:before{content:"";position:absolute;inset:9px;border:1px solid rgba(233,207,124,.5);border-radius:50%}
+.chairman-frame{width:150px;height:150px;border-radius:50%;margin:auto;position:relative;padding:6px;background:linear-gradient(150deg,var(--forest),var(--navy));border:1px solid var(--gold);box-sizing:border-box}
+.chairman-frame:after{content:"";position:absolute;inset:6px;border:1px solid rgba(233,207,124,.5);border-radius:50%;pointer-events:none}
+.chairman-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 .welcome-card blockquote{margin:0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:1.32rem;color:#2a332c;line-height:1.55}
 .signoff{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule)}
 .signoff strong{display:block;color:var(--navy);font-family:'Playfair Display',Georgia,serif;font-size:1.05rem}
@@ -255,8 +256,12 @@ footer{background:var(--forest-deep);color:#c9d3cb;padding:40px 0 28px}
 
 @media(max-width:960px){
   .hero-grid,.about-grid,.crown-inner,.personal-grid,.event-grid,.welcome-card{grid-template-columns:1fr}
-  .hero-grid{text-align:left}
-  .portrait-wrap{justify-self:start;max-width:280px;margin-top:36px}
+  .hero-grid{text-align:center}
+  .hero-copy{max-width:640px;margin:0 auto}
+  .kicker{justify-content:center}
+  .hero-lede{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
+  .portrait-wrap{justify-self:center;max-width:300px;margin:40px auto 0}
   .legacy-row{grid-template-columns:1fr;gap:10px}
   .themes-band{grid-template-columns:1fr}
   .theme{border-left:0;border-top:1px solid rgba(233,207,124,.22);padding-left:0}
@@ -265,25 +270,42 @@ footer{background:var(--forest-deep);color:#c9d3cb;padding:40px 0 28px}
   .event-ribbon .fact{flex:1 1 45%}
   .navlinks a:not(.nav-main){display:none}
   .welcome-card{text-align:center}
+  .about-label{text-align:center}
+  .kicker:before{display:none}
 }
 @media(max-width:600px){
-  body{font-size:15.5px}
-  section{padding:64px 0}
-  .container{width:min(100% - 30px,1180px)}
-  .nav{min-height:70px}
-  .seal{width:38px;height:38px;flex-basis:38px}
-  .hero{padding:34px 0 0}
-  .hero-frame{inset:10px}
-  .hero h1{font-size:clamp(2.3rem,11vw,3rem)}
-  .portrait-wrap{max-width:230px}
+  body{font-size:16px;line-height:1.75}
+  section{padding:60px 0}
+  .container{width:min(100% - 28px,1180px)}
+  .nav{min-height:68px}
+  .seal{width:36px;height:36px;flex-basis:36px}
+  .brand-copy{font-size:.76rem}
+  .hero{padding:30px 0 0}
+  .hero-frame{inset:9px}
+  .hero h1{font-size:clamp(2.15rem,10vw,2.7rem);line-height:1.08}
+  .hero-title-small{font-size:.34em;letter-spacing:.16em}
+  .hero-role{font-size:1.02rem;line-height:1.55}
+  .hero-lede{font-size:1rem;line-height:1.75}
+  .portrait-wrap{max-width:240px}
+  .portrait-caption strong{font-size:.98rem}
+  .section-head h2{line-height:1.15}
+  .section-head p{font-size:1rem;line-height:1.7}
+  .about-copy{font-size:1.02rem;line-height:1.75}
+  .about-copy .lead{font-size:1.28rem;line-height:1.55}
+  .legacy-row p,.timeline-body p,.personal-copy p,.theme p{line-height:1.7}
   .event-ribbon .fact{flex:1 1 100%;border-right:0;border-bottom:1px solid rgba(255,255,255,.15);padding:16px 0}
-  .mandate-facts div{flex:1 1 45%;margin-right:0;padding-right:14px}
+  .mandate-num{font-size:3.4rem;text-align:center}
+  .crown-inner{text-align:center}
+  .mandate-facts{flex-direction:column;text-align:left;gap:0}
+  .mandate-facts div{padding-left:0;border-left:0;padding-top:14px;border-top:1px solid rgba(233,207,124,.25)}
+  .mandate-facts div:first-child{border-top:0;padding-top:0}
   .tool-grid{grid-template-columns:1fr}
   .source-link{flex-direction:column;gap:3px}
   .source-link span{text-align:left}
   .footer-grid{justify-content:center;text-align:center}
   .footer-actions{width:100%;justify-content:center}
   .footer-actions a{flex:1 1 auto;text-align:center}
+  .chairman-frame{width:130px;height:130px}
 }
 </style>
 </head>
@@ -337,7 +359,7 @@ footer{background:var(--forest-deep);color:#c9d3cb;padding:40px 0 28px}
         <svg class="portrait-corner br" viewBox="0 0 60 60"><use href="#corner-medallion"/></svg>
         <img src="images/her-excellency-dr-fatima-maada-bio-keynote-portrait.jpg" alt="Her Excellency Dr. Fatima Maada Bio" decoding="async">
       </div>
-      <div class="speaker-plaque"><strong>Keynote Speaker</strong><span>SLPP New York Executive Inauguration 2026</span></div>
+      <div class="portrait-caption"><strong>Her Excellency Dr. Fatima Maada Bio</strong><span>Keynote Speaker · Executive Inauguration 2026</span></div>
     </div>
   </div>
 </section>
@@ -431,7 +453,7 @@ footer{background:var(--forest-deep);color:#c9d3cb;padding:40px 0 28px}
 <section class="welcome"><div class="container">
   <div class="section-head center"><div class="kicker" style="justify-content:center">A Welcome from the Chairman</div><h2>New York welcomes Her Excellency</h2></div>
   <div class="welcome-card">
-    <div class="chairman-monogram">JW</div>
+    <div class="chairman-frame"><img class="chairman-photo" src="images/chairman-jabati-wai.jpg" alt="Chairman Jabati A. Wai" decoding="async"></div>
     <div>
       <blockquote>"It is our profound honor to welcome Her Excellency Dr. Fatima Maada Bio as Keynote Speaker for the SLPP North America New York Chapter Executive Inauguration. Her national service, continental leadership and sustained advocacy for women and girls give this historic celebration exceptional meaning."</blockquote>
       <div class="signoff"><strong>Jabati Wai</strong><span>Chairman, SLPP North America — New York Chapter</span></div>
