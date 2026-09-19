@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Video</title>
+  <style>
+    :root {
+      --bg: #0f1512;
+      --fg: #f2efe6;
+      --muted: #9aa39d;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    }
+    video {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: calc(100dvh - 90px);
+      aspect-ratio: 478 / 850;
+      background: #000;
+      border-radius: 12px;
+    }
+    a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-underline-offset: 3px;
+    }
+    a:hover, a:focus-visible { color: var(--fg); }
+    video:focus-visible, a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <video controls playsinline preload="metadata" poster="poster.jpg">
+    <source src="video.mp4" type="video/mp4">
+    Your browser can't play this video.
+  </video>
+  <a href="video.mp4" download>Download video</a>
+</body>
+</html>
