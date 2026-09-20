@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Civic Day USA Edition – UNGA 81 Side Event, Sept 24</title>
+  <meta name="description" content="Thursday, Sept 24 at 4pm. Daylight Studio, 450 W 31st Street, New York. Sierra Leone's Chief Minister and ministers in one room. Register now.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SLPP North America – New York Chapter">
+  <meta property="og:title" content="Civic Day USA Edition – UNGA 81 Side Event, Sept 24">
+  <meta property="og:description" content="Thursday, Sept 24 at 4pm. Daylight Studio, 450 W 31st Street, New York. Sierra Leone's Chief Minister and ministers in one room. Register now.">
+  <meta property="og:url" content="https://slppnewyorkchapter.github.io/UNGA/civic.html">
+  <meta property="og:image" content="https://slppnewyorkchapter.github.io/UNGA/civic-og.jpg?v=1">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Civic Day USA Edition – UNGA 81 Side Event, Sept 24">
+  <meta name="twitter:description" content="Thursday, Sept 24 at 4pm. Daylight Studio, 450 W 31st Street, New York. Register now.">
+  <meta name="twitter:image" content="https://slppnewyorkchapter.github.io/UNGA/civic-og.jpg?v=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --mint: #A2FCB0;
+      --ink: #0b1f14;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; background: #000; color: #fff; }
+    body {
+      font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    [hidden] { display: none !important; }
+
+    /* ---------- Flyer + buttons (before and after the announcement) ---------- */
+    #idle {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px;
+      padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+    }
+    .flyer {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100dvh - 190px);
+      width: auto; height: auto;
+      border-radius: 10px;
+    }
+    .btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      border-radius: 999px; padding: 14px 26px;
+      font: 900 1.05rem/1 Lato, sans-serif;
+      text-decoration: none; cursor: pointer; border: 2px solid transparent;
+    }
+    #play { background: var(--gold); color: var(--ink); }
+    #play svg { width: 19px; height: 19px; fill: currentColor; }
+    .reg { background: transparent; color: var(--mint); border-color: var(--mint); }
+    .reg:hover { background: var(--mint); color: var(--ink); }
+    .small { color: #9aa39d; font-size: .85rem; text-align: center; line-height: 1.4; }
+    .small a { color: #9aa39d; text-underline-offset: 3px; }
+    .small a:hover { color: #fff; }
+
+    /* ---------- Stage ---------- */
+    #stage {
+      position: fixed; inset: 0; background: #000;
+      padding: max(24px, env(safe-area-inset-top)) 5vw max(24px, env(safe-area-inset-bottom));
+    }
+    .panel {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 5vw max(84px, env(safe-area-inset-bottom));
+      opacity: 0;
+    }
+    #cap { display: block; text-align: center; font-weight: 900; line-height: 1.06; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: normal; }
+    #cap-inner { margin: auto; text-align: center; }
+
+    .ring {
+      border-radius: 50%;
+      border: 6px solid var(--mint);
+      overflow: hidden; background: #000;
+      flex: none;
+    }
+    .ring img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .tag {
+      background: var(--mint); color: var(--ink);
+      font-weight: 900; font-size: 1rem; letter-spacing: .04em;
+      padding: 6px 18px; border-radius: 999px; margin-top: 16px;
+    }
+    .pname { font-weight: 900; line-height: 1.08; text-align: center; text-wrap: balance; margin-top: 16px; }
+    .ptitle { color: var(--mint); font-weight: 700; line-height: 1.2; text-align: center; text-wrap: balance; margin-top: 10px; }
+
+    .ctaText { font-weight: 900; line-height: 1.05; text-align: center; }
+    .ctaLink {
+      display: inline-block; margin-top: 22px;
+      background: var(--mint); color: var(--ink);
+      border-radius: 999px; padding: .5em 1.1em;
+      font-weight: 900; text-decoration: none;
+    }
+
+    .bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #1b1b1b; z-index: 2; }
+    .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
+    .ctl { position: absolute; z-index: 3; background: rgba(255,255,255,.12); color: #fff; border: 0; cursor: pointer; }
+    #pause {
+      bottom: max(22px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+      width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+    }
+    #pause svg { width: 22px; height: 22px; fill: #fff; }
+    #close {
+      top: max(18px, env(safe-area-inset-top)); right: 16px;
+      border-radius: 999px; padding: 10px 18px; font: 700 .95rem/1 Lato, sans-serif;
+    }
+    .ctl:hover { background: rgba(255,255,255,.22); }
+    button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+  <main id="idle">
+    <img class="flyer" src="civic-flyer.jpg" alt="The Civic Day Series, UNGA 81 side event: Civic Day USA Edition. 24 September 2026 at 4pm, Daylight Studio, 450 W 31st Street, 10th floor, New York NY 10001. Register at bit.ly/3UNHD6J.">
+    <div class="btns">
+      <button id="play" class="btn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+        <span id="playLabel">Play announcement</span>
+      </button>
+      <a class="btn reg" href="https://bit.ly/3UNHD6J" target="_blank" rel="noopener">Register now</a>
+    </div>
+    <div class="small">An event of the Ministry of Information and Civic Education, Government of Sierra Leone<br><a href="civic-announcement.mp3" download>Download audio</a></div>
+  </main>
+
+  <section id="stage" hidden aria-label="Announcement">
+    <div class="bar"><i id="prog"></i></div>
+
+    <div id="cap" class="panel" aria-hidden="true" hidden><div id="cap-inner"></div></div>
+
+    <div id="person" class="panel" aria-hidden="true" hidden>
+      <div class="ring" id="ring"><img id="pimg" alt=""></div>
+      <div class="tag" id="ptag" hidden>Host</div>
+      <div class="pname" id="pname"></div>
+      <div class="ptitle" id="ptitle"></div>
+    </div>
+
+    <div id="cta" class="panel" hidden>
+      <div class="ctaText" id="ctaText">Register today</div>
+      <a class="ctaLink" id="ctaLink" href="https://bit.ly/3UNHD6J" target="_blank" rel="noopener">bit.ly/3UNHD6J</a>
+    </div>
+
+    <button id="pause" class="ctl" type="button" aria-label="Pause">
+      <svg id="icoPause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      <svg id="icoPlay" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+    </button>
+    <button id="close" class="ctl" type="button">Close</button>
+  </section>
+
+  <audio id="audio" src="civic-announcement.mp3" preload="auto"></audio>
+
+<script>
+/* People, as named on the flyer. */
+const PEOPLE = {
+  host:     { img: "civic-00-chernor-bah.jpg",  name: "Chernor Bah",                 title: "Minister of Information and Civic Education", host: true },
+  sengeh:   { img: "civic-01-sengeh.jpg",       name: "Dr. David Moinina Sengeh",    title: "Chief Minister" },
+  swaray:   { img: "civic-02-swaray.jpg",       name: "Mohamed Rahman Swaray",       title: "Minister of Foreign Affairs & International Cooperation" },
+  kargbo:   { img: "civic-03-kargbo.jpg",       name: "Karefa Kargbo",               title: "Minister of Finance" },
+  barlay:   { img: "civic-04-barlay.jpg",       name: "Kenyeh Barlay",               title: "Minister of Planning & Economic Development" },
+  sesay:    { img: "civic-05-sesay.jpg",        name: "Alpha Sesay Esq.",            title: "Attorney General & Minister of Justice" },
+  monorma:  { img: "civic-06-monorma-bah.jpg",  name: "Haja Salimatu Monorma Bah",   title: "Minister of Communications, Technology & Innovation" },
+  wurie:    { img: "civic-07-wurie.jpg",        name: "Dr. Haja Ramatulai Wurie",    title: "Minister of Technical & Higher Education" },
+  abdulai:  { img: "civic-08-abdulai.jpg",      name: "Jiwoh E. Abdulai",            title: "Minister of Environment & Climate Change" },
+  mahoi:    { img: "civic-09-mahoi.jpg",        name: "Dr. Isata Mahoi",             title: "Minister of Gender and Children's Affairs" },
+  demby:    { img: "civic-10-demby.jpg",        name: "Dr. Austin Demby",            title: "Minister of Health" },
+  koroma:   { img: "civic-11-koroma.jpg",       name: "Umaru Napoleon Koroma",       title: "Minister of Employment, Labour and Social Security" },
+  karminty: { img: "civic-12-karminty.jpg",     name: "Melrose Karminty",            title: "Minister of Social Welfare" },
+  grant:    { img: "civic-13-grant.jpg",        name: "Cyril Arnold Grant",          title: "Minister of Energy" },
+  dugba:    { img: "civic-14-dugba.jpg",        name: "Princess Dugba",              title: "Minister of Fisheries and Marine Resources" },
+  sackey:   { img: "civic-15-sackey.jpg",       name: "Conrad Sackey",               title: "Minister of Basic and Senior Secondary Education" },
+  sannoh:   { img: "civic-16-sannoh.jpg",       name: "Ibrahim Sannoh",              title: "Minister of Youth Affairs" }
+};
+
+/* Timing, matched to the audio: [start seconds, end seconds, kind, content].
+   kind "text" = big white words ("|" starts a new line), "person" = photo + name + title,
+   "cta" = Register button. To adjust a moment, change its two numbers. */
+const ITEMS = [
+  [ 0.00,   1.90, "text", "Sierra Leoneans|in America"],
+  [ 2.05,   3.85, "text", "This is|your moment"],
+  [ 4.20,   6.60, "text", "The Civic Day Series|is coming to New York"],
+  [ 6.80,   7.75, "text", "Civic Day"],
+  [ 8.00,   9.60, "text", "USA Edition"],
+  [ 9.85,  13.55, "text", "UNGA 81|Side Event"],
+  [14.05,  17.95, "text", "The national conversation|is coming to the United States"],
+  [18.55,  19.45, "text", "Thursday"],
+  [19.50,  20.85, "text", "September 24"],
+  [20.95,  22.20, "text", "4 PM"],
+
+  [22.45,  27.20, "person", "host"],
+  [27.55,  31.35, "person", "sengeh"],
+  [31.87,  34.95, "person", "swaray"],
+  [35.57,  37.60, "person", "kargbo"],
+  [38.17,  40.85, "person", "barlay"],
+  [41.78,  44.70, "person", "sesay"],
+  [45.62,  51.80, "person", "monorma"],
+  [52.70,  56.30, "person", "wurie"],
+  [56.51,  59.63, "person", "abdulai"],
+  [59.90,  63.10, "person", "mahoi"],
+  [63.81,  65.85, "person", "demby"],
+  [66.28,  71.05, "person", "koroma"],
+  [71.74,  74.27, "person", "karminty"],
+  [74.60,  76.76, "person", "grant"],
+  [77.16,  80.26, "person", "dugba"],
+  [80.71,  84.45, "person", "sackey"],
+  [84.89,  87.30, "person", "sannoh"],
+
+  [87.90,  89.85, "text", "Your Chief Minister|and your ministers"],
+  [89.95,  92.35, "text", "All in one room|in New York"],
+  [92.95,  95.45, "text", "Be part of|the conversation"],
+  [95.95,  97.20, "text", "Bring your family"],
+  [97.50,  98.80, "text", "Your friends"],
+  [98.95, 100.30, "text", "Your community"],
+  [100.90, 102.35, "text", "Let us fill that room"],
+  [102.40, 105.90, "text", "Show the world|a united Sierra Leone"],
+  [106.50, 108.00, "text", "Daylight Studio"],
+  [108.40, 110.75, "text", "450 West 31st Street"],
+  [111.30, 112.70, "text", "10th Floor"],
+  [113.15, 114.40, "text", "New York"],
+  [115.15, 119.60, "cta",  ""],
+  [120.40, 999.00, "text", "Salone Big Pas|Wi All"]
+];
+
+const $ = id => document.getElementById(id);
+const audio = $('audio'), idle = $('idle'), stage = $('stage');
+const panels = { text: $('cap'), person: $('person'), cta: $('cta') };
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FADE = reduce ? 0 : 200;
+
+/* Load every photo up front so each one appears instantly. */
+const preload = Object.values(PEOPLE).map(p => { const i = new Image(); i.src = p.img; return i; });
+
+let current = -2, shown = null, raf = 0;
+
+/* Find the largest font size where the element still fits the box. */
+function fitEl(el, maxW, maxH, lo, hi) {
+  el.style.width = maxW + 'px';
+  for (let i = 0; i < 12; i++) {
+    const mid = (lo + hi) / 2;
+    el.style.fontSize = mid + 'px';
+    if (el.scrollHeight <= maxH && el.scrollWidth <= el.clientWidth + 1) lo = mid; else hi = mid;
+  }
+  el.style.fontSize = lo + 'px';
+  return lo;
+}
+
+function fitText() {
+  const el = $('cap-inner');
+  const maxW = innerWidth * 0.9, maxH = innerHeight * 0.68;
+  const top = Math.min(innerWidth * 0.21, innerHeight * 0.21, 190);
+  const run = nowrap => {
+    el.style.whiteSpace = nowrap ? 'nowrap' : 'normal';
+    return fitEl(el, maxW, maxH, 22, top);
+  };
+  /* Keep the line breaks as written unless that makes the text much smaller. */
+  const kept = run(true), wrapped = run(false);
+  if (kept >= wrapped * 0.8) { el.style.whiteSpace = 'nowrap'; el.style.fontSize = kept + 'px'; }
+  else { el.style.whiteSpace = 'normal'; el.style.fontSize = wrapped + 'px'; }
+}
+
+function fitPerson() {
+  const vw = innerWidth, vh = innerHeight;
+  const ring = $('ring'), nm = $('pname'), tt = $('ptitle');
+  let ph = Math.min(vw * 0.6, vh * 0.36, 380);
+  for (let tries = 0; tries < 8; tries++) {
+    ring.style.width = ring.style.height = ph + 'px';
+    const nsize = fitEl(nm, vw * 0.9, vh * 0.17, 20, Math.min(vw * 0.11, vh * 0.075, 64));
+    tt.style.width = vw * 0.88 + 'px';
+    tt.style.fontSize = Math.max(15, Math.min(nsize * 0.55, vw * 0.05, 30)) + 'px';
+    const total = ring.offsetHeight + ($('ptag').hidden ? 0 : 50) + nm.offsetHeight + tt.offsetHeight + 40;
+    if (total <= vh * 0.80) break;
+    ph *= 0.9;
+  }
+}
+
+function fitCta() {
+  const vw = innerWidth, vh = innerHeight;
+  const size = Math.min(vw * 0.15, vh * 0.12, 120);
+  $('ctaText').style.fontSize = size + 'px';
+  $('ctaLink').style.fontSize = Math.min(size * 0.6, vw * 0.075) + 'px';
+}
+
+function render(kind, data) {
+  if (kind === 'text') {
+    const el = $('cap-inner');
+    el.textContent = '';
+    data.split('|').forEach((line, n) => {
+      if (n) el.appendChild(document.createElement('br'));
+      line.split(' ').forEach((word, w) => {
+        if (w) el.appendChild(document.createTextNode(' '));
+        const s = document.createElement('span');
+        s.style.whiteSpace = 'nowrap';            /* never break inside a word */
+        s.textContent = word;
+        el.appendChild(s);
+      });
+    });
+    fitText();
+  } else if (kind === 'person') {
+    const p = PEOPLE[data];
+    $('pimg').src = p.img;
+    $('pname').textContent = p.name;
+    $('ptitle').textContent = p.title;
+    $('ptag').hidden = !p.host;
+    fitPerson();
+  } else {
+    fitCta();
+  }
+}
+
+function fadeIn(el) {
+  el.getAnimations().forEach(a => a.cancel());
+  el.style.opacity = 1;
+  if (FADE) el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: FADE, easing: 'ease-out' });
+}
+function fadeOut(el) {
+  const done = () => { if (shown !== el) { el.hidden = true; el.style.opacity = 0; } };
+  el.getAnimations().forEach(a => a.cancel());
+  if (!FADE) { done(); return; }
+  el.style.opacity = 0;
+  const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: FADE, easing: 'ease-in' });
+  a.onfinish = done;
+}
+
+function setCaption(i) {
+  if (i === current) return;
+  current = i;
+  if (i < 0) { if (shown) { const el = shown; shown = null; fadeOut(el); } return; }
+  const [, , kind, data] = ITEMS[i];
+  const panel = panels[kind];
+  if (shown && shown !== panel) { shown.getAnimations().forEach(a => a.cancel()); shown.hidden = true; shown.style.opacity = 0; }
+  shown = panel;
+  panel.hidden = false; panel.style.opacity = 0;
+  render(kind, data);
+  fadeIn(panel);
+}
+
+function tick() {
+  const t = audio.currentTime;
+  let idx = -1;
+  for (let i = 0; i < ITEMS.length; i++) {
+    if (t >= ITEMS[i][0] && t < ITEMS[i][1]) { idx = i; break; }
+  }
+  setCaption(idx);
+  if (audio.duration) $('prog').style.width = (t / audio.duration * 100) + '%';
+  raf = requestAnimationFrame(tick);
+}
+
+function showStage() {
+  idle.hidden = true; stage.hidden = false;
+  current = -2; shown = null;
+  Object.values(panels).forEach(p => { p.hidden = true; p.style.opacity = 0; });
+  cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+}
+function showFlyer(label) {
+  cancelAnimationFrame(raf);
+  stage.hidden = true; idle.hidden = false;
+  $('playLabel').textContent = label;
+}
+function setPaused(p) {
+  $('icoPause').hidden = p; $('icoPlay').hidden = !p;
+  $('pause').setAttribute('aria-label', p ? 'Play' : 'Pause');
+}
+
+$('play').addEventListener('click', () => {
+  audio.currentTime = 0;
+  showStage(); setPaused(false);
+  audio.play().catch(() => showFlyer('Tap to play announcement'));
+});
+$('pause').addEventListener('click', () => {
+  if (audio.paused) { audio.play(); setPaused(false); } else { audio.pause(); setPaused(true); }
+});
+$('close').addEventListener('click', () => {
+  audio.pause(); audio.currentTime = 0; showFlyer('Play announcement');
+});
+audio.addEventListener('ended', () => showFlyer('Play again'));
+addEventListener('resize', () => {
+  if (stage.hidden || current < 0) return;
+  const kind = ITEMS[current][2];
+  if (kind === 'text') fitText(); else if (kind === 'person') fitPerson(); else fitCta();
+});
+</script>
+</body>
+</html>
