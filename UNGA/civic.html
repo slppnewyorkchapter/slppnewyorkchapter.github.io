@@ -31,7 +31,8 @@
       --ink: #0b1f14;
     }
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; background: #000; color: #fff; }
+    html, body { height: 100%; margin: 0; background: #020b30; color: #fff; }
+    body { background: radial-gradient(120% 90% at 50% 15%, #0b2fa8 0%, #061a5c 42%, #020b30 100%) fixed; }
     body {
       font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       overflow: hidden;
@@ -50,7 +51,8 @@
       max-width: 100%;
       max-height: calc(100dvh - 260px);
       width: auto; height: auto;
-      border-radius: 10px;
+      border-radius: 14px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08);
     }
     .btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
     .btn {
@@ -59,7 +61,7 @@
       font: 900 1.05rem/1 Lato, sans-serif;
       text-decoration: none; cursor: pointer; border: 2px solid transparent;
     }
-    #play { background: var(--gold); color: var(--ink); }
+    #play { background: var(--gold); color: var(--ink); animation: pulse 2.4s ease-in-out infinite; }
     #play svg { width: 19px; height: 19px; fill: currentColor; }
     .reg { background: transparent; color: var(--mint); border-color: var(--mint); }
     .reg:hover { background: var(--mint); color: var(--ink); }
@@ -69,23 +71,38 @@
     .small a { color: #9aa39d; text-underline-offset: 3px; }
     .small a:hover { color: #fff; }
 
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,.55); } 50% { box-shadow: 0 0 0 14px rgba(212,175,55,0); } }
+    @keyframes drift1 { to { transform: translate(12vmax, 8vmax); } }
+    @keyframes drift2 { to { transform: translate(-10vmax, -8vmax); } }
+    @media (prefers-reduced-motion: reduce) { #play, #stage::before, #stage::after, .ctaLink { animation: none !important; } }
+
     /* ---------- Stage ---------- */
     #stage {
-      position: fixed; inset: 0; background: #000;
+      position: fixed; inset: 0; overflow: hidden;
+      background: radial-gradient(120% 85% at 50% 25%, #0a2a9a 0%, #061a5c 45%, #020b30 100%);
       padding: max(24px, env(safe-area-inset-top)) 5vw max(24px, env(safe-area-inset-bottom));
     }
+    #stage::before, #stage::after {
+      content: ""; position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%;
+      filter: blur(60px); pointer-events: none; z-index: 0;
+    }
+    #stage::before { top: -25vmax; left: -20vmax; background: radial-gradient(circle, #2a5cff 0%, transparent 65%); opacity: .38; animation: drift1 22s ease-in-out infinite alternate; }
+    #stage::after  { bottom: -30vmax; right: -25vmax; background: radial-gradient(circle, #19d67a 0%, transparent 65%); opacity: .20; animation: drift2 26s ease-in-out infinite alternate; }
     .panel {
+      z-index: 1;
       position: absolute; inset: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: max(24px, env(safe-area-inset-top)) 5vw max(84px, env(safe-area-inset-bottom));
+      padding: max(40px, env(safe-area-inset-top)) 5vw max(120px, calc(env(safe-area-inset-bottom) + 100px));
       opacity: 0;
     }
-    #cap { display: block; text-align: center; font-weight: 900; line-height: 1.06; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: normal; }
-    #cap-inner { margin: auto; text-align: center; }
+    #cap { text-align: center; font-weight: 900; line-height: 1.06; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: normal; }
+    #cap-inner { margin: auto; text-align: center; text-shadow: 0 3px 24px rgba(0,0,10,.45); }
+    .hl { color: var(--mint); }
 
     .ring {
       border-radius: 50%;
       border: 6px solid var(--mint);
+      box-shadow: 0 0 0 10px rgba(162,252,176,.12), 0 0 70px rgba(162,252,176,.35), 0 24px 60px rgba(0,0,10,.5);
       overflow: hidden; background: #000;
       flex: none;
     }
@@ -95,7 +112,7 @@
       font-weight: 900; font-size: 1rem; letter-spacing: .04em;
       padding: 6px 18px; border-radius: 999px; margin-top: 16px;
     }
-    .pname { font-weight: 900; line-height: 1.08; text-align: center; text-wrap: balance; margin-top: 16px; }
+    .pname { text-shadow: 0 2px 18px rgba(0,0,10,.5); font-weight: 900; line-height: 1.08; text-align: center; text-wrap: balance; margin-top: 16px; }
     .ptitle { color: var(--mint); font-weight: 700; line-height: 1.2; text-align: center; text-wrap: balance; margin-top: 10px; }
 
     .ctaText { font-weight: 900; line-height: 1.05; text-align: center; }
@@ -106,7 +123,14 @@
       font-weight: 900; text-decoration: none;
     }
 
-    .bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #1b1b1b; z-index: 2; }
+    .brand { position: absolute; z-index: 2; top: max(22px, env(safe-area-inset-top)); left: 16px; color: var(--mint); font-weight: 700; font-size: .85rem; letter-spacing: .02em; opacity: .9; }
+    #dots { position: absolute; z-index: 2; left: 50%; transform: translateX(-50%); bottom: max(92px, calc(env(safe-area-inset-bottom) + 80px)); display: flex; gap: 6px; align-items: center; }
+    #dots i { display: block; width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.28); transition: width .25s, background .25s; }
+    #dots i.seen { background: rgba(162,252,176,.6); }
+    #dots i.now { width: 18px; background: var(--mint); }
+    .ctaLink { animation: pulseMint 2.2s ease-in-out infinite; }
+    @keyframes pulseMint { 0%,100% { box-shadow: 0 0 0 0 rgba(162,252,176,.5); } 50% { box-shadow: 0 0 0 16px rgba(162,252,176,0); } }
+    .bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,.12); z-index: 2; }
     .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
     .ctl { position: absolute; z-index: 3; background: rgba(255,255,255,.12); color: #fff; border: 0; cursor: pointer; }
     #pause {
@@ -140,6 +164,7 @@
 
   <section id="stage" hidden aria-label="Announcement">
     <div class="bar"><i id="prog"></i></div>
+    <div class="brand">Civic Day · USA Edition</div>
 
     <div id="cap" class="panel" aria-hidden="true" hidden><div id="cap-inner"></div></div>
 
@@ -154,6 +179,8 @@
       <div class="ctaText" id="ctaText">Register today</div>
       <a class="ctaLink" id="ctaLink" href="https://bit.ly/3UNHD6J" target="_blank" rel="noopener">bit.ly/3UNHD6J</a>
     </div>
+
+    <div id="dots" hidden aria-hidden="true"></div>
 
     <button id="pause" class="ctl" type="button" aria-label="Pause">
       <svg id="icoPause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
@@ -191,14 +218,14 @@ const PEOPLE = {
    "cta" = Register button. To adjust a moment, change its two numbers. */
 const ITEMS = [
   [  0.00,    1.84, "text", "Sierra Leoneans|in America"],
-  [  1.87,    3.32, "text", "This is|your moment"],
-  [  3.35,    6.55, "text", "The Civic Day Series|is coming to New York"],
-  [  6.64,    7.50, "text", "Civic Day"],
-  [  7.53,    8.96, "text", "USA Edition"],
-  [  8.99,   12.34, "text", "UNGA 81|Side Event"],
-  [ 12.44,   16.29, "text", "The national conversation|is coming to the United States"],
-  [ 16.32,   18.26, "text", "Thursday|September 24"],
-  [ 18.29,   19.69, "text", "4 PM"],
+  [  1.87,    3.32, "text", "This is|*your moment*"],
+  [  3.35,    6.55, "text", "The *Civic Day* Series|is coming to *New York*"],
+  [  6.64,    7.50, "text", "*Civic Day*"],
+  [  7.53,    8.96, "text", "*USA Edition*"],
+  [  8.99,   12.34, "text", "*UNGA 81*|Side Event"],
+  [ 12.44,   16.29, "text", "The *national conversation*|is coming to the *United States*"],
+  [ 16.32,   18.26, "text", "Thursday|*September 24*"],
+  [ 18.29,   19.69, "text", "*4 PM*"],
   [ 19.77,   24.60, "person", "host"],
   [ 24.63,   28.58, "person", "sengeh"],
   [ 28.61,   31.57, "person", "swaray"],
@@ -217,19 +244,19 @@ const ITEMS = [
   [ 78.13,   82.57, "person", "sackey"],
   [ 82.60,   85.54, "person", "sannoh"],
   [ 85.67,   88.04, "text", "Your Chief Minister|and your ministers"],
-  [ 88.07,   90.52, "text", "All in one room|in New York"],
-  [ 90.57,   92.89, "text", "Be part of|the conversation"],
-  [ 92.92,   93.93, "text", "Bring your family"],
-  [ 93.96,   94.75, "text", "Your friends"],
-  [ 94.78,   96.16, "text", "Your community"],
-  [ 96.29,   97.57, "text", "Let us fill that room"],
-  [ 97.60,  101.19, "text", "Show the world|a united Sierra Leone"],
-  [101.35,  102.64, "text", "Daylight Studio"],
+  [ 88.07,   90.52, "text", "All in one room|in *New York*"],
+  [ 90.57,   92.89, "text", "Be part of|*the conversation*"],
+  [ 92.92,   93.93, "text", "Bring your *family*"],
+  [ 93.96,   94.75, "text", "Your *friends*"],
+  [ 94.78,   96.16, "text", "Your *community*"],
+  [ 96.29,   97.57, "text", "Let us fill *that room*"],
+  [ 97.60,  101.19, "text", "Show the world|a *united* Sierra Leone"],
+  [101.35,  102.64, "text", "*Daylight Studio*"],
   [102.67,  105.11, "text", "450 West 31st Street"],
   [105.14,  106.14, "text", "10th Floor"],
   [106.17,  107.23, "text", "New York"],
   [107.44,  110.80, "cta", ""],
-  [110.85,  999.00, "text", "Salone Big Pas|Wi All"]
+  [110.85,  999.00, "text", "*Salone Big Pas*|*Wi All*"]
 ];
 
 const $ = id => document.getElementById(id);
@@ -279,7 +306,7 @@ function fitPerson() {
     tt.style.width = vw * 0.88 + 'px';
     tt.style.fontSize = Math.max(15, Math.min(nsize * 0.55, vw * 0.05, 30)) + 'px';
     const total = ring.offsetHeight + ($('ptag').hidden ? 0 : 50) + nm.offsetHeight + tt.offsetHeight + 40;
-    if (total <= vh * 0.80) break;
+    if (total <= vh - 170) break;
     ph *= 0.9;
   }
 }
@@ -294,28 +321,59 @@ function fitCta() {
 function render(kind, data) {
   if (kind === 'text') {
     const el = $('cap-inner');
+    let hilite = false;
     el.textContent = '';
     data.split('|').forEach((line, n) => {
       if (n) el.appendChild(document.createElement('br'));
       line.split(' ').forEach((word, w) => {
         if (w) el.appendChild(document.createTextNode(' '));
+        let closes = false;
+        if (word.startsWith('*')) { hilite = true; word = word.slice(1); }
+        if (word.endsWith('*')) { closes = true; word = word.slice(0, -1); }
         const s = document.createElement('span');
         s.style.whiteSpace = 'nowrap';            /* never break inside a word */
+        if (hilite) s.className = 'hl';           /* *word* shows in mint green */
         s.textContent = word;
         el.appendChild(s);
+        if (closes) hilite = false;
       });
     });
     fitText();
   } else if (kind === 'person') {
     const p = PEOPLE[data];
+    $('pimg').getAnimations().forEach(a => a.cancel());
     $('pimg').src = p.img;
     $('pname').textContent = p.name;
     $('ptitle').textContent = p.title;
     $('ptag').hidden = !p.host;
     fitPerson();
+    updateDots(data);
   } else {
     fitCta();
   }
+}
+
+/* Progress dots for the 16 ministers. */
+const ORDER = Object.keys(PEOPLE).filter(k => k !== 'host');
+ORDER.forEach(() => $('dots').appendChild(document.createElement('i')));
+function updateDots(key) {
+  const dots = $('dots');
+  const idx = ORDER.indexOf(key);
+  dots.hidden = idx < 0;
+  [...dots.children].forEach((d, i) => { d.className = i < idx ? 'seen' : i === idx ? 'now' : ''; });
+}
+
+/* Gentle entrance for each new caption or person. */
+function animateIn(kind, secs) {
+  if (reduce) return;
+  const ease = 'cubic-bezier(.2,.8,.2,1)';
+  const rise = (el, delay = 0) => el.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay, easing: ease, fill: 'backwards' });
+  if (kind === 'text') rise($('cap-inner'));
+  else if (kind === 'person') {
+    $('ring').animate([{ opacity: 0, transform: 'scale(.88)' }, { opacity: 1, transform: 'none' }], { duration: 450, easing: ease, fill: 'backwards' });
+    rise($('ptag'), 120); rise($('pname'), 120); rise($('ptitle'), 220);
+    $('pimg').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.07)' }], { duration: Math.max(1500, secs * 1000), easing: 'linear', fill: 'forwards' });
+  } else { rise($('ctaText')); rise($('ctaLink'), 160); }
 }
 
 function fadeIn(el) {
@@ -335,14 +393,16 @@ function fadeOut(el) {
 function setCaption(i) {
   if (i === current) return;
   current = i;
-  if (i < 0) { if (shown) { const el = shown; shown = null; fadeOut(el); } return; }
-  const [, , kind, data] = ITEMS[i];
+  if (i < 0) { $('dots').hidden = true; if (shown) { const el = shown; shown = null; fadeOut(el); } return; }
+  const [t0, t1, kind, data] = ITEMS[i];
   const panel = panels[kind];
   if (shown && shown !== panel) { shown.getAnimations().forEach(a => a.cancel()); shown.hidden = true; shown.style.opacity = 0; }
   shown = panel;
   panel.hidden = false; panel.style.opacity = 0;
   render(kind, data);
+  if (kind !== 'person') $('dots').hidden = true;
   fadeIn(panel);
+  animateIn(kind, Math.min(t1, audio.duration || t1) - t0);
 }
 
 function tick() {
