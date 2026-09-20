@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SLPP-NA Has You Covered – UNGA Rally, Sept 22</title>
+  <meta name="description" content="Breakfast, lunch, refreshments and restrooms provided. Dag Hammarskjöld Plaza, Rally Area A, Manhattan.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SLPP North America – New York Chapter">
+  <meta property="og:title" content="SLPP-NA Has You Covered – UNGA Rally, Sept 22">
+  <meta property="og:description" content="Breakfast, lunch, refreshments and restrooms provided. Dag Hammarskjöld Plaza, Rally Area A, Manhattan.">
+  <meta property="og:url" content="https://slppnewyorkchapter.github.io/UNGA/rally.html">
+  <meta property="og:image" content="https://slppnewyorkchapter.github.io/UNGA/rally-og.jpg?v=1">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SLPP-NA Has You Covered – UNGA Rally, Sept 22">
+  <meta name="twitter:description" content="Breakfast, lunch, refreshments and restrooms provided. Dag Hammarskjöld Plaza, Rally Area A, Manhattan.">
+  <meta name="twitter:image" content="https://slppnewyorkchapter.github.io/UNGA/rally-og.jpg?v=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --ink: #0b1f14;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; background: #000; color: #fff; }
+    body {
+      font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    [hidden] { display: none !important; }
+
+    /* ---------- Flyer + play (before and after the announcement) ---------- */
+    #idle {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px;
+      padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+    }
+    .flyer {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100dvh - 130px);
+      width: auto; height: auto;
+      border-radius: 10px;
+    }
+    #play {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--gold); color: var(--ink);
+      border: 0; border-radius: 999px;
+      padding: 15px 30px;
+      font: 900 1.15rem/1 Lato, sans-serif;
+      cursor: pointer;
+    }
+    #play svg { width: 20px; height: 20px; fill: currentColor; }
+    #dl { color: #9aa39d; font-size: .9rem; text-underline-offset: 3px; }
+    #dl:hover { color: #fff; }
+
+    /* ---------- Caption stage ---------- */
+    #stage {
+      position: fixed; inset: 0; background: #000;
+      display: flex; align-items: center; justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 5vw max(24px, env(safe-area-inset-bottom));
+    }
+    #cap {
+      width: 100%;
+      max-width: 1400px;
+      text-align: center;
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+      overflow-wrap: normal;
+      opacity: 0;
+    }
+    .bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #1b1b1b; }
+    .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
+    .ctl {
+      position: absolute;
+      background: rgba(255,255,255,.12); color: #fff;
+      border: 0; cursor: pointer;
+    }
+    #pause {
+      bottom: max(22px, env(safe-area-inset-bottom));
+      left: 50%; transform: translateX(-50%);
+      width: 56px; height: 56px; border-radius: 50%;
+      display: grid; place-items: center;
+    }
+    #pause svg { width: 22px; height: 22px; fill: #fff; }
+    #close {
+      top: max(18px, env(safe-area-inset-top)); right: 16px;
+      border-radius: 999px; padding: 10px 18px;
+      font: 700 .95rem/1 Lato, sans-serif;
+    }
+    .ctl:hover { background: rgba(255,255,255,.22); }
+    button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+  <main id="idle">
+    <img class="flyer" src="rally-flyer.jpg" alt="SLPP-NA UNGA Rally, September 22, 2026. Breakfast, lunch, refreshments and restroom facilities provided for rally goers.">
+    <button id="play" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+      <span id="playLabel">Play announcement</span>
+    </button>
+    <a id="dl" href="rally-announcement.mp3" download>Download audio</a>
+  </main>
+
+  <section id="stage" hidden aria-label="Announcement captions">
+    <div class="bar"><i id="prog"></i></div>
+    <div id="cap" aria-hidden="true"></div>
+    <button id="pause" class="ctl" type="button" aria-label="Pause">
+      <svg id="icoPause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      <svg id="icoPlay" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+    </button>
+    <button id="close" class="ctl" type="button">Close</button>
+  </section>
+
+  <audio id="audio" src="rally-announcement.mp3" preload="auto"></audio>
+
+<script>
+/* Caption timing: [start seconds, end seconds, "line one|line two"].
+   To adjust when a caption appears or disappears, change its numbers. */
+const CAPTIONS = [
+  [0.00,  3.50, "SLPP-NA|has you covered"],
+  [3.50,  5.25, "UNGA Rally"],
+  [5.30,  6.30, "Tuesday"],
+  [6.40,  7.70, "September 22"],
+  [8.30, 11.15, "Dag Hammarskjöld|Plaza"],
+  [11.30, 12.80, "Rally Area A"],
+  [12.95, 14.00, "Manhattan"],
+  [14.15, 16.20, "Standing with|His Excellency"],
+  [16.45, 18.50, "Dr. Julius|Maada Bio"],
+  [18.80, 20.60, "President of|Sierra Leone"],
+  [20.85, 23.40, "Addressing the|UN General Assembly"],
+  [24.25, 27.30, "Your comfort|has been planned for"],
+  [28.20, 29.85, "Thanks to the|generous support of"],
+  [29.85, 32.30, "Regional Chairman|Desmond Pessima"],
+  [32.90, 33.80, "Breakfast"],
+  [33.95, 34.80, "Lunch"],
+  [35.05, 36.10, "Refreshments"],
+  [36.15, 37.80, "Restrooms"],
+  [38.00, 40.30, "Provided for|all rally goers"],
+  [41.15, 43.70, "No need to worry|about food"],
+  [44.35, 47.40, "No need to worry|about facilities"],
+  [48.25, 49.20, "Just come."],
+  [49.45, 51.20, "Bring your family|and friends"],
+  [51.35, 52.70, "Stand with us"],
+  [54.10, 56.00, "Our moment to show|the world"],
+  [56.00, 58.20, "Sierra Leoneans|are united"],
+  [58.30, 60.90, "We stand proudly|behind our President"],
+  [61.55, 63.60, "Rally with|peace of mind"],
+  [64.05, 65.10, "One Country"],
+  [65.45, 66.50, "One People"],
+  [66.80, 99.00, "The only way out"]
+];
+
+const $ = id => document.getElementById(id);
+const audio = $('audio'), cap = $('cap'), idle = $('idle'), stage = $('stage');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FADE = reduce ? 0 : 200;
+
+let current = -2, raf = 0;
+
+function fit() {
+  const pad = parseFloat(getComputedStyle(cap.parentElement).paddingLeft) * 2;
+  const maxW = cap.parentElement.clientWidth - pad;
+  const maxH = innerHeight * 0.72;
+  const top = Math.min(innerWidth * 0.21, innerHeight * 0.21, 190);
+  cap.style.width = maxW + 'px';
+  const search = nowrap => {
+    cap.style.whiteSpace = nowrap ? 'nowrap' : 'normal';
+    let lo = 22, hi = top;
+    for (let i = 0; i < 12; i++) {
+      const mid = (lo + hi) / 2;
+      cap.style.fontSize = mid + 'px';
+      if (cap.scrollHeight <= maxH && cap.scrollWidth <= cap.clientWidth + 1) lo = mid; else hi = mid;
+    }
+    return lo;
+  };
+  /* Keep the line breaks as written unless that makes the text much smaller. */
+  const kept = search(true), wrapped = search(false);
+  if (kept >= wrapped * 0.8) { cap.style.whiteSpace = 'nowrap'; cap.style.fontSize = kept + 'px'; }
+  else { cap.style.whiteSpace = 'normal'; cap.style.fontSize = wrapped + 'px'; }
+}
+
+function fade(to) {
+  cap.getAnimations().forEach(a => a.cancel());
+  cap.style.opacity = to;
+  if (FADE) cap.animate([{ opacity: 1 - to }, { opacity: to }], { duration: FADE, easing: 'ease-out' });
+}
+
+function setCaption(i) {
+  if (i === current) return;
+  current = i;
+  if (i < 0) { fade(0); return; }
+  cap.textContent = '';
+  CAPTIONS[i][2].split('|').forEach((line, n) => {
+    if (n) cap.appendChild(document.createElement('br'));
+    line.split(' ').forEach((word, w) => {
+      if (w) cap.appendChild(document.createTextNode(' '));
+      const span = document.createElement('span');
+      span.style.whiteSpace = 'nowrap';   /* never break inside a word, e.g. SLPP-NA */
+      span.textContent = word;
+      cap.appendChild(span);
+    });
+  });
+  fit();
+  fade(1);
+}
+
+function tick() {
+  const t = audio.currentTime;
+  let idx = -1;
+  for (let i = 0; i < CAPTIONS.length; i++) {
+    if (t >= CAPTIONS[i][0] && t < CAPTIONS[i][1]) { idx = i; break; }
+  }
+  setCaption(idx);
+  if (audio.duration) $('prog').style.width = (t / audio.duration * 100) + '%';
+  raf = requestAnimationFrame(tick);
+}
+
+function showStage() {
+  idle.hidden = true; stage.hidden = false;
+  current = -2; cap.style.opacity = 0;
+  cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+}
+function showFlyer(label) {
+  cancelAnimationFrame(raf);
+  stage.hidden = true; idle.hidden = false;
+  $('playLabel').textContent = label;
+}
+function setPaused(p) {
+  $('icoPause').hidden = p; $('icoPlay').hidden = !p;
+  $('pause').setAttribute('aria-label', p ? 'Play' : 'Pause');
+}
+
+$('play').addEventListener('click', () => {
+  audio.currentTime = 0;
+  showStage(); setPaused(false);
+  audio.play().catch(() => { showFlyer('Tap to play announcement'); });
+});
+$('pause').addEventListener('click', () => {
+  if (audio.paused) { audio.play(); setPaused(false); } else { audio.pause(); setPaused(true); }
+});
+$('close').addEventListener('click', () => {
+  audio.pause(); audio.currentTime = 0; showFlyer('Play announcement');
+});
+audio.addEventListener('ended', () => showFlyer('Play again'));
+addEventListener('resize', () => { if (!stage.hidden && current >= 0) fit(); });
+</script>
+</body>
+</html>
