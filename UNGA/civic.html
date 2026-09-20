@@ -48,7 +48,7 @@
     .flyer {
       display: block;
       max-width: 100%;
-      max-height: calc(100dvh - 190px);
+      max-height: calc(100dvh - 260px);
       width: auto; height: auto;
       border-radius: 10px;
     }
@@ -64,6 +64,8 @@
     .reg { background: transparent; color: var(--mint); border-color: var(--mint); }
     .reg:hover { background: var(--mint); color: var(--ink); }
     .small { color: #9aa39d; font-size: .85rem; text-align: center; line-height: 1.4; }
+    .credit { color: #e8efe9; font-size: 1rem; text-align: center; line-height: 1.45; }
+    .credit strong { color: #fff; font-weight: 900; }
     .small a { color: #9aa39d; text-underline-offset: 3px; }
     .small a:hover { color: #fff; }
 
@@ -131,7 +133,9 @@
       </button>
       <a class="btn reg" href="https://bit.ly/3UNHD6J" target="_blank" rel="noopener">Register now</a>
     </div>
-    <div class="small">An event of the Ministry of Information and Civic Education, Government of Sierra Leone<br>Produced by Fomba Kassoh, Secretary General, SLPP North America – New York Chapter<br><a href="civic-announcement.mp3?v=2" download>Download audio</a></div>
+    <div class="small">An event of the Ministry of Information and Civic Education, Government of Sierra Leone</div>
+    <div class="credit">Produced by <strong>Fomba Kassoh</strong><br>Secretary General, SLPP North America – New York Chapter</div>
+    <div class="small"><a href="civic-announcement-v3.mp3" download>Download audio</a></div>
   </main>
 
   <section id="stage" hidden aria-label="Announcement">
@@ -158,7 +162,7 @@
     <button id="close" class="ctl" type="button">Close</button>
   </section>
 
-  <audio id="audio" src="civic-announcement.mp3?v=2" preload="auto"></audio>
+  <audio id="audio" src="civic-announcement-v3.mp3" preload="auto"></audio>
 
 <script>
 /* People, as named on the flyer. */
@@ -186,49 +190,46 @@ const PEOPLE = {
    kind "text" = big white words ("|" starts a new line), "person" = photo + name + title,
    "cta" = Register button. To adjust a moment, change its two numbers. */
 const ITEMS = [
-  [  0.00,    2.00, "text", "Sierra Leoneans|in America"],
-  [  2.16,    4.05, "text", "This is|your moment"],
-  [  4.42,    6.95, "text", "The Civic Day Series|is coming to New York"],
-  [  7.16,    8.16, "text", "Civic Day"],
-  [  8.42,   10.11, "text", "USA Edition"],
-  [ 10.37,   14.26, "text", "UNGA 81|Side Event"],
-  [ 14.79,   18.89, "text", "The national conversation|is coming to the United States"],
-  [ 19.53,   20.47, "text", "Thursday"],
-  [ 20.53,   21.95, "text", "September 24"],
-  [ 22.05,   23.37, "text", "4 PM"],
-
-  [ 23.63,   28.63, "person", "host"],
-  [ 29.03,   33.35, "person", "sengeh"],
-  [ 33.94,   37.44, "person", "swaray"],
-  [ 38.14,   40.45, "person", "kargbo"],
-  [ 41.10,   44.14, "person", "barlay"],
-  [ 45.20,   48.52, "person", "sesay"],
-  [ 49.56,   56.59, "person", "monorma"],
-  [ 57.61,   61.70, "person", "wurie"],
-  [ 61.94,   65.48, "person", "abdulai"],
-  [ 65.79,   69.43, "person", "mahoi"],
-  [ 70.23,   72.55, "person", "demby"],
-  [ 73.04,   78.46, "person", "koroma"],
-  [ 79.25,   82.12, "person", "karminty"],
-  [ 82.50,   84.95, "person", "grant"],
-  [ 85.40,   88.93, "person", "dugba"],
-  [ 89.44,   93.69, "person", "sackey"],
-  [ 94.19,   96.93, "person", "sannoh"],
-
-  [ 97.57,   99.62, "text", "Your Chief Minister|and your ministers"],
-  [ 99.72,  102.25, "text", "All in one room|in New York"],
-  [102.88,  105.51, "text", "Be part of|the conversation"],
-  [106.04,  107.36, "text", "Bring your family"],
-  [107.67,  109.04, "text", "Your friends"],
-  [109.20,  110.62, "text", "Your community"],
-  [111.25,  112.78, "text", "Let us fill that room"],
-  [112.83,  116.51, "text", "Show the world|a united Sierra Leone"],
-  [117.15,  118.72, "text", "Daylight Studio"],
-  [119.15,  121.62, "text", "450 West 31st Street"],
-  [122.20,  123.67, "text", "10th Floor"],
-  [124.15,  125.46, "text", "New York"],
-  [126.25,  130.94, "cta",  ""],
-  [131.78,  999.00, "text", "Salone Big Pas|Wi All"]
+  [  0.00,    1.84, "text", "Sierra Leoneans|in America"],
+  [  1.87,    3.32, "text", "This is|your moment"],
+  [  3.35,    6.55, "text", "The Civic Day Series|is coming to New York"],
+  [  6.64,    7.50, "text", "Civic Day"],
+  [  7.53,    8.96, "text", "USA Edition"],
+  [  8.99,   12.34, "text", "UNGA 81|Side Event"],
+  [ 12.44,   16.29, "text", "The national conversation|is coming to the United States"],
+  [ 16.32,   18.26, "text", "Thursday|September 24"],
+  [ 18.29,   19.69, "text", "4 PM"],
+  [ 19.77,   24.60, "person", "host"],
+  [ 24.63,   28.58, "person", "sengeh"],
+  [ 28.61,   31.57, "person", "swaray"],
+  [ 31.60,   34.16, "person", "kargbo"],
+  [ 34.19,   37.75, "person", "barlay"],
+  [ 37.78,   41.69, "person", "sesay"],
+  [ 41.72,   47.29, "person", "monorma"],
+  [ 47.32,   52.03, "person", "wurie"],
+  [ 52.06,   56.28, "person", "abdulai"],
+  [ 56.37,   60.12, "person", "mahoi"],
+  [ 60.31,   62.92, "person", "demby"],
+  [ 62.97,   67.97, "person", "koroma"],
+  [ 68.01,   71.21, "person", "karminty"],
+  [ 71.38,   74.14, "person", "grant"],
+  [ 74.17,   78.08, "person", "dugba"],
+  [ 78.13,   82.57, "person", "sackey"],
+  [ 82.60,   85.54, "person", "sannoh"],
+  [ 85.67,   88.04, "text", "Your Chief Minister|and your ministers"],
+  [ 88.07,   90.52, "text", "All in one room|in New York"],
+  [ 90.57,   92.89, "text", "Be part of|the conversation"],
+  [ 92.92,   93.93, "text", "Bring your family"],
+  [ 93.96,   94.75, "text", "Your friends"],
+  [ 94.78,   96.16, "text", "Your community"],
+  [ 96.29,   97.57, "text", "Let us fill that room"],
+  [ 97.60,  101.19, "text", "Show the world|a united Sierra Leone"],
+  [101.35,  102.64, "text", "Daylight Studio"],
+  [102.67,  105.11, "text", "450 West 31st Street"],
+  [105.14,  106.14, "text", "10th Floor"],
+  [106.17,  107.23, "text", "New York"],
+  [107.44,  110.80, "cta", ""],
+  [110.85,  999.00, "text", "Salone Big Pas|Wi All"]
 ];
 
 const $ = id => document.getElementById(id);
